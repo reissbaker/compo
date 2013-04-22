@@ -8,6 +8,10 @@ if you have a series of powerups, you might want those to just be in a single
 controller component, and have that component call different components
 depending on its state.
 
+NO: unnecessary. Just have an interface that owns a component. The exported
+component provides the hooks; the main object controls the state. Components
+are hooks.
+
 
 Rather than having the runner know about SceneNodes, the engine, etc, the
 runner should just know about components. Additionally, there is a walker
