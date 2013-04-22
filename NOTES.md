@@ -2,6 +2,10 @@ Engine should have dependency injection on the looping and running functions.
 Provide realtime-tuned defaults if none are specified.
 
 
+Might want Component containers that call all the methods on components, and
+that themselves are components that can be added to a SceneNode or engine.
+
+
 Rather than having the runner know about SceneNodes, the engine, etc, the
 runner should just know about components. Additionally, there is a walker
 function that collects all the components from the given tree.
