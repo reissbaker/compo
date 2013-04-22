@@ -1,6 +1,14 @@
 build/seine.js:
 	mkdir -p build/
-	cat lib/*.js > $@
+	cat index.js > $@
+	cat \
+		lib/runqueue.js \
+		lib/component.js \
+		lib/scenenode.js \
+		lib/runner.js \
+		lib/loop.js \
+		lib/engine.js \
+		>> $@
 
 build/seine.min.js: build/seine.js
 	node_modules/.bin/uglifyjs \
