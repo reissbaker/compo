@@ -2,7 +2,8 @@
   'use strict';
 
   var SceneNode = seine.SceneNode,
-      Keylogger = demo.Keylogger;
+      Keylogger = demo.Keylogger,
+      Player = demo.Player;
 
   var World = SceneNode.extend();
 
@@ -10,6 +11,7 @@
     SceneNode.prototype.init.call(this);
 
     this.components.push(new Keylogger);
+    this.add(new Player);
   };
 
   exports.World = World;
