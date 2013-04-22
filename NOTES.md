@@ -3,7 +3,10 @@ Provide realtime-tuned defaults if none are specified.
 
 
 Might want Component containers that call all the methods on components, and
-that themselves are components that can be added to a SceneNode or engine.
+that themselves are components that can be added to a SceneNode or engine. E.g.
+if you have a series of powerups, you might want those to just be in a single
+controller component, and have that component call different components
+depending on its state.
 
 
 Rather than having the runner know about SceneNodes, the engine, etc, the
