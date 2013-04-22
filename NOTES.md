@@ -1,3 +1,7 @@
+Engine should have dependency injection on the looping and running functions.
+Provide realtime-tuned defaults if none are specified.
+
+
 Rather than binding to a global `engine.nextTick`, elements should have
 `before` and `after` filters. These are run per-element rather than globally,
 so you can be sure you're not accidentally leaking memory or dealing with
