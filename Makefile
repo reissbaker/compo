@@ -5,8 +5,8 @@ build/seine.js:
 		lib/runqueue.js \
 		lib/component.js \
 		lib/scenenode.js \
-		lib/runner.js \
-		lib/loop.js \
+		lib/run/runner.js \
+		lib/run/loop.js \
 		lib/engine.js \
 		>> $@
 
