@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title>Seine Test</title>
+  </head>
+
+  <body>
+    <script src=index.js></script>
+    <script src=lib/runqueue.js></script>
+    <script src=lib/component.js></script>
+    <script src=lib/scenenode.js></script>
+    <script src=lib/runner.js></script>
+    <script src=lib/loop.js></script>
+    <script src=lib/engine.js></script>
+    <script>
+      !function() {
+        'use strict';
+
+        var root = new seine.SceneNode;
+        seine.engine.start(root);
+      }();
+    </script>
+  </body>
+</html>

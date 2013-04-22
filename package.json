@@ -1,0 +1,7 @@
+{
+  "name": "seine",
+  "version": "0.0.1",
+  "devDependencies": {
+    "uglify-js": "2.2.5"
+  }
+}
