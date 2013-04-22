@@ -7,7 +7,6 @@
 
   World.prototype.init = function() {
     SceneNode.prototype.init.call(this);
-    console.log('hi');
   };
 
   exports.World = World;
