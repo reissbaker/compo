@@ -1,6 +1,9 @@
 !function(demo, seine) {
   'use strict';
 
-  seine.engine.start(new demo.World);
+  var engine = seine.engine;
+
+  engine.components.push(demo.keyboard.component());
+  engine.start(new demo.World);
 
 }(demo, seine);
