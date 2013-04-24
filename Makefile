@@ -2,9 +2,9 @@ build/seine.js:
 	mkdir -p build/
 	cat index.js > $@
 	cat \
-		lib/runqueue.js \
+		lib/containers/runqueue.js \
 		lib/component.js \
-		lib/componentlist.js \
+		lib/containers/componentlist.js \
 		lib/scenenode.js \
 		lib/runloop/runner.js \
 		lib/runloop/loop.js \
