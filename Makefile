@@ -4,6 +4,7 @@ build/seine.js:
 	cat \
 		lib/runqueue.js \
 		lib/component.js \
+		lib/componentlist.js \
 		lib/scenenode.js \
 		lib/runloop/runner.js \
 		lib/runloop/loop.js \

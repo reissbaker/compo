@@ -8,6 +8,8 @@
   var Player = SceneNode.extend();
 
   Player.prototype.init = function() {
+    SceneNode.prototype.init.call(this);
+
     this.components.push(new Controller(this));
     this.components.push(new PositionLogger(this));
   };

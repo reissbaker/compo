@@ -8,8 +8,10 @@
   var World = SceneNode.extend();
 
   World.prototype.init = function() {
+    SceneNode.prototype.init.call(this);
+
     this.components.push(new Keylogger);
-    this.add(new Player);
+    this.push(new Player);
   };
 
   exports.World = World;
