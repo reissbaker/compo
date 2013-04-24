@@ -3,17 +3,16 @@
 
   var Component = seine.Component;
 
-  var canvas, ctx,
+  var canvas, ctx, className,
       component = new Component;
 
   component.init = function() {
     canvas = document.createElement('canvas');
-    canvas.style.position = 'absolute';
-    canvas.style.left = canvas.style.top = '0';
-
     ctx = canvas.getContext('experimental-webgl');
 
-    //document.appendChild(canvas);
+    canvas.classList.add(className);
+
+    document.body.appendChild(canvas);
   };
 
   component.destroy = function() {
@@ -21,7 +20,8 @@
   };
 
   demo.graphics = {
-    init: function() {
+    init: function(canvasClassName) {
+      className = canvasClassName;
       seine.engine.components.push(component);
     }
   };
