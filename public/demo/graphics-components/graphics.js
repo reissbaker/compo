@@ -10,41 +10,43 @@
   component.init = function() {
     var vertex, fragment, loc, buffer, res;
 
-    canvas = document.createElement('canvas');
+    setTimeout(function() {
+      canvas = document.createElement('canvas');
 
-    canvas.classList.add(className);
-    document.body.appendChild(canvas);
+      canvas.classList.add(className);
+      document.body.appendChild(canvas);
 
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
-
-    gl = initWebGl(canvas);
-
-    vertex = getShader(gl, '2d-vertex-shader');
-    fragment = getShader(gl, '2d-fragment-shader');
-
-    prog = gl.createProgram();
-    gl.attachShader(prog, vertex);
-    gl.attachShader(prog, fragment);
-    gl.linkProgram(prog);
-
-    if(!gl.getProgramParameter(prog, gl.LINK_STATUS)) alert('crap');
-    gl.useProgram(prog);
-
-    window.addEventListener('resize', function() {
       canvas.width = canvas.clientWidth;
       canvas.height = canvas.clientHeight;
-      gl.viewport(0, 0, canvas.width, canvas.height);
-    });
 
-    image = new Image;
-    image.onload = function() { loaded = true; };
-    image.src = '/swordguy.png';
+      gl = initWebGl(canvas);
+
+      vertex = getShader(gl, '2d-vertex-shader');
+      fragment = getShader(gl, '2d-fragment-shader');
+
+      prog = gl.createProgram();
+      gl.attachShader(prog, vertex);
+      gl.attachShader(prog, fragment);
+      gl.linkProgram(prog);
+
+      if(!gl.getProgramParameter(prog, gl.LINK_STATUS)) alert('crap');
+      gl.useProgram(prog);
+
+      window.addEventListener('resize', function() {
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      });
+
+      image = new Image;
+      image.onload = function() { loaded = true; };
+      image.src = '/swordguy.png';
+    }, 0);
 
   };
 
   component.preprocess = function() {
-    clear(gl);
+    if(loaded) clear(gl);
   };
 
   component.render = function() {
