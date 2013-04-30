@@ -1,3 +1,13 @@
+Postprocess / after filters should run in this order:
+
+* component
+* children
+
+If you want something to run AFTER all children, you can stick it in the before
+filter. But if you want something to run in between render / postprocess, if
+you don't stay consistent with ordering you're screwed.
+
+
 Engine should have dependency injection on the looping and running functions.
 Provide realtime-tuned defaults if none are specified.
 
