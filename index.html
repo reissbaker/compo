@@ -29,29 +29,36 @@
   <body>
     <script id="2d-vertex-shader" type="x-shader/x-vertex">
       attribute vec2 aPosition;
+      attribute vec2 aTexCoord;
       uniform vec2 uResolution;
+      varying vec2 vTexCoord;
 
       void main() {
         vec2 clipspace = (2.0 * aPosition / uResolution) - 1.0;
         gl_Position = vec4(clipspace * vec2(1, -1), 0, 1);
+        vTexCoord = aTexCoord;
       }
     </script>
 
     <script id="2d-fragment-shader" type="x-shader/x-fragment">
+      precision mediump float;
+      uniform sampler2D uImage;
+      varying vec2 vTexCoord;
+
       void main() {
-        gl_FragColor = vec4(0, 1, 0, 1);
+        gl_FragColor = texture2D(uImage, vTexCoord);
       }
     </script>
 
-    <script src=build/seine.js></script>
-    <script src=demo/index.js></script>
-    <script src=demo/engine-components/keyboard.js></script>
-    <script src=demo/graphics-components/graphics.js></script>
-    <script src=demo/components/keylogger.js></script>
-    <script src=demo/components/node-keyboard-controller.js></script>
-    <script src=demo/components/position-logger.js></script>
-    <script src=demo/player.js></script>
-    <script src=demo/world.js></script>
-    <script src=demo/main.js></script>
+    <script src=/build/seine.js></script>
+    <script src=/demo/index.js></script>
+    <script src=/demo/engine-components/keyboard.js></script>
+    <script src=/demo/graphics-components/graphics.js></script>
+    <script src=/demo/components/keylogger.js></script>
+    <script src=/demo/components/node-keyboard-controller.js></script>
+    <script src=/demo/components/position-logger.js></script>
+    <script src=/demo/player.js></script>
+    <script src=/demo/world.js></script>
+    <script src=/demo/main.js></script>
   </body>
 </html>

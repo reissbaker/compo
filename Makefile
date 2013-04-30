@@ -1,5 +1,5 @@
-build/seine.js:
-	mkdir -p build/
+public/build/seine.js:
+	mkdir -p public/build/
 	cat index.js > $@
 	cat \
 		lib/containers/runqueue.js \
@@ -11,17 +11,17 @@ build/seine.js:
 		lib/engine.js \
 		>> $@
 
-build/seine.min.js: build/seine.js
+public/build/seine.min.js: public/build/seine.js
 	node_modules/.bin/uglifyjs \
 		-m \
 		-c warnings=false,unsafe=true \
 		$< > $@
 
-build/seine.min.js.gz: build/seine.min.js
+public/build/seine.min.js.gz: public/build/seine.min.js
 	gzip -c $< > $@
 
 .PHONY: build
-build: build/seine.js build/seine.min.js build/seine.min.js.gz
+build: public/build/seine.js public/build/seine.min.js public/build/seine.min.js.gz
 
 .PHONY: clean
 clean:

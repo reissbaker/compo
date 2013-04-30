@@ -3,8 +3,9 @@
 
   var Component = seine.Component;
 
-  var canvas, gl, className, prog,
-      component = new Component;
+  var canvas, gl, className, prog, image,
+      component = new Component,
+      loaded = false;
 
   component.init = function() {
     var vertex, fragment, loc, buffer, res;
@@ -36,6 +37,11 @@
       canvas.height = canvas.clientHeight;
       gl.viewport(0, 0, canvas.width, canvas.height);
     });
+
+    image = new Image;
+    image.onload = function() { loaded = true; };
+    image.src = '/swordguy.png';
+
   };
 
   component.preprocess = function() {
@@ -43,7 +49,7 @@
   };
 
   component.render = function() {
-    drawScene(gl, prog, canvas.width, canvas.height);
+    if(loaded) drawScene(gl, prog, canvas.width, canvas.height);
   };
 
   component.destroy = function() {
@@ -83,16 +89,16 @@
   }
 
   function drawScene(gl, program, width, height) {
+
+    rect(gl, program, 10, 10, image.width*2, image.height*2);
+  }
+
+  function rect(gl, program, x, y, w, h, color) {
     var buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
 
     var resolutionLocation = gl.getUniformLocation(program, 'uResolution');
-    gl.uniform2f(resolutionLocation, width, height);
-
-    rect(gl, program, 10, 10, 70, 70);
-  }
-
-  function rect(gl, program, x, y, w, h, color) {
+    gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
     gl.bufferData(gl.ARRAY_BUFFER, rectArray(x, y, w, h), gl.STATIC_DRAW);
 
     var positionLocation = gl.getAttribLocation(program, "aPosition");
@@ -100,6 +106,27 @@
 
     // (pointer, tuple size?, type, ?, ?, ?)
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+    var texCoordLocation = gl.getAttribLocation(program, 'aTexCoord');
+    var texCoordBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+      0.0, 0.0,
+      0.0, 1.0,
+      1.0, 0.0,
+      1.0, 1.0
+    ]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(texCoordLocation);
+    gl.vertexAttribPointer(texCoordLocation, 2, gl.FLOAT, false, 0, 0);
+
+    var texture = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
 
     // (type, dunno, num tuples)
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
