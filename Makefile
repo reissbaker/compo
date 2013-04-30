@@ -29,15 +29,27 @@ public/build/seine.min.js: public/build/seine.js
 		-c warnings=false,unsafe=true \
 		$< > $@
 
+public/build/demo.min.js: public/build/demo.js
+	node_modules/.bin/uglifyjs \
+		-m \
+		-c warnings=false,unsafe=true \
+		$< > $@
+
 public/build/seine.min.js.gz: public/build/seine.min.js
 	gzip -c $< > $@
 
-.PHONY: build
-build: public/build/seine.js public/build/seine.min.js public/build/seine.min.js.gz public/build/demo.js
+public/build/demo.min.js.gz: public/build/demo.min.js
+	gzip -c $< > $@
+
+.PHONY: build-seine
+build-seine: public/build/seine.js public/build/seine.min.js public/build/seine.min.js.gz
+	
+.PHONY: build-demo
+build-demo: public/build/demo.js public/build/demo.min.js public/build/demo.min.js.gz
 
 .PHONY: clean
 clean:
 	rm -rf public/build/
 
 .PHONY: rebuild
-rebuild: clean build
+rebuild: clean build-seine build-demo
