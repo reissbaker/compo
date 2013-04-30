@@ -17,7 +17,6 @@
 
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
-    console.log(canvas.width, canvas.height);
 
     gl = initWebGl(canvas);
 
