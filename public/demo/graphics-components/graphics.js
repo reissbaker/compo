@@ -112,12 +112,15 @@
     var texCoordLocation = gl.getAttribLocation(program, 'aTexCoord');
     var texCoordBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
+
+    // note: can reuse same float32 array every time, no need to make garbage
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
       0.0, 0.0,
       0.0, 1.0,
       1.0, 0.0,
       1.0, 1.0
     ]), gl.STATIC_DRAW);
+
     gl.enableVertexAttribArray(texCoordLocation);
     gl.vertexAttribPointer(texCoordLocation, 2, gl.FLOAT, false, 0, 0);
 
@@ -135,6 +138,8 @@
   }
 
   function rectArray(x, y, w, h) {
+    // note: can overwrite same float32 array every time, as long as client
+    // code is ok with that. maybe take in a float32 array and modify it?
     return new Float32Array([
       x, y,
       x, y + h,
