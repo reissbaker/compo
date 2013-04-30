@@ -88,11 +88,10 @@
   }
 
   function drawScene(gl, program, width, height) {
-
-    rect(gl, program, 10, 10, image.width*2, image.height*2);
+    rect(gl, program, 10, 10, image.width*2, image.height*2, image);
   }
 
-  function rect(gl, program, x, y, w, h, color) {
+  function rect(gl, program, x, y, w, h, image) {
     var buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
 
