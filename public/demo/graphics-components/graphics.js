@@ -105,6 +105,10 @@
     // (pointer, tuple size?, type, ?, ?, ?)
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
 
+    gl.enable(gl.BLEND);
+    //gl.disable(gl.DEPTH_TEST); // Only needed for 3D
+    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     var texCoordLocation = gl.getAttribLocation(program, 'aTexCoord');
     var texCoordBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
