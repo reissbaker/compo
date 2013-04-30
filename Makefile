@@ -11,6 +11,18 @@ public/build/seine.js:
 		lib/engine.js \
 		>> $@
 
+public/build/demo.js:
+	mkdir -p public/build/
+	cat \
+		public/demo/index.js \
+		public/demo/engine-components/*.js \
+		public/demo/graphics-components/*.js \
+		public/demo/components/*.js \
+		public/demo/player.js \
+		public/demo/world.js \
+		public/demo/main.js \
+		>> $@
+
 public/build/seine.min.js: public/build/seine.js
 	node_modules/.bin/uglifyjs \
 		-m \
@@ -21,11 +33,11 @@ public/build/seine.min.js.gz: public/build/seine.min.js
 	gzip -c $< > $@
 
 .PHONY: build
-build: public/build/seine.js public/build/seine.min.js public/build/seine.min.js.gz
+build: public/build/seine.js public/build/seine.min.js public/build/seine.min.js.gz public/build/demo.js
 
 .PHONY: clean
 clean:
-	rm -rf build/
+	rm -rf public/build/
 
 .PHONY: rebuild
 rebuild: clean build
