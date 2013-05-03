@@ -6,8 +6,6 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
   fs.readFile('./index.html', 'utf8', function(err, data) {
-    console.log(err, data);
-    //res.set('Content-Type', 'text/html');
     res.send(data);
   });
 });
