@@ -10,6 +10,10 @@
   component.init = function() {
     var vertex, fragment, loc, buffer, res;
 
+    // Why setTimeout here?
+    // It helps with speeding up the onload event: setting up a WebGL context
+    // is expensive, and will block onload from firing until the computation is
+    // finished even though everything has finished loading.
     setTimeout(function() {
       canvas = document.createElement('canvas');
 
