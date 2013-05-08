@@ -7,7 +7,7 @@
 
   var World = SceneNode.extend();
 
-  World.prototype.init = function() {
+  World.prototype.enter = function() {
     this.components.push(new Keylogger);
     this.push(new Player);
   };

@@ -5,7 +5,6 @@ public/build/seine.js:
 		lib/containers/runqueue.js \
 		lib/component.js \
 		lib/containers/componentlist.js \
-		lib/containers/scenenodelist.js \
 		lib/scenenode.js \
 		lib/runloop/runner.js \
 		lib/runloop/loop.js \

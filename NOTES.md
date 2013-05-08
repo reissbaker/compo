@@ -1,3 +1,7 @@
+OH CRAP undo the _init / _destroy thing. It's a PITA with ComponentLists and
+the push / remove methods.
+
+
 Postprocess / after filters should run in this order:
 
 * component

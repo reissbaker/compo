@@ -7,7 +7,7 @@
 
   var Player = SceneNode.extend();
 
-  Player.prototype.init = function() {
+  Player.prototype.enter = function() {
     this.components.push(new Controller(this));
     this.components.push(new PositionLogger(this));
   };
