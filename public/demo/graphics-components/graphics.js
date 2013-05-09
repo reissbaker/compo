@@ -94,10 +94,11 @@
   }
 
   function drawScene(gl, program, width, height) {
-    rect(gl, program, 10, 10, image.width*2, image.height*2, image);
+    var tex = texture(image, 0, 0, 48, 32);
+    drawRect(gl, program, 10, 10, 48*2, 32*2, tex);
   }
 
-  function rect(gl, program, x, y, w, h, image) {
+  function drawRect(gl, program, x, y, w, h, tex) {
     var buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
 
@@ -116,6 +117,10 @@
     gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     var texCoordLocation = gl.getAttribLocation(program, 'aTexCoord');
+    var texClipLocation = gl.getUniformLocation(program, 'uClip');
+    gl.uniform4f(texClipLocation, tex.x, tex.y, tex.w, tex.h);
+    var texSizeLocation = gl.getUniformLocation(program, 'uTexSize');
+    gl.uniform2f(texSizeLocation, tex.image.width, tex.image.height);
     var texCoordBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
 
@@ -137,10 +142,20 @@
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, tex.image);
 
     // (type, dunno, num tuples)
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+
+  function texture(image, x, y, w, h) {
+    return {
+      image: image,
+      x: x,
+      y: y,
+      w: w,
+      h: h
+    };
   }
 
   function rectArray(x, y, w, h) {

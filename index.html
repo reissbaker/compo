@@ -44,9 +44,14 @@
       precision mediump float;
       uniform sampler2D uImage;
       varying vec2 vTexCoord;
+      uniform vec4 uClip;
+      uniform vec2 uTexSize;
 
       void main() {
-        gl_FragColor = texture2D(uImage, vTexCoord);
+        vec2 onePixel = vec2(1.0, 1.0) / uTexSize;
+        vec2 offset = uClip.xy * onePixel;
+        vec2 texspace = uClip.zw / uTexSize;
+        gl_FragColor = texture2D(uImage, vTexCoord * texspace + offset);
       }
     </script>
 
