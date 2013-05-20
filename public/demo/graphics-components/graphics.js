@@ -95,7 +95,7 @@
 
   function drawScene(gl, program, width, height) {
     var tex = texture(image, 0, 0, 48, 32);
-    drawRect(gl, program, 10, 10, 48*2, 32*2, tex);
+    drawRect(gl, program, 10, 10, 48*4, 32*4, tex);
   }
 
   function drawRect(gl, program, x, y, w, h, tex) {

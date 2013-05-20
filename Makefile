@@ -16,7 +16,10 @@ public/build/demo.js:
 	cat \
 		public/demo/index.js \
 		public/demo/engine-components/*.js \
-		public/demo/graphics-components/*.js \
+		public/demo/graphics-components/texturemap.js \
+		public/demo/graphics-components/raster.js \
+		public/demo/graphics-components/fasterraster.js \
+		public/demo/graphics-components/graphics.js \
 		public/demo/components/*.js \
 		public/demo/player.js \
 		public/demo/world.js \

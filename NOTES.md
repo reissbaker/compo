@@ -1,6 +1,12 @@
-OH CRAP undo the _init / _destroy thing. It's a PITA with ComponentLists and
-the push / remove methods.
+Oh damn, the root node shouldn't be the world: it should be the screen. That
+way you can absolutely position things relative to the screen (by adding them
+to the screen node), as well as the world.
 
+No nevermind, just have things that ignore camera by percentages (including
+zero).
+
+fr -- faster raster
+jenniferseinefr -- seine bindings to fr
 
 Postprocess / after filters should run in this order:
 
