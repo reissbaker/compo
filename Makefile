@@ -19,7 +19,6 @@ public/build/demo.js:
 		public/demo/graphics-components/texturemap.js \
 		public/demo/graphics-components/raster.js \
 		public/demo/graphics-components/fasterraster.js \
-		public/demo/graphics-components/graphics.js \
 		public/demo/components/*.js \
 		public/demo/player.js \
 		public/demo/world.js \

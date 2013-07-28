@@ -2,10 +2,7 @@
   'use strict';
 
   var engine = seine.engine,
-      graphics = demo.graphics,
       FasterRaster = demo.FasterRaster;
-
-  //graphics.init('seine-demo');
 
   setTimeout(function() {
     var fr = new FasterRaster;
