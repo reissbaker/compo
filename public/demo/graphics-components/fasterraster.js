@@ -54,7 +54,7 @@
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   };
 
-  
+
   function initWebGl(canvas) {
     return canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
   }
