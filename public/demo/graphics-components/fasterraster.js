@@ -1,7 +1,8 @@
 !function(exports) {
   'use strict';
 
-  var TextureMap = exports.TextureMap;
+  var TextureMap = exports.TextureMap,
+      Raster = exports.Raster;
 
   function FasterRaster() {
     var gl, vertex, fragment;
@@ -34,19 +35,20 @@
     if(this._gl) this._gl.viewport(0, 0, canvas.width, canvas.height);
   };
 
-  FasterRaster.prototype.image = function(url, x, y, w, h, callback) {
+  FasterRaster.prototype.image = function(img, x, y, w, h) {
+    return new Raster(this, img, -1, x, y, w, h);
   };
 
-  FasterRaster.prototype.canvas = function(canvas, x, y, w, h, callback) {
+  FasterRaster.prototype.canvas = function(canvas, x, y, w, h) {
   };
 
-  FasterRaster.prototype.rect = function(w, h, callback) {
+  FasterRaster.prototype.rect = function(color, w, h) {
   };
 
-  FasterRaster.prototype.ellipse = function(w, h, callback) {
+  FasterRaster.prototype.ellipse = function(color, w, h) {
   };
 
-  FasterRaster.prototype.text = function(text, font, color, fill, callback) {
+  FasterRaster.prototype.text = function(text, font, color, fill) {
   };
 
   FasterRaster.prototype.clear = function() {
