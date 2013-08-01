@@ -4,6 +4,9 @@
   var TextureMap = exports.TextureMap,
       Raster = exports.Raster;
 
+  var WEBGL_CTX = 'webgl',
+      VENDOR_WEBGL_CTX = 'experimental-webgl';
+
   function FasterRaster() {
     var gl, vertex, fragment;
 
@@ -58,7 +61,7 @@
 
 
   function initWebGl(canvas) {
-    return canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    return canvas.getContext(WEBGL_CTX) || canvas.getContext(VENDOR_WEBGL_CTX);
   }
 
   function initProgram(gl, vertex, fragment) {
