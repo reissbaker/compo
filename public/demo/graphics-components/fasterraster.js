@@ -20,7 +20,7 @@
     this._prog = initProgram(gl, vertex, fragment);
   }
 
-  FasterRaster.prototype.el = function() {
+  FasterRaster.prototype.el = FasterRaster.prototype.element = function() {
     return this._canvas;
   };
 
