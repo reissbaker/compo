@@ -22,7 +22,7 @@ public/build/demo.js:
 		public/demo/player.js \
 		public/demo/world.js \
 		public/demo/main.js \
-		>> $@
+		> $@
 
 public/build/seine.min.js: public/build/seine.js
 	node_modules/.bin/uglifyjs \
@@ -44,13 +44,16 @@ public/build/demo.min.js.gz: public/build/demo.min.js
 
 .PHONY: build-seine
 build-seine: public/build/seine.js public/build/seine.min.js public/build/seine.min.js.gz
-	
+
 .PHONY: build-demo
 build-demo: public/build/demo.js public/build/demo.min.js public/build/demo.min.js.gz
+
+.PHONY: build
+build: build-seine build-demo
 
 .PHONY: clean
 clean:
 	rm -rf public/build/
 
 .PHONY: rebuild
-rebuild: clean build-seine build-demo
+rebuild: clean build
