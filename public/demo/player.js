@@ -1,15 +1,21 @@
 !function(seine, exports) {
   'use strict';
 
-  var SceneNode = seine.SceneNode,
+  var Component = seine.Component,
       Controller = demo.NodeKeyboardController,
       PositionLogger = demo.PositionLogger;
 
-  var Player = SceneNode.extend();
+  var Player = Component.extend(function() {
+    Component.call(this);
 
-  Player.prototype.enter = function() {
-    this.components.push(new Controller(this));
-    this.components.push(new PositionLogger(this));
+    this.x = 0;
+    this.y = 0;
+    this.z = 0;
+  });
+
+  Player.prototype.init = function() {
+    this.push(new Controller(this));
+    this.push(new PositionLogger(this));
   };
 
   exports.Player = Player;

@@ -1,14 +1,14 @@
 !function(seine, exports) {
   'use strict';
 
-  var SceneNode = seine.SceneNode,
+  var Component = seine.Component,
       Keylogger = demo.Keylogger,
       Player = demo.Player;
 
-  var World = SceneNode.extend();
+  var World = Component.extend();
 
-  World.prototype.enter = function() {
-    this.components.push(new Keylogger);
+  World.prototype.init = function() {
+    this.unshift(new Keylogger);
     this.push(new Player);
   };
 

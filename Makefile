@@ -1,15 +1,14 @@
 public/build/seine.js:
 	mkdir -p public/build/
-	cat index.js > $@
 	cat \
-		lib/containers/runqueue.js \
-		lib/component.js \
-		lib/containers/componentlist.js \
-		lib/scenenode.js \
-		lib/runloop/runner.js \
-		lib/runloop/loop.js \
-		lib/engine.js \
-		>> $@
+		index.js \
+		lib/base/runqueue.js \
+		lib/base/component.js \
+		lib/engine/runloop/runner.js \
+		lib/engine/runloop/loop.js \
+		lib/engine/kernel.js \
+		lib/engine/engine.js \
+		> $@
 
 public/build/demo.js:
 	mkdir -p public/build/
