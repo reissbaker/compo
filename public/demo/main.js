@@ -28,7 +28,7 @@
     };
     image.src = '/swordguy.png';
 
-    demo.keyboard.link(engine);
+    engine.after.push(demo.keyboard.component);
     engine.init(new demo.World);
   }, 0);
 

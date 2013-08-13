@@ -148,7 +148,7 @@
     down: function(keycode) { return !!down[keycode]; },
     released: function(keycode) { return !!released[keycode]; },
     pressed: function(keycode) { return !!pressed[keycode]; },
-    link: function(engine) { engine.after.push(keyboardComponent); },
+    component: keyboardComponent,
     key: KEY_CONSTANTS
   };
 
