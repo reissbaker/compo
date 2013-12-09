@@ -18,6 +18,7 @@ public/build/demo.js:
 		demo/graphics-components/renderer.js \
 		demo/graphics-components/graphics.js \
 		demo/components/*.js \
+		demo/npc.js \
 		demo/player.js \
 		demo/world.js \
 		demo/main.js \
