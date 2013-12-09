@@ -12,8 +12,8 @@
       x: 0, y: 0, width: 48, height: 32
     });
     this.sprite = new PIXI.Sprite(tex);
-    this.sprite.position.x = 0;
-    this.sprite.position.y = 0;
+
+    updateLocation(this.node, this);
   });
 
   Graphics.prototype.init = function() {
@@ -25,10 +25,28 @@
   };
 
   Graphics.prototype.update = function() {
-    var pos = this.sprite.position;
-    pos.x = Math.round(this.node.x);
-    pos.y = Math.round(this.node.y);
+    updateLocation(this.node, this);
   };
+
+  function updateLocation(node, graphic) {
+    var pos = graphic.sprite.position,
+        scale = graphic.sprite.scale;
+
+    pos.x = Math.round(node.x);
+    pos.y = Math.round(node.y);
+
+    scale.x = 1 * node.dir.x;
+    scale.y = 1 * node.dir.y;
+
+    /*
+     * Flipping will result in the sprite appearing to jump (flips on the 0,
+     * rather than mid-sprite), so subtract the sprite's size from its position
+     * if it's flipped.
+     */
+
+    if(scale.x < 0) pos.x -= graphic.sprite.width;
+    if(scale.y < 0) pos.y -= graphic.sprite.height;
+  }
 
   exports.Graphics = Graphics;
 
