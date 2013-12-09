@@ -2,8 +2,9 @@
   'use strict';
 
   var Component = seine.Component,
-      Controller = demo.NodeKeyboardController,
-      PositionLogger = demo.PositionLogger;
+      Controller = exports.NodeKeyboardController,
+      PositionLogger = exports.PositionLogger,
+      Graphics = exports.Graphics;
 
   var Player = Component.extend(function() {
     Component.call(this);
@@ -16,6 +17,7 @@
   Player.prototype.init = function() {
     this.push(new Controller(this));
     this.push(new PositionLogger(this));
+    this.push(new Graphics(this, '/swordguy.png'));
   };
 
   exports.Player = Player;

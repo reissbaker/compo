@@ -13,15 +13,14 @@ public/build/seine.js:
 public/build/demo.js:
 	mkdir -p public/build/
 	cat \
-		public/demo/index.js \
-		public/demo/engine-components/*.js \
-		public/demo/graphics-components/texturemap.js \
-		public/demo/graphics-components/raster.js \
-		public/demo/graphics-components/fasterraster.js \
-		public/demo/components/*.js \
-		public/demo/player.js \
-		public/demo/world.js \
-		public/demo/main.js \
+		demo/index.js \
+		demo/engine-components/*.js \
+		demo/graphics-components/renderer.js \
+		demo/graphics-components/graphics.js \
+		demo/components/*.js \
+		demo/player.js \
+		demo/world.js \
+		demo/main.js \
 		> $@
 
 public/build/seine.min.js: public/build/seine.js

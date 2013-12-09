@@ -4,15 +4,16 @@
   var Component = seine.Component,
       keyboard = demo.keyboard;
 
-  var SPEED = 5 / 1000;
+  var SPEED = 100;
 
   var NodeKeyboardController = Component.extend(function(node) {
     Component.call(this);
     this.node = node;
   });
 
-  NodeKeyboardController.prototype.update = function(delta) {
-    var node = this.node;
+  NodeKeyboardController.prototype.update = function(d) {
+    var node = this.node,
+        delta = d / 1000;
 
     if(keyboard.down(keyboard.key.LEFT)) node.x -= SPEED * delta;
     if(keyboard.down(keyboard.key.RIGHT)) node.x += SPEED * delta;

@@ -2,9 +2,12 @@
   'use strict';
 
   var engine = seine.engine,
-      FasterRaster = demo.FasterRaster;
+      renderer = demo.renderer;
 
   setTimeout(function() {
+    engine.overlay.push(renderer);
+
+    /*
     var raster, r2,
         fr = new FasterRaster;
 
@@ -27,6 +30,7 @@
       r2.render();
     };
     image.src = '/swordguy.png';
+    */
 
     engine.after.push(demo.keyboard.component);
     engine.init(new demo.World);

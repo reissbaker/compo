@@ -8,7 +8,7 @@
   var World = Component.extend();
 
   World.prototype.init = function() {
-    this.unshift(new Keylogger);
+    this.push(new Keylogger);
     this.push(new Player);
   };
 
