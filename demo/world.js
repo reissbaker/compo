@@ -5,12 +5,12 @@
       Keylogger = demo.Keylogger,
       Player = demo.Player;
 
-  var World = Component.extend();
-
-  World.prototype.init = function() {
-    this.push(new Keylogger);
-    this.push(new Player);
-  };
+  var World = Component.extend({
+    init: function() {
+      this.push(new Keylogger);
+      this.push(new Player);
+    }
+  });
 
   exports.World = World;
 

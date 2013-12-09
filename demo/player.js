@@ -6,24 +6,26 @@
       PositionLogger = exports.PositionLogger,
       Graphics = exports.Graphics;
 
-  var Player = Component.extend(function() {
-    Component.call(this);
+  var Player = Component.extend({
+    constructor: function() {
+      Component.call(this);
 
-    this.x = 0;
-    this.y = 0;
-    this.z = 0;
+      this.x = 0;
+      this.y = 0;
+      this.z = 0;
 
-    this.dir = {
-      x: 1,
-      y: 1
-    };
+      this.dir = {
+        x: 1,
+        y: 1
+      };
+    },
+    init: function() {
+      this.push(new Controller(this));
+      this.push(new PositionLogger(this));
+      this.push(new Graphics(this, '/swordguy.png'));
+    }
   });
 
-  Player.prototype.init = function() {
-    this.push(new Controller(this));
-    this.push(new PositionLogger(this));
-    this.push(new Graphics(this, '/swordguy.png'));
-  };
 
   exports.Player = Player;
 

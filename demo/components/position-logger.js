@@ -7,25 +7,26 @@
   var KEY = keyboard.key.BACKTICK,
       MOD = keyboard.key.SHIFT;
 
-  var PositionLogger = Component.extend(function(positional) {
-    Component.call(this);
-    this.positional = positional;
-  });
-
-  PositionLogger.prototype.update = function() {
-    var positional = this.positional;
-    if(pressed()) {
-      console.log([
-        'position: (',
-          positional.x,
-        ', ',
-          positional.y,
-        ', ',
-          positional.z,
-        ')'
-      ].join(''));
+  var PositionLogger = Component.extend({
+    constructor: function(positional) {
+      Component.call(this);
+      this.positional = positional;
+    },
+    update: function() {
+      var positional = this.positional;
+      if(pressed()) {
+        console.log([
+          'position: (',
+            positional.x,
+          ', ',
+            positional.y,
+          ', ',
+            positional.z,
+          ')'
+        ].join(''));
+      }
     }
-  };
+  });
 
   function pressed() { return modifier() && key(); }
   function modifier() { return keyboard.down(MOD); }

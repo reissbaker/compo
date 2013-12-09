@@ -4,11 +4,12 @@
   var Component = seine.Component,
       keyboard = demo.keyboard;
 
-  var Keylogger = Component.extend();
-  Keylogger.prototype.update = function(delta) {
-    if(keyboard.pressed(keyboard.key.X)) console.log('x pressed');
-    if(keyboard.down(keyboard.key.X))  console.log('x down');
-  };
+  var Keylogger = Component.extend({
+    update: function(delta) {
+      if(keyboard.pressed(keyboard.key.X)) console.log('x pressed');
+      if(keyboard.down(keyboard.key.X))  console.log('x down');
+    }
+  });
 
   exports.Keylogger = Keylogger;
 
