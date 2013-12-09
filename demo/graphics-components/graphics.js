@@ -31,6 +31,5 @@
   };
 
   exports.Graphics = Graphics;
-  exports.renderer = renderer;
 
 }(window, seine, PIXI, demo);
