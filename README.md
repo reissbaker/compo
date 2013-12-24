@@ -1,4 +1,4 @@
 seine
-=====
+================================================================================
 
-Component-based scene graph kernel of a game engine
+Component-based kernel of a game engine.
