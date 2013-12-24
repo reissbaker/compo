@@ -60,3 +60,7 @@ Could be done by overriding a filter in a component. Also async doesn't mean
 callbacks necessarily: you could just push things that need to get removed into
 a buffer, and then remove them all at once in the filter.
 
+On second or third thought, this is sort of silly. Really there should just be
+one interface/object that controls all of physics and does a single update
+step, with exportable physics components that get added to the engine and the
+game components.
