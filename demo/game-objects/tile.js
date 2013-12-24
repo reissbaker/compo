@@ -15,7 +15,7 @@
       this.dim = new Dimension(48, 48);
     },
     init: function() {
-      this.push(new Graphics(this.pos, this.dir, '/tile.png', {
+      this.push(new Graphics(this.pos, this.dir, '/assets/tile.png', {
         x: 0, y: 0, width: 48, height: 48
       }));
     }

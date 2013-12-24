@@ -1,5 +1,6 @@
-public/build/seine.js:
-	mkdir -p public/build/
+BUILD_DIR=build
+$(BUILD_DIR)/seine.js:
+	mkdir -p $(BUILD_DIR)
 	cat \
 		index.js \
 		lib/base/runqueue.js \
@@ -11,8 +12,8 @@ public/build/seine.js:
 		lib/engine/engine.js \
 		> $@
 
-public/build/demo.js:
-	mkdir -p public/build/
+$(BUILD_DIR)/demo.js:
+	mkdir -p $(BUILD_DIR)
 	cat \
 		demo/index.js \
 		demo/data/*.js \
@@ -25,36 +26,36 @@ public/build/demo.js:
 		demo/main.js \
 		> $@
 
-public/build/seine.min.js: public/build/seine.js
+$(BUILD_DIR)/seine.min.js: $(BUILD_DIR)/seine.js
 	node_modules/.bin/uglifyjs \
 		-m \
 		-c warnings=false,unsafe=true \
 		$< > $@
 
-public/build/demo.min.js: public/build/demo.js
+$(BUILD_DIR)/demo.min.js: $(BUILD_DIR)/demo.js
 	node_modules/.bin/uglifyjs \
 		-m \
 		-c warnings=false,unsafe=true \
 		$< > $@
 
-public/build/seine.min.js.gz: public/build/seine.min.js
+$(BUILD_DIR)/seine.min.js.gz: $(BUILD_DIR)/seine.min.js
 	gzip -c $< > $@
 
-public/build/demo.min.js.gz: public/build/demo.min.js
+$(BUILD_DIR)/demo.min.js.gz: $(BUILD_DIR)/demo.min.js
 	gzip -c $< > $@
 
 .PHONY: build-seine
-build-seine: public/build/seine.js public/build/seine.min.js public/build/seine.min.js.gz
+build-seine: $(BUILD_DIR)/seine.js $(BUILD_DIR)/seine.min.js $(BUILD_DIR)/seine.min.js.gz
 
 .PHONY: build-demo
-build-demo: public/build/demo.js public/build/demo.min.js public/build/demo.min.js.gz
+build-demo: $(BUILD_DIR)/demo.js $(BUILD_DIR)/demo.min.js $(BUILD_DIR)/demo.min.js.gz
 
 .PHONY: build
 build: build-seine build-demo
 
 .PHONY: clean
 clean:
-	rm -rf public/build/
+	rm -rf $(BUILD_DIR)
 
 .PHONY: rebuild
 rebuild: clean build

@@ -20,7 +20,7 @@
     init: function() {
       this.push(new Controller(this));
       this.push(new PositionLogger(this));
-      this.push(new Graphics(this.pos, this.dir, '/swordguy.png', {
+      this.push(new Graphics(this.pos, this.dir, '/assets/swordguy.png', {
         x: 0, y: 0, width: 48, height: 32
       }));
     }
