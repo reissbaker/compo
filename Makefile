@@ -15,12 +15,12 @@ public/build/demo.js:
 	mkdir -p public/build/
 	cat \
 		demo/index.js \
+		demo/data/*.js \
 		demo/engine-components/*.js \
 		demo/graphics-components/renderer.js \
 		demo/graphics-components/graphics.js \
 		demo/components/*.js \
-		demo/npc.js \
-		demo/player.js \
+		demo/game-objects/*.js \
 		demo/world.js \
 		demo/main.js \
 		> $@

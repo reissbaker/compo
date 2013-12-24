@@ -3,15 +3,15 @@
 
   var Component = seine.Component;
   exports.RandomPlacement = Component.extend({
-    constructor: function(node) {
+    constructor: function(position) {
       Component.call(this);
-      this.node = node;
+      this.pos = position;
     },
     init: function() {
       var width = document.body.clientWidth,
           height = document.body.clientHeight;
-      this.node.x = Math.random() * width;
-      this.node.y = Math.random() * height;
+      this.pos.x = Math.random() * width;
+      this.pos.y = Math.random() * height;
     }
   });
 }(seine, demo);

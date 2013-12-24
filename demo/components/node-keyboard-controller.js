@@ -16,15 +16,15 @@
           delta = d / 1000;
 
       if(keyboard.down(keyboard.key.LEFT)) {
-        node.x -= SPEED * delta;
+        node.pos.x -= SPEED * delta;
         node.dir.x = -1;
       }
       if(keyboard.down(keyboard.key.RIGHT)) {
-        node.x += SPEED * delta;
+        node.pos.x += SPEED * delta;
         node.dir.x = 1;
       }
-      if(keyboard.down(keyboard.key.UP)) node.y -= SPEED * delta;
-      if(keyboard.down(keyboard.key.DOWN)) node.y += SPEED * delta;
+      if(keyboard.down(keyboard.key.UP)) node.pos.y -= SPEED * delta;
+      if(keyboard.down(keyboard.key.DOWN)) node.pos.y += SPEED * delta;
     }
   });
 

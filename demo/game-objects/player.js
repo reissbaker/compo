@@ -4,25 +4,25 @@
   var Component = seine.Component,
       Controller = exports.NodeKeyboardController,
       PositionLogger = exports.PositionLogger,
-      Graphics = exports.Graphics;
+      Graphics = exports.Graphics,
+      Dimension = exports.Dimension,
+      Direction = exports.Direction,
+      Position = exports.Position;
 
   var Player = Component.extend({
     constructor: function() {
       Component.call(this);
 
-      this.x = 0;
-      this.y = 0;
-      this.z = 0;
-
-      this.dir = {
-        x: 1,
-        y: 1
-      };
+      this.pos = new Position;
+      this.dir = new Direction;
+      this.dim = new Dimension(48, 32);
     },
     init: function() {
       this.push(new Controller(this));
       this.push(new PositionLogger(this));
-      this.push(new Graphics(this, '/swordguy.png'));
+      this.push(new Graphics(this.pos, this.dir, '/swordguy.png', {
+        x: 0, y: 0, width: 48, height: 32
+      }));
     }
   });
 
