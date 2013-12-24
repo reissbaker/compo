@@ -3,6 +3,7 @@ public/build/seine.js:
 	cat \
 		index.js \
 		lib/base/runqueue.js \
+		lib/base/dftlist.js \
 		lib/base/component.js \
 		lib/engine/runloop/runner.js \
 		lib/engine/runloop/loop.js \
