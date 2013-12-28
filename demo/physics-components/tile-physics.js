@@ -65,7 +65,8 @@
         deltaSeconds = delta / 1000,
         movement = v.x * deltaSeconds,
         movingRight = v.x > 0,
-        xDir = movingRight ? 1 : -1,
+        xDir = movingRight ? 1 : (v.x === 0 ? 0 : -1),
+        aDir = a.x > 0 ? 1 : (a.x < 0 ? -1 : 0),
         // left edge of a hitbox the size of the movement area
         leftEdge = movingRight ? h.x + h.width : h.x - movement,
         // hitbox the size of the movement area
@@ -74,9 +75,9 @@
 
     // No collider? Cool, move freely.
     if(!collider) {
-      h.x += movement;
-      v.x = absClamp(v.x + (a.x * deltaSeconds) + (g.x * deltaSeconds), m.x);
-      if(a.x === 0 && g.x === 0 && v.x !== 0) {
+      h.x += absClamp(movement, m.x * deltaSeconds);
+      v.x = absClamp(v.x + (a.x * deltaSeconds) + (g.x * deltaSeconds), m.x * deltaSeconds);
+      if((aDir === 0 || (aDir !== xDir && xDir !== 0)) && g.x === 0 && v.x !== 0) {
         v.x -= xDir * d.x * deltaSeconds;
         if(movingRight && v.x < 0) v.x = 0;
         if(!movingRight && v.x > 0) v.x = 0;
@@ -99,7 +100,8 @@
         deltaSeconds = delta / 1000,
         movement = v.y * deltaSeconds,
         movingDown = v.y > 0,
-        yDir = movingDown ? 1 : -1,
+        yDir = movingDown ? 1 : (v.y === 0 ? 0 : -1),
+        aDir = a.x > 0 ? 1 : (a.x < 0 ? -1 : 0),
         // top edge of a hitbox the size of the movement area
         topEdge = movingDown ? h.y + h.height : h.y - movement,
         // hitbox the size of the movement area
@@ -109,9 +111,9 @@
 
     // No collider? Cool, move freely.
     if(!collider) {
-      h.y += movement;
-      v.y = absClamp(v.y + (a.y * deltaSeconds) + (g.y * deltaSeconds), m.y);
-      if(a.y === 0 && g.y === 0 && v.y !== 0) {
+      h.y += absClamp(movement, m.y * deltaSeconds);
+      v.y = absClamp(v.y + (a.y * deltaSeconds) + (g.y * deltaSeconds), m.y * deltaSeconds);
+      if((a.y === 0 || a.y !== yDir && yDir !== 0) && g.y === 0 && v.y !== 0) {
         v.y -= yDir * d.y * deltaSeconds;
         if(movingDown && v.y < 0) v.y = 0;
         if(!movingDown && v.y > 0) v.y = 0;
