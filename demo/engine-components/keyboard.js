@@ -138,7 +138,7 @@
   });
 
   var keyboardComponent = new Component();
-  keyboardComponent.after = function() {
+  keyboardComponent.update = function() {
     for(var index = 0, length = NUM_KEYS; index < length; index++) {
       pressed[index] = released[index] = false;
     }
