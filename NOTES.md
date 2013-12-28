@@ -73,3 +73,9 @@ Cool idea: decorators. Two ways to do it:
 2. Decorator class, instantiates components -- but instead of passing Component
    objects to it, you make the Component class have a `decorate` method, and
    you can pass decorators into it.
+
+
+Collision, physics engine should separate hitboxes from location. The (x,y) of
+a hitbox is the offset from the node's location, not the absolute location
+itself. Collision runs on computed properties. Physics component needs to take
+two data structures: a location (x, y), and a hitbox (x, y, width, height).
