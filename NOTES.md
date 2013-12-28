@@ -64,3 +64,12 @@ On second or third thought, this is sort of silly. Really there should just be
 one interface/object that controls all of physics and does a single update
 step, with exportable physics components that get added to the engine and the
 game components.
+
+
+Cool idea: decorators. Two ways to do it:
+
+1. Decorator class that can instantiate components. You pass Component objects
+   to it.
+2. Decorator class, instantiates components -- but instead of passing Component
+   objects to it, you make the Component class have a `decorate` method, and
+   you can pass decorators into it.
