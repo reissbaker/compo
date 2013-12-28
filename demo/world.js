@@ -20,6 +20,11 @@
         this.push(tile);
       }
 
+      tile = new Tile;
+      tile.hitbox.y = 48 * 9;
+      tile.hitbox.x = (numTiles - 1) * 48;
+      this.push(tile);
+
       for(i = 0; i < 20; i++) {
         this.push(new NPC);
       }
