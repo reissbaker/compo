@@ -55,8 +55,11 @@
     attemptY(delta, component, components);
   }
 
+  // Don't reallocate this constantly
+  var savedMovementHitbox = new Rect;
   function attemptX(delta, component, components) {
-    var a = component.acceleration,
+    var collider,
+        a = component.acceleration,
         d = component.drag,
         v = component.velocity,
         h = component.hitbox,
@@ -68,10 +71,14 @@
         xDir = movingRight ? 1 : (v.x === 0 ? 0 : -1),
         aDir = a.x > 0 ? 1 : (a.x < 0 ? -1 : 0),
         // left edge of a hitbox the size of the movement area
-        leftEdge = movingRight ? h.x + h.width : h.x - movement,
-        // hitbox the size of the movement area
-        movementHitbox = new Rect(leftEdge, h.y, movement, h.height),
-        collider = collideAlongX(component, movementHitbox, components, xDir);
+        leftEdge = movingRight ? h.x + h.width : h.x - movement;
+
+    // hitbox the size of the movement area
+    savedMovementHitbox.x = leftEdge;
+    savedMovementHitbox.y = h.y;
+    savedMovementHitbox.width = movement;
+    savedMovementHitbox.height = h.height;
+    collider = collideAlongX(component, savedMovementHitbox, components, xDir);
 
     // No collider? Cool, move freely.
     if(!collider) {
@@ -91,7 +98,8 @@
   }
 
   function attemptY(delta, component, components) {
-    var a = component.acceleration,
+    var collider,
+        a = component.acceleration,
         d = component.drag,
         v = component.velocity,
         h = component.hitbox,
@@ -103,11 +111,13 @@
         yDir = movingDown ? 1 : (v.y === 0 ? 0 : -1),
         aDir = a.x > 0 ? 1 : (a.x < 0 ? -1 : 0),
         // top edge of a hitbox the size of the movement area
-        topEdge = movingDown ? h.y + h.height : h.y - movement,
-        // hitbox the size of the movement area
-        movementHitbox = new Rect(h.x, topEdge, h.width, movement),
-        // collider candidate set
-        collider = collideAlongY(component, movementHitbox, components, yDir);
+        topEdge = movingDown ? h.y + h.height : h.y - movement;
+
+    savedMovementHitbox.x = h.x;
+    savedMovementHitbox.y = topEdge;
+    savedMovementHitbox.width = h.width;
+    savedMovementHitbox.height = movement;
+    collider = collideAlongY(component, savedMovementHitbox, components, yDir);
 
     // No collider? Cool, move freely.
     if(!collider) {
