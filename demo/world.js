@@ -7,6 +7,8 @@
       NPC = demo.NPC,
       Tile = demo.Tile;
 
+  var NUM_NPCS = 20;
+
   var World = Component.extend({
     init: function() {
       var i, tile,
@@ -25,7 +27,7 @@
       tile.hitbox.x = (numTiles - 1) * 48;
       this.push(tile);
 
-      for(i = 0; i < 20; i++) {
+      for(i = 0; i < NUM_NPCS; i++) {
         this.push(new NPC);
       }
 
