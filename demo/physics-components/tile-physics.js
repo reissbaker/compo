@@ -67,16 +67,17 @@
         g = component.gravity,
         deltaSeconds = delta / 1000,
         movement = v.x * deltaSeconds,
+        absMovement = Math.abs(movement),
         movingRight = v.x > 0,
         xDir = movingRight ? 1 : (v.x === 0 ? 0 : -1),
         aDir = a.x > 0 ? 1 : (a.x < 0 ? -1 : 0),
         // left edge of a hitbox the size of the movement area
-        leftEdge = movingRight ? h.x + h.width : h.x - movement;
+        leftEdge = movingRight ? h.x + h.width : h.x - absMovement;
 
     // hitbox the size of the movement area
     savedMovementHitbox.x = leftEdge;
     savedMovementHitbox.y = h.y;
-    savedMovementHitbox.width = movement;
+    savedMovementHitbox.width = absMovement;
     savedMovementHitbox.height = h.height;
     collider = collideAlongX(component, savedMovementHitbox, components, xDir);
 
@@ -107,16 +108,17 @@
         g = component.gravity,
         deltaSeconds = delta / 1000,
         movement = v.y * deltaSeconds,
+        absMovement = Math.abs(movement),
         movingDown = v.y > 0,
         yDir = movingDown ? 1 : (v.y === 0 ? 0 : -1),
         aDir = a.x > 0 ? 1 : (a.x < 0 ? -1 : 0),
         // top edge of a hitbox the size of the movement area
-        topEdge = movingDown ? h.y + h.height : h.y - movement;
+        topEdge = movingDown ? h.y + h.height : h.y - absMovement;
 
     savedMovementHitbox.x = h.x;
     savedMovementHitbox.y = topEdge;
     savedMovementHitbox.width = h.width;
-    savedMovementHitbox.height = movement;
+    savedMovementHitbox.height = absMovement;
     collider = collideAlongY(component, savedMovementHitbox, components, yDir);
 
     // No collider? Cool, move freely.
