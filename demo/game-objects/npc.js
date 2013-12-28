@@ -6,7 +6,8 @@
       Graphics = exports.Graphics,
       Rect = exports.Rect,
       RandomPlacement = exports.RandomPlacement,
-      TilePhysicsComponent = exports.TilePhysicsComponent;
+      TilePhysicsComponent = exports.TilePhysicsComponent,
+      constants = exports.constants;
 
   exports.NPC = Component.extend({
     constructor: function() {
@@ -16,11 +17,11 @@
     },
     init: function() {
       var physics = new TilePhysicsComponent(this.hitbox);
-      physics.maxVelocity.x = 1000;
-      physics.maxVelocity.y = 1000;
-      physics.drag.x = 1000;
-      physics.drag.y = 1000;
-      physics.gravity.y = 1000;
+      physics.maxVelocity.x = constants.MAX_X_VEL;
+      physics.maxVelocity.y = constants.MAX_Y_VEL;
+      physics.drag.x = constants.DRAG;
+      physics.drag.y = constants.DRAG;
+      physics.gravity.y = constants.GRAVITY;
       this.push(physics);
 
       this.push(new RandomPlacement(this.hitbox));

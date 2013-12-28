@@ -16,6 +16,7 @@ $(BUILD_DIR)/demo.js:
 	mkdir -p $(BUILD_DIR)
 	cat \
 		demo/index.js \
+		demo/constants.js \
 		demo/data/*.js \
 		demo/physics-components/*.js \
 		demo/graphics-components/renderer.js \

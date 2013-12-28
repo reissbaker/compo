@@ -7,11 +7,8 @@
       Graphics = exports.Graphics,
       Direction = exports.Direction,
       Rect = exports.Rect,
-      TilePhysicsComponent = exports.TilePhysicsComponent;
-
-  var MAX_VEL = 200,
-      DRAG = 5000,
-      GRAVITY = 1000;
+      TilePhysicsComponent = exports.TilePhysicsComponent,
+      constants = exports.constants;
 
   var Player = Component.extend({
     constructor: function() {
@@ -22,11 +19,11 @@
     },
     init: function() {
       var physics = new TilePhysicsComponent(this.hitbox);
-      physics.gravity.y = GRAVITY;
-      physics.maxVelocity.x = MAX_VEL;
-      physics.maxVelocity.y = MAX_VEL;
-      physics.drag.x = DRAG;
-      physics.drag.y = DRAG;
+      physics.gravity.y = constants.GRAVITY;
+      physics.maxVelocity.x = constants.MAX_X_VEL;
+      physics.maxVelocity.y = constants.MAX_Y_VEL;
+      physics.drag.x = constants.DRAG;
+      physics.drag.y = constants.DRAG;
       this.push(physics);
       this.push(new Controller(this.dir, physics));
 

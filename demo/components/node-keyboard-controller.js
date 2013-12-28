@@ -2,9 +2,8 @@
   'use strict';
 
   var Component = seine.Component,
-      keyboard = demo.keyboard;
-
-  var ACCEL = 1000;
+      keyboard = demo.keyboard,
+      constants = exports.constants;
 
   var NodeKeyboardController = Component.extend({
     constructor: function(dir, physics) {
@@ -16,17 +15,18 @@
       var physics = this.physics;
 
       if(keyboard.down(keyboard.key.LEFT)) {
-        physics.acceleration.x = -ACCEL;
+        physics.acceleration.x = -constants.ACCEL;
         this.dir.x = -1;
       } else if(keyboard.down(keyboard.key.RIGHT)) {
-        physics.acceleration.x = ACCEL;
+        physics.acceleration.x = constants.ACCEL;
         this.dir.x = 1;
       } else {
         physics.acceleration.x = 0;
       }
 
-      if(keyboard.down(keyboard.key.UP)) physics.acceleration.y = -ACCEL - 1000;
-      else physics.acceleration.y = 0;
+      if(keyboard.pressed(keyboard.key.UP)) {
+        physics.velocity.y = -constants.JUMP_POWER;
+      }
     }
   });
 
