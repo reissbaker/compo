@@ -4,27 +4,29 @@
   var Component = seine.Component,
       keyboard = demo.keyboard;
 
-  var SPEED = 100;
+  var ACCEL = 1000;
 
   var NodeKeyboardController = Component.extend({
-    constructor: function(node) {
+    constructor: function(dir, physics) {
       Component.call(this);
-      this.node = node;
+      this.physics = physics;
+      this.dir = dir;
     },
-    update: function(d) {
-      var node = this.node,
-          delta = d / 1000;
+    update: function() {
+      var physics = this.physics;
 
       if(keyboard.down(keyboard.key.LEFT)) {
-        node.pos.x -= SPEED * delta;
-        node.dir.x = -1;
+        physics.acceleration.x = -ACCEL;
+        this.dir.x = -1;
+      } else if(keyboard.down(keyboard.key.RIGHT)) {
+        physics.acceleration.x = ACCEL;
+        this.dir.x = 1;
+      } else {
+        physics.acceleration.x = 0;
       }
-      if(keyboard.down(keyboard.key.RIGHT)) {
-        node.pos.x += SPEED * delta;
-        node.dir.x = 1;
-      }
-      if(keyboard.down(keyboard.key.UP)) node.pos.y -= SPEED * delta;
-      if(keyboard.down(keyboard.key.DOWN)) node.pos.y += SPEED * delta;
+
+      if(keyboard.down(keyboard.key.UP)) physics.acceleration.y = -ACCEL - 1000;
+      else physics.acceleration.y = 0;
     }
   });
 

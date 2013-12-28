@@ -15,8 +15,8 @@
 
       for(i = 0; i < numTiles; i++) {
         tile = new Tile;
-        tile.pos.y = 48 * 10;
-        tile.pos.x = i * 48;
+        tile.hitbox.y = 48 * 10;
+        tile.hitbox.x = i * 48;
         this.push(tile);
       }
 

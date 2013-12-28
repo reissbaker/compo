@@ -8,10 +8,8 @@
       this.pos = position;
     },
     init: function() {
-      var width = document.body.clientWidth,
-          height = document.body.clientHeight;
+      var width = document.body.clientWidth;
       this.pos.x = Math.random() * width;
-      this.pos.y = Math.random() * height;
     }
   });
 }(seine, demo);

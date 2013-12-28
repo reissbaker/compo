@@ -1,23 +1,30 @@
 !function(seine, exports) {
   'use strict';
 
-  var Position = exports.Position,
-      Direction = exports.Direction,
+  var Direction = exports.Direction,
       Component = seine.Component,
       Graphics = exports.Graphics,
-      Dimension = exports.Dimension,
-      RandomPlacement = exports.RandomPlacement;
+      Rect = exports.Rect,
+      RandomPlacement = exports.RandomPlacement,
+      TilePhysicsComponent = exports.TilePhysicsComponent;
 
   exports.NPC = Component.extend({
     constructor: function() {
       Component.call(this);
-      this.pos = new Position;
+      this.hitbox = new Rect(0, 0, 48, 32);
       this.dir = new Direction;
-      this.dim = new Dimension(48, 32);
     },
     init: function() {
-      this.push(new RandomPlacement(this.pos));
-      this.push(new Graphics(this.pos, this.dir, '/assets/swordguy.png', {
+      var physics = new TilePhysicsComponent(this.hitbox);
+      physics.maxVelocity.x = 1000;
+      physics.maxVelocity.y = 1000;
+      physics.drag.x = 1000;
+      physics.drag.y = 1000;
+      physics.gravity.y = 1000;
+      this.push(physics);
+
+      this.push(new RandomPlacement(this.hitbox));
+      this.push(new Graphics(this.hitbox, this.dir, '/assets/swordguy.png', {
         x: 0, y: 0, width: 48, height: 32
       }));
     }

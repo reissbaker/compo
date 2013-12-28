@@ -17,9 +17,10 @@ $(BUILD_DIR)/demo.js:
 	cat \
 		demo/index.js \
 		demo/data/*.js \
-		demo/engine-components/*.js \
+		demo/physics-components/*.js \
 		demo/graphics-components/renderer.js \
 		demo/graphics-components/graphics.js \
+		demo/engine-components/*.js \
 		demo/components/*.js \
 		demo/game-objects/*.js \
 		demo/world.js \
