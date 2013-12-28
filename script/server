@@ -9,7 +9,7 @@ EOF
   exit 1
 fi
 
-make rebuild > /dev/null
+make rebuild > /dev/null 2>&1
 
 python -m SimpleHTTPServer $1 > /dev/null 2>&1 &
 open "http://localhost:$1"
