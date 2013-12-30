@@ -1,3 +1,6 @@
+Should rename to Compo, instead of Seine.
+
+
 Right now, the DFTList runs all of the component functions -- even ones that
 don't matter for a given component (e.g. the `render` function of a
 PhysicsComponent, or the `update` function of a Hitbox). Using a
@@ -53,3 +56,49 @@ rendering until all updates have completed in the kernel, which is otherwise
 fairly difficult to simulate in userland since there's no obvious way to tell
 if the engine is going to immediately perform another update after the current
 one or not.
+
+Okay, here's how you can structure things for optimal performance / consistent
+extension, while also keeping the abstraction space small:
+
+1. Components. These have lifecycle methods (`init`, `start`, `finish`), a
+   pointer to the kernel, and that's it (well, and an `extend` class method).
+   Useful for storing data like health, animation frames, etc.
+2. Services. These create Components and can imbue them with extra behavior,
+   e.g. an overridable `render` or `update` method. Services get registered
+   with the kernel and have IDs auto-generated for them on definition so that
+   you can look them up by class later. You can also stick game data on them,
+   e.g. score, since they're instantiated per-kernel.
+3. Entities. These are actually components created from the EntityService. They
+   can own Components (and, naturally, other Entities, since Entities are
+   themselves Components). Entities have an `update` method that gets called on
+   each tick of the game engine, and belong to a DFTList for easy, fast
+   iteration with treelike insertion behavior. Also have `next` and `end`
+   RunQueues, for lifecycle-safe out-of-main-loop updates. Note: since you need
+   to pass the kernel object in for creation, you should probably have
+   `pushNew`, `unshiftNew`, etc methods where you can just pass in a class and
+   an options hash without having to manually pass the kernel around.
+4. Kernel. This provides registration for Services, and runs the game loop. The
+   Kernel provides four hooks for extension:
+   1. The root entity. This is generally inaccessible, but calling `switchRoot`
+      will safely switch the root out.
+   2. The `before` entity.
+   3. The `overlay` entity. This is essentially the root's root. Adding things
+      to the `overlay` is like adding them to the root, except that they'll
+      persist through `switchRoot` calls.
+   4. The `after` entity.
+   5. The `render` entity. This is essentially a hint to the kernel that
+      entities here will only perform rendering duties. The default runloop
+      takes advantage of this knowledge and only updates the `render` entity
+      once per DOM-event-loop-run, and then only if the game's been updated, as
+      opposed to every time the game ticks. Renderers should use the `render`
+      entity to hook into the kernel for maximum performance. The `render`
+      entity runs after the `after` entity if it runs at all.
+
+Why do you need service registration on the kernel? Because you need services
+to be per-kernel-instance, rather than singletons, in order for multiple games
+to be able to be embedded on a single page.
+
+The `extend` method shouldn't blindly copy class attributes: it should only
+copy the `extend` method. ES6 classes don't support class methods, and you
+don't want to write yourself into a corner on this: the library should be
+compatible with ES6.
