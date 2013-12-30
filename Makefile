@@ -24,6 +24,7 @@ $(BUILD_DIR)/demo.js:
 		demo/graphics-components/graphics.js \
 		demo/engine-components/*.js \
 		demo/components/*.js \
+		demo/game-objects/decorators/*.js \
 		demo/game-objects/game-object.js \
 		demo/game-objects/player.js \
 		demo/game-objects/npc.js \
