@@ -18,12 +18,16 @@ $(BUILD_DIR)/demo.js:
 		demo/index.js \
 		demo/constants.js \
 		demo/data/*.js \
-		demo/physics-components/*.js \
+		demo/physics-components/tile-physics.js \
+		demo/physics-components/physics-component.js \
 		demo/graphics-components/renderer.js \
 		demo/graphics-components/graphics.js \
 		demo/engine-components/*.js \
 		demo/components/*.js \
-		demo/game-objects/*.js \
+		demo/game-objects/game-object.js \
+		demo/game-objects/player.js \
+		demo/game-objects/npc.js \
+		demo/game-objects/tile.js \
 		demo/world.js \
 		demo/main.js \
 		> $@

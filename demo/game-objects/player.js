@@ -1,24 +1,19 @@
 !function(seine, exports) {
   'use strict';
 
-  var Component = seine.Component,
+  var GameObject = exports.GameObject,
       Controller = exports.NodeKeyboardController,
       PositionLogger = exports.PositionLogger,
       Graphics = exports.Graphics,
-      Direction = exports.Direction,
-      Rect = exports.Rect,
       TilePhysicsComponent = exports.TilePhysicsComponent,
       constants = exports.constants;
 
-  var Player = Component.extend({
+  var Player = GameObject.extend({
     constructor: function() {
-      Component.call(this);
-
-      this.hitbox = new Rect(0, 0, 48, 32);
-      this.dir = new Direction;
+      GameObject.call(this, 0, 0, 48, 32);
     },
     init: function() {
-      var physics = new TilePhysicsComponent(this.hitbox);
+      var physics = new TilePhysicsComponent(this.loc, this.hitbox);
       physics.gravity.y = constants.GRAVITY;
       physics.maxVelocity.x = constants.MAX_X_VEL;
       physics.maxVelocity.y = constants.MAX_Y_VEL;
@@ -28,7 +23,7 @@
       this.push(new Controller(this.dir, physics));
 
       this.push(new PositionLogger(this));
-      this.push(new Graphics(this.hitbox, this.dir, '/assets/swordguy.png', {
+      this.push(new Graphics(this.loc, this.dir, '/assets/swordguy.png', {
         x: 0, y: 0, width: 48, height: 32
       }));
     }

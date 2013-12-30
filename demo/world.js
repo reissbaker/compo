@@ -17,14 +17,14 @@
 
       for(i = 0; i < numTiles; i++) {
         tile = new Tile;
-        tile.hitbox.y = 48 * 10;
-        tile.hitbox.x = i * 48;
+        tile.loc.y = 48 * 10;
+        tile.loc.x = i * 48;
         this.push(tile);
       }
 
       tile = new Tile;
-      tile.hitbox.y = 48 * 9;
-      tile.hitbox.x = (numTiles - 1) * 48;
+      tile.loc.y = 48 * 9;
+      tile.loc.x = (numTiles - 1) * 48;
       this.push(tile);
 
       for(i = 0; i < NUM_NPCS; i++) {

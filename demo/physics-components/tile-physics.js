@@ -2,28 +2,7 @@
   'use strict';
 
   var Component = seine.Component,
-      Rect = exports.Rect,
-      Point = exports.Point;
-
-  var PhysicsComponent = Component.extend({
-    constructor: function(hitbox) {
-      Component.call(this);
-
-      this.hitbox = hitbox;
-
-      this.velocity = new Point;
-      this.maxVelocity = new Point;
-      this.acceleration = new Point;
-      this.drag = new Point;
-      this.gravity = new Point;
-
-      this.immovable = false;
-    },
-
-    init: function() { physics.register(this); },
-    destroy: function() { physics.unregister(this); }
-  });
-
+      Rect = exports.Rect;
 
   var physicsComponents = [],
       component = new Component;
@@ -65,6 +44,7 @@
         h = component.hitbox,
         m = component.maxVelocity,
         g = component.gravity,
+        loc = component.loc,
         deltaSeconds = delta / 1000,
         movement = v.x * deltaSeconds,
         absMovement = Math.abs(movement),
@@ -75,15 +55,13 @@
         leftEdge = movingRight ? h.x + h.width : h.x - absMovement;
 
     // hitbox the size of the movement area
-    savedMovementHitbox.x = leftEdge;
-    savedMovementHitbox.y = h.y;
-    savedMovementHitbox.width = absMovement;
-    savedMovementHitbox.height = h.height;
+    overwriteHitbox(savedMovementHitbox, leftEdge, h.y, absMovement, h.height);
+    copyOffsetHitbox(savedMovementHitbox, savedMovementHitbox, loc);
     collider = collideAlongX(component, savedMovementHitbox, components, xDir);
 
     // No collider? Cool, move freely.
     if(!collider) {
-      h.x += absClamp(movement, m.x * deltaSeconds);
+      loc.x += absClamp(movement, m.x * deltaSeconds);
       v.x = absClamp(v.x + (a.x * deltaSeconds) + (g.x * deltaSeconds), m.x * deltaSeconds);
       if((aDir === 0 || (aDir !== xDir && xDir !== 0)) && g.x === 0 && v.x !== 0) {
         v.x -= xDir * d.x * deltaSeconds;
@@ -92,8 +70,8 @@
       }
     } else {
       // Resolve the collision.
-      if(movingRight) h.x = collider.hitbox.x - h.width;
-      else h.x = collider.hitbox.x + collider.hitbox.width;
+      if(movingRight) loc.x = collider.loc.x + collider.hitbox.x - h.width;
+      else loc.x = collider.loc.x + collider.hitbox.x + collider.hitbox.width;
       v.x = 0;
     }
   }
@@ -106,6 +84,7 @@
         h = component.hitbox,
         m = component.maxVelocity,
         g = component.gravity,
+        loc = component.loc,
         deltaSeconds = delta / 1000,
         movement = v.y * deltaSeconds,
         absMovement = Math.abs(movement),
@@ -115,15 +94,13 @@
         // top edge of a hitbox the size of the movement area
         topEdge = movingDown ? h.y + h.height : h.y - absMovement;
 
-    savedMovementHitbox.x = h.x;
-    savedMovementHitbox.y = topEdge;
-    savedMovementHitbox.width = h.width;
-    savedMovementHitbox.height = absMovement;
+    overwriteHitbox(savedMovementHitbox, h.x, topEdge, h.width, absMovement);
+    copyOffsetHitbox(savedMovementHitbox, savedMovementHitbox, loc);
     collider = collideAlongY(component, savedMovementHitbox, components, yDir);
 
     // No collider? Cool, move freely.
     if(!collider) {
-      h.y += absClamp(movement, m.y * deltaSeconds);
+      loc.y += absClamp(movement, m.y * deltaSeconds);
       v.y = absClamp(v.y + (a.y * deltaSeconds) + (g.y * deltaSeconds), m.y * deltaSeconds);
       if((a.y === 0 || a.y !== yDir && yDir !== 0) && g.y === 0 && v.y !== 0) {
         v.y -= yDir * d.y * deltaSeconds;
@@ -132,8 +109,8 @@
       }
     } else {
       // Resolve the collision.
-      if(movingDown) h.y = collider.hitbox.y - h.height;
-      else h.y = collider.hitbox.y + collider.hitbox.height;
+      if(movingDown) loc.y = collider.loc.y + collider.hitbox.y - h.height;
+      else loc.y = collider.loc.y + collider.hitbox.y + collider.hitbox.height;
       v.y = 0;
     }
   }
@@ -154,8 +131,8 @@
       curr = colliders[i];
       currDistance = directionalDistance(
         dir < 0 ? movementHitbox.x : movementHitbox.x + movementHitbox.width,
-        curr.x,
-        curr.width,
+        curr.hitbox.x + curr.loc.x,
+        curr.hitbox.width,
         dir
       );
       if(min === null || currDistance < minDistance) {
@@ -177,8 +154,8 @@
       curr = colliders[i];
       currDistance = directionalDistance(
         dir < 0 ? movementHitbox.y : movementHitbox.y + movementHitbox.height,
-        curr.y,
-        curr.height,
+        curr.loc.y + curr.hitbox.y,
+        curr.hitbox.height,
         dir
       );
       if(min === null || currDistance < minDistance) {
@@ -193,6 +170,7 @@
 
   // Given a movement hitbox and a set of components, returns the subset of
   // components that collide with the hitbox.
+  var computedHitbox = new Rect;
   function collide(component, movementHitbox, components) {
     var i, l, curr,
         colliders = [];
@@ -203,12 +181,28 @@
 
     for(i = 0, l = components.length; i < l; i++) {
       curr = components[i];
-      if(component !== curr && doesCollide(movementHitbox, curr.hitbox)) {
+      copyOffsetHitbox(computedHitbox, curr.hitbox, curr.loc);
+
+      if(component !== curr && doesCollide(movementHitbox, computedHitbox)) {
         colliders.push(curr);
       }
     }
 
     return colliders;
+  }
+
+  function overwriteHitbox(hitbox, x, y, width, height) {
+    hitbox.x = x;
+    hitbox.y = y;
+    hitbox.width = width;
+    hitbox.height = height;
+  }
+
+  function copyOffsetHitbox(dest, src, offset) {
+    dest.x = offset.x + src.x;
+    dest.y = offset.y + src.y;
+    dest.width = src.width;
+    dest.height = src.height;
   }
 
   function directionalDistance(a, b, offset, dir) {
@@ -226,6 +220,5 @@
   }
 
   exports.tilePhysics = physics;
-  exports.TilePhysicsComponent = PhysicsComponent;
 
 }(seine, demo);
