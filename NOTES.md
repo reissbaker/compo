@@ -84,7 +84,8 @@ extension, while also keeping the abstraction space small:
    2. The `before` entity.
    3. The `overlay` entity. This is essentially the root's root. Adding things
       to the `overlay` is like adding them to the root, except that they'll
-      persist through `switchRoot` calls.
+      persist through `switchRoot` calls. (Is this necessary? What's the reason
+      you'd ever use this instead of `before`?)
    4. The `after` entity.
    5. The `render` entity. This is essentially a hint to the kernel that
       entities here will only perform rendering duties. The default runloop
