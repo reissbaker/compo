@@ -1,81 +1,55 @@
-Oh damn, the root node shouldn't be the world: it should be the screen. That
-way you can absolutely position things relative to the screen (by adding them
-to the screen node), as well as the world.
-
-No nevermind, just have things that ignore camera by percentages (including
-zero).
-
-fr -- faster raster
-jenniferseinefr -- seine bindings to fr
-
-Postprocess / after filters should run in this order:
-
-* component
-* children
-
-If you want something to run AFTER all children, you can stick it in the before
-filter. But if you want something to run in between render / postprocess, if
-you don't stay consistent with ordering you're screwed.
+Right now, the DFTList runs all of the component functions -- even ones that
+don't matter for a given component (e.g. the `render` function of a
+PhysicsComponent, or the `update` function of a Hitbox). Using a
+multidimensional DFTList (described in more detail at the top of the dftlist.js
+file) would solve this.
 
 
-Engine should have dependency injection on the looping and running functions.
-Provide realtime-tuned defaults if none are specified.
+Should make a separate QuadTree lib. The physics lib can use the QuadTree lib,
+as can the rendering lib.
 
 
-Might want Component containers that call all the methods on components, and
-that themselves are components that can be added to a SceneNode or engine. E.g.
-if you have a series of powerups, you might want those to just be in a single
-controller component, and have that component call different components
-depending on its state.
-
-NO: unnecessary. Just have an interface that owns a component. The exported
-component provides the hooks; the main object controls the state. Components
-are hooks.
-
-
-Rather than having the runner know about SceneNodes, the engine, etc, the
-runner should just know about components. Additionally, there is a walker
-function that collects all the components from the given tree.
-
-Hmmm, dunno. Does that mean components can't take x, y, z coordinates as args
-to their update methods? Once you've lost the tree structure you lose the
-coords, or have to store them which makes for garbage.
+Data structures like Points, Rects, etc should probably be in userland. Not all
+games need circles, or 3D points, or triangles, or convex shapes, etc. Could
+have specialized geometry libraries which may or may not go along with
+specialized physics / collision libraries (tile-based vs SAT vs 3D, etc). The
+data structures aren't *needed* by the kernel, so it shouldn't dictate them;
+you'll end up with userland geometry modules anyway, since even a fairly
+standard set of core geometry primitives won't satisfy all use cases equally
+well, and the functions you'd want to run on them would vary wildly.
 
 
-Move geometry, rendering out to an abstracted non-scene-graph-based library.
-Just a simple thing that can set up a canvas context, draw a bitmap, draw
-shapes for rendering. For geometry, simple thing that can check collisions
-between points, rects, circles. Maybe even a pure-functional collision
-resolution library?
-
-Once you have the functional geometry and rendering lib, build your components
-on top of that.
+Need to really take another look at the runloop stuff. It's a bit hairy at the
+moment.
 
 
-All updates to position in physics module should be *async*. Not for some
-imagined speed boost: for simplification. The state of the world should never
-change: you just figure out what the next state should be.
-
-Could be done by overriding a filter in a component. Also async doesn't mean
-callbacks necessarily: you could just push things that need to get removed into
-a buffer, and then remove them all at once in the filter.
-
-On second or third thought, this is sort of silly. Really there should just be
-one interface/object that controls all of physics and does a single update
-step, with exportable physics components that get added to the engine and the
-game components.
+The engine shouldn't be a singleton. It's sweet that multiple Coquette games
+can be embedded into a single page without iframes; that's only possible
+because Coquette avoids singletons. You should probably avoid singletons for
+that reason in general: even the registrars should be individually
+instantiated. You could make everything relate to a single Game object
+(available automatically to all components?) so that registrants can find them.
 
 
-Cool idea: decorators. Two ways to do it:
+Weird thought: remove the overridable `render`, `postprocess`, `preprocess`
+methods: make those defined by the (userland!) rendering library. Often you
+won't want to have every single component render (for example, if you have an
+expensive-to-draw scene with straightforward game rules, you might want to only
+render objects in the viewport but keep simulating a larger portion of the game
+world), and if the individual rendering libs are going to define their own
+versions of "render" that clash with the kernel's then screw it, why have it in
+the kernel at all?
 
-1. Decorator class that can instantiate components. You pass Component objects
-   to it.
-2. Decorator class, instantiates components -- but instead of passing Component
-   objects to it, you make the Component class have a `decorate` method, and
-   you can pass decorators into it.
+...Does this mean the multidimensional DFTList doesn't really matter anymore?
+Would it actually bring much benefit as compared to the regular version,
+considering the fact that nothing renders anymore? It probably wouldn't. Might
+still be nice from the perspective of convincing everyone to always use
+components rather than one-off data structures "for performance."
 
-
-Collision, physics engine should separate hitboxes from location. The (x,y) of
-a hitbox is the offset from the node's location, not the absolute location
-itself. Collision runs on computed properties. Physics component needs to take
-two data structures: a location (x, y), and a hitbox (x, y, width, height).
+Maybe you should have a single `render` component (similar to the `before` and
+`after` components) to ensure that rendering libs hook into the kernel in a
+relatively consistent way. Also lets you keep the nice optimization of skipping
+rendering until all updates have completed in the kernel, which is otherwise
+fairly difficult to simulate in userland since there's no obvious way to tell
+if the engine is going to immediately perform another update after the current
+one or not.
