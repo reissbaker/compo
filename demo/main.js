@@ -8,11 +8,6 @@
       World = demo.World;
 
   setTimeout(function() {
-    //engine.overlay.push(renderer);
-    //engine.after.push(demo.tilePhysics.component);
-    //engine.after.push(demo.keyboard.component);
-
-    //engine.init(new demo.World);
     var kernel = new Kernel();
     kernel.register(keyboard);
     kernel.register(tilePhysics);
