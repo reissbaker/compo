@@ -100,3 +100,7 @@ The `extend` method shouldn't blindly copy class attributes: it should only
 copy the `extend` method. ES6 classes don't support class methods, and you
 don't want to write yourself into a corner on this: the library should be
 compatible with ES6.
+
+
+Components should fire events to a global event bus when they're
+initialized/destroyed, to make auto-registration less hacky and monkeypatchy.
