@@ -1,7 +1,7 @@
 !function(seine, exports) {
   'use strict';
 
-  var Component = seine.Component,
+  var Entity = seine.Entity,
       Keylogger = demo.Keylogger,
       Player = demo.Player,
       NPC = demo.NPC,
@@ -9,8 +9,8 @@
 
   var NUM_NPCS = 20;
 
-  var World = Component.extend({
-    init: function() {
+  var World = Entity.extend({
+    start: function() {
       var i, tile,
           numTiles = Math.ceil(document.body.clientWidth / 48);
       this.push(new Keylogger);

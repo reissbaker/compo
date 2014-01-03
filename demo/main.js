@@ -1,22 +1,11 @@
 !function(demo, seine) {
   'use strict';
 
-  var Kernel = seine.core.Kernel,
+  var Kernel = seine.Kernel,
+      keyboard = demo.keyboard,
+      tilePhysics = demo.tilePhysics,
       renderer = demo.renderer,
-      Collection = seine.core.Collection;
-
-  var TestWorld = Collection.extend({
-    init: function() {
-      this.logged = false;
-      console.log('initializing');
-    },
-    update: function(dt) {
-      if(!this.logged) {
-        this.logged = true;
-        console.log('updated with', dt);
-      }
-    }
-  });
+      World = demo.World;
 
   setTimeout(function() {
     //engine.overlay.push(renderer);
@@ -24,8 +13,11 @@
     //engine.after.push(demo.keyboard.component);
 
     //engine.init(new demo.World);
-    var kernel = new Kernel(TestWorld);
-    kernel.init();
+    var kernel = new Kernel();
+    kernel.register(keyboard);
+    kernel.register(tilePhysics);
+    kernel.register(renderer);
+    kernel.start(new World);
   }, 0);
 
 }(demo, seine);

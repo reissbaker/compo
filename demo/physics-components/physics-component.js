@@ -1,14 +1,11 @@
 !function(seine, exports) {
   'use strict';
 
-  var tilePhysics = exports.tilePhysics,
-      Component = seine.Component,
+  var Component = seine.Component,
       Point = exports.Point;
 
   var PhysicsComponent = Component.extend({
-    constructor: function(loc, hitbox) {
-      Component.call(this);
-
+    init: function(loc, hitbox) {
       this.loc = loc;
       this.hitbox = hitbox;
 
@@ -19,10 +16,7 @@
       this.gravity = new Point;
 
       this.immovable = false;
-    },
-
-    init: function() { tilePhysics.register(this); },
-    destroy: function() { tilePhysics.unregister(this); }
+    }
   });
 
 

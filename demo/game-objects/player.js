@@ -9,7 +9,7 @@
     constructor: function() {
       GameObject.call(this, 0, 0, 48, 32);
     },
-    init: function() {
+    start: function() {
       var swordguyComponents = this.decorate(swordguy, {
         loc: this.loc,
         dir: this.dir,

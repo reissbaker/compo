@@ -6,10 +6,10 @@
       swordguy = exports.decorators.swordguy;
 
   exports.NPC = GameObject.extend({
-    constructor: function() {
+    constructor: function(kernel) {
       GameObject.call(this, 0, 0, 48, 32);
     },
-    init: function() {
+    start: function() {
       this.decorate(swordguy, {
         loc: this.loc,
         dir: this.dir,

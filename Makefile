@@ -18,14 +18,12 @@ $(BUILD_DIR)/demo.js:
 	mkdir -p $(BUILD_DIR)
 	cat \
 		demo/index.js \
-		demo/main.js \
-		> $@
-		#demo/constants.js \
+		demo/constants.js \
 		demo/data/*.js \
-		demo/physics-components/tile-physics.js \
 		demo/physics-components/physics-component.js \
-		demo/graphics-components/renderer.js \
+		demo/physics-components/tile-physics.js \
 		demo/graphics-components/graphics.js \
+		demo/graphics-components/renderer.js \
 		demo/engine-components/*.js \
 		demo/components/*.js \
 		demo/game-objects/decorators/*.js \
