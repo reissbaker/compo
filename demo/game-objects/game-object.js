@@ -1,17 +1,17 @@
 !function(seine, exports) {
   'use strict';
 
-  var Component = seine.Component,
+  var Entity = seine.Entity,
       Position = exports.Position,
       Rect = exports.Rect,
       Direction = exports.Direction;
 
-  exports.GameObject = Component.extend({
+  exports.GameObject = Entity.extend({
     constructor: function(x, y, width, height) {
-      Component.call(this);
       this.loc = new Position;
       this.hitbox = new Rect(x, y, width, height);
       this.dir = new Direction;
+      Entity.apply(this, arguments);
     }
   });
 

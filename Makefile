@@ -3,13 +3,15 @@ $(BUILD_DIR)/seine.js:
 	mkdir -p $(BUILD_DIR)
 	cat \
 		index.js \
-		lib/base/runqueue.js \
-		lib/base/dftlist.js \
-		lib/base/component.js \
-		lib/engine/runloop/runner.js \
-		lib/engine/runloop/loop.js \
-		lib/engine/kernel.js \
-		lib/engine/engine.js \
+		lib/util/*.js \
+		lib/core/component.js \
+		lib/core/entity.js \
+		lib/core/system.js \
+		lib/core/runloop/runner.js \
+		lib/core/runloop/loop.js \
+		lib/plugin/behavior/behavior.js \
+		lib/plugin/behavior/behavior-system.js \
+		lib/core/kernel.js \
 		> $@
 
 $(BUILD_DIR)/demo.js:
@@ -18,10 +20,10 @@ $(BUILD_DIR)/demo.js:
 		demo/index.js \
 		demo/constants.js \
 		demo/data/*.js \
-		demo/physics-components/tile-physics.js \
 		demo/physics-components/physics-component.js \
-		demo/graphics-components/renderer.js \
+		demo/physics-components/tile-physics.js \
 		demo/graphics-components/graphics.js \
+		demo/graphics-components/renderer.js \
 		demo/engine-components/*.js \
 		demo/components/*.js \
 		demo/game-objects/decorators/*.js \

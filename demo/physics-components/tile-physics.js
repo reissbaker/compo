@@ -1,32 +1,22 @@
 !function(seine, exports) {
   'use strict';
 
-  var Component = seine.Component,
+  var System = seine.System,
+      TilePhysicsComponent = demo.TilePhysicsComponent,
       Rect = exports.Rect;
 
-  var physicsComponents = [],
-      component = new Component;
-
-  component.update = function(delta) {
-    for(var i = 0, l = physicsComponents.length; i < l; i++) {
-      attemptMove(delta, physicsComponents[i], physicsComponents);
-    }
-  };
-
-  var physics = {
-    register: function(component) {
-      physicsComponents.push(component);
+  var TilePhysics = System.extend({
+    observe: {
+      children: TilePhysicsComponent
     },
-    unregister: function(component) {
-      for(var i = 0, l = physicsComponents.length; i < l; i++) {
-        if(physicsComponents[i] === component) {
-          physicsComponents.splice(i, 1);
-          return;
-        }
+    update: function(delta) {
+      var i, l,
+          children = this.observe.children;
+      for(i = 0, l = children.length; i < l; i++) {
+        attemptMove(delta, children[i], children);
       }
-    },
-    component: component
-  };
+    }
+  });
 
   function attemptMove(delta, component, components) {
     if(component.immovable) return;
@@ -219,6 +209,7 @@
     return true;
   }
 
-  exports.tilePhysics = physics;
+
+  exports.tilePhysics = new TilePhysics;
 
 }(seine, demo);

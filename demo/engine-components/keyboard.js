@@ -1,7 +1,7 @@
 !function(window, seine, exports) {
   'use strict';
 
-  var Component = seine.Component;
+  var System = seine.System;
 
   var NUM_KEYS = 256,
       KEY_CONSTANTS = {
@@ -121,35 +121,45 @@
         META: 224
       };
 
-  var down = new Array(NUM_KEYS),
-      released = new Array(NUM_KEYS),
-      pressed = new Array(NUM_KEYS);
+  var Keyboard = System.extend({
+    init: function() {
+      var down = this._down = new Array(NUM_KEYS);
+      var released = this._released = new Array(NUM_KEYS);
+      var pressed = this._pressed = new Array(NUM_KEYS);
 
-  window.addEventListener('keydown', function(e) {
-    var keycode = e.which;
-    if(!down[keycode]) pressed[keycode] = true;
-    down[keycode] = true;
-  });
+      this._keydownHandler = function(e) {
+        var keycode = e.which;
+        if(!down[keycode]) pressed[keycode] = true;
+        down[keycode] = true;
+      };
+      this._keyupHandler = function(e) {
+        var keycode = e.which;
+        released[keycode] = true;
+        down[keycode] = false;
+      };
+    },
 
-  window.addEventListener('keyup', function(e) {
-    var keycode = e.which;
-    released[keycode] = true;
-    down[keycode] = false;
-  });
+    start: function() {
+      window.addEventListener('keydown', this._keydownHandler);
+      window.addEventListener('keyup', this._keyupHandler);
+    },
+    stop: function() {
+      window.removeEventListener('keydown', this._keydownHandler);
+      window.removeEventListener('keyup', this._keyupHandler);
+    },
 
-  var keyboardComponent = new Component();
-  keyboardComponent.update = function() {
-    for(var index = 0, length = NUM_KEYS; index < length; index++) {
-      pressed[index] = released[index] = false;
-    }
-  };
+    down: function(keycode) { return !!this._down[keycode]; },
+    released: function(keycode) { return !!this._released[keycode]; },
+    pressed: function(keycode) { return !!this._pressed[keycode]; },
 
-  exports.keyboard = {
-    down: function(keycode) { return !!down[keycode]; },
-    released: function(keycode) { return !!released[keycode]; },
-    pressed: function(keycode) { return !!pressed[keycode]; },
-    component: keyboardComponent,
+    after: function() {
+      for(var index = 0, length = NUM_KEYS; index < length; index++) {
+        this._pressed[index] = this._released[index] = false;
+      }
+    },
     key: KEY_CONSTANTS
-  };
+  });
+
+  exports.keyboard = new Keyboard;
 
 }(window, seine, demo);

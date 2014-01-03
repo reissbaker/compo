@@ -1,11 +1,9 @@
 !function(window, seine, PIXI, exports) {
 
-  var Component = seine.Component,
-      renderer = exports.renderer;
+  var Component = seine.Component;
 
   var Graphics = Component.extend({
-    constructor: function(position, direction, url, slice) {
-      Component.call(this);
+    init: function(position, direction, url, slice) {
       this.pos = position;
       this.dir = direction;
 
@@ -14,12 +12,6 @@
       this.sprite = new PIXI.Sprite(tex);
 
       updateLocation(this, this.pos, this.dir);
-    },
-    init: function() {
-      renderer.stage.addChild(this.sprite);
-    },
-    destroy: function() {
-      renderer.stage.removeChild(this.sprite);
     },
     render: function() {
       updateLocation(this, this.pos, this.dir);

@@ -7,9 +7,10 @@
 
   exports.Tile = GameObject.extend({
     constructor: function() {
-      GameObject.call(this, 0, 0, 48, 32);
+      GameObject.call(this, 0, 0, 48, 48);
     },
-    init: function() {
+
+    start: function() {
       var physics = new TilePhysicsComponent(this.loc, this.hitbox);
       physics.immovable = true;
       this.push(physics);

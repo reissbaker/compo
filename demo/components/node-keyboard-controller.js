@@ -1,13 +1,12 @@
 !function(seine, exports) {
   'use strict';
 
-  var Component = seine.Component,
+  var Behavior = seine.Behavior,
       keyboard = demo.keyboard,
       constants = exports.constants;
 
-  var NodeKeyboardController = Component.extend({
-    constructor: function(dir, physics) {
-      Component.call(this);
+  var NodeKeyboardController = Behavior.extend({
+    init: function(dir, physics) {
       this.physics = physics;
       this.dir = dir;
     },
