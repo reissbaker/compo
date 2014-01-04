@@ -2,12 +2,12 @@
   'use strict';
 
   var Component = seine.Component,
-      Point = exports.Point;
+      Point = exports.Point,
+      Collidable = exports.Collidable;
 
   var PhysicsComponent = Component.extend({
     init: function(loc, hitbox) {
-      this.loc = loc;
-      this.hitbox = hitbox;
+      this.collidable = new Collidable(loc, hitbox);
 
       this.velocity = new Point;
       this.maxVelocity = new Point;

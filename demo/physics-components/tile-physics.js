@@ -3,6 +3,9 @@
 
   var System = seine.System,
       TilePhysicsComponent = demo.TilePhysicsComponent,
+      CollisionGrid = demo.CollisionGrid,
+      Collidable = exports.Collidable,
+      Point = exports.Point,
       Rect = exports.Rect;
 
   var X_AXIS = 'x',
@@ -12,30 +15,32 @@
 
   var TilePhysics = System.extend({
     observe: {
-      children: TilePhysicsComponent
+      tiles: TilePhysicsComponent,
+      grids: CollisionGrid
     },
     update: function(delta) {
       var i, l,
-          children = this.observe.children;
-      for(i = 0, l = children.length; i < l; i++) {
-        attemptMove(delta, children[i], children);
+          tiles = this.observe.tiles,
+          grids = this.observe.grids;
+      for(i = 0, l = tiles.length; i < l; i++) {
+        attemptMove(delta, tiles[i], tiles, grids);
       }
     }
   });
 
-  function attemptMove(delta, tile, tiles) {
+  function attemptMove(delta, tile, tiles, grids) {
     if(tile.immovable) return;
-    attempt(X_AXIS, X_DIMENSION, delta, tile, tiles);
-    attempt(Y_AXIS, Y_DIMENSION, delta, tile, tiles);
+    attempt(X_AXIS, X_DIMENSION, delta, tile, tiles, grids);
+    attempt(Y_AXIS, Y_DIMENSION, delta, tile, tiles, grids);
   }
 
   // Don't reallocate this constantly
   var savedMovementHitbox = new Rect;
-  function attempt(axis, dimension, delta, component, components) {
+  function attempt(axis, dimension, delta, component, components, grids) {
     var collider,
         v = component.velocity[axis],
-        h = component.hitbox,
-        loc = component.loc,
+        h = component.collidable.hitbox,
+        loc = component.collidable.loc,
         deltaSeconds = delta / 1000,
         absMove = Math.abs(v * deltaSeconds),
         positive = v > 0,
@@ -50,26 +55,26 @@
     copyOffsetHitbox(savedMovementHitbox, savedMovementHitbox, loc);
 
     collider = collideAlong(
-      axis, dimension, component, savedMovementHitbox, components, xDir
+      axis, dimension, component, savedMovementHitbox, components, grids, xDir
     );
     resolve(axis, dimension, xDir, delta, component, collider);
   }
 
-  function resolve(axis, dimension, dir, delta, component, collider) {
+  function resolve(axis, dimension, dir, delta, component, collidable) {
     var max, notAccelerating, noGravity, hasVelocity, cL, cH,
         v = component.velocity,
-        h = component.hitbox,
+        h = component.collidable.hitbox,
         a = component.acceleration,
         d = component.drag,
         g = component.gravity,
         m = component.maxVelocity,
-        loc = component.loc,
+        loc = component.collidable.loc,
         deltaSeconds = delta / 1000,
         movement = v[axis] * deltaSeconds,
         aDir = a[axis] > 0 ? 1 : (a[axis] < 0 ? -1 : 0);
 
     // No collider? Cool, move freely.
-    if(!collider) {
+    if(!collidable) {
       max = m[axis] * deltaSeconds;
       loc[axis] += absClamp(movement, max);
       v[axis] = absClamp(
@@ -86,8 +91,8 @@
       }
     } else {
       // Resolve the collision.
-      cL = collider.loc;
-      cH = collider.hitbox;
+      cL = collidable.loc;
+      cH = collidable.hitbox;
       if(dir === 1) loc[axis] = cL[axis] + cH[axis] - h[dimension];
       else loc[axis] = cL[axis] + cH[axis] + cH[dimension];
       v[axis] = 0;
@@ -100,10 +105,17 @@
     return val;
   }
 
-  function collideAlong(axis, dimension, component, hitbox, components, dir) {
+  /*
+   * Given an axis, dimension, component, hitbox, set of components, a set of
+   * grids, and a collision direction, returns the closests `Collidable` from
+   * the set of components or grids that overlaps the given component.
+   *
+   * Oof. This thing could be refactored.
+   */
+  function collideAlong(axis, dim, component, hitbox, components, grids, dir) {
     var i, l, curr, minDistance, currDistance, startingEdge,
         min = null,
-        colliders = collide(component, hitbox, components);
+        colliders = collide(component, hitbox, components, grids);
 
     if(colliders.length === 0) return null;
 
@@ -111,12 +123,12 @@
       curr = colliders[i];
 
       if(dir < 0) startingEdge = hitbox[axis];
-      else startingEdge = hitbox[axis] + hitbox[dimension];
+      else startingEdge = hitbox[axis] + hitbox[dim];
 
       currDistance = directionalDistance(
         startingEdge,
         curr.hitbox[axis] + curr.loc[axis],
-        curr.hitbox[dimension],
+        curr.hitbox[dim],
         dir
       );
 
@@ -130,28 +142,41 @@
   }
 
 
-  // Given a movement hitbox and a set of components, returns the subset of
-  // components that collide with the hitbox.
+  /*
+   * Given a component, a movement hitbox, a set of components, and a set of
+   * grids, returns the subset of collidables that collide with the given
+   * component.
+   */
   var computedHitbox = new Rect;
-  function collide(component, movementHitbox, components) {
-    var i, l, curr,
-        colliders = [];
+  function collide(component, movementHitbox, components, grids) {
+    var i, l, curr, collidable, grid, gridCollisions, g, gL,
+        collidables = [];
 
     if(movementHitbox.width === 0 || movementHitbox.height === 0) {
-      return colliders;
+      return collidables;
     }
 
     for(i = 0, l = components.length; i < l; i++) {
       curr = components[i];
-      copyOffsetHitbox(computedHitbox, curr.hitbox, curr.loc);
+      collidable = curr.collidable;
+      copyOffsetHitbox(computedHitbox, collidable.hitbox, collidable.loc);
 
       if(component !== curr && doesCollide(movementHitbox, computedHitbox)) {
-        colliders.push(curr);
+        collidables.push(curr.collidable);
       }
     }
 
-    return colliders;
+    for(i = 0, l = grids.length; i < l; i++) {
+      grid = grids[i];
+      gridCollisions = gridCollide(movementHitbox, grid);
+      for(g = 0, gL = gridCollisions.length; g < gL; g++) {
+        collidables.push(gridCollisions[g]);
+      }
+    }
+
+    return collidables;
   }
+
 
   function overwriteHitbox(hitbox, x, y, width, height) {
     hitbox.x = x;
@@ -179,6 +204,44 @@
     if(a.y + a.height <= b.y) return false;
     if(a.y >= b.y + b.height) return false;
     return true;
+  }
+
+  var tileHitbox = new Rect;
+  function gridCollide(hitbox, grid) {
+    var collidables = [];
+    if(!doesCollide(hitbox, grid.hitbox())) return collidables;
+
+    var westOverlap = hitbox.x - grid.loc.x,
+        northOverlap = hitbox.y - grid.loc.y,
+        eastOverlap = hitbox.width + westOverlap,
+        southOverlap = hitbox.height + northOverlap;
+
+    var startingRow = Math.floor(northOverlap / grid.tileSize.y),
+        endingRow = Math.floor(southOverlap / grid.tileSize.y),
+        startingCol = Math.floor(westOverlap / grid.tileSize.x),
+        endingCol = Math.floor(eastOverlap / grid.tileSize.x);
+
+    if(startingRow < 0) startingRow = 0;
+    if(startingCol < 0) startingCol = 0;
+    if(endingRow >= grid.matrix.numRows) endingRow = grid.matrix.numRows - 1;
+    if(endingCol >= grid.matrix.numCols) endingCol = grid.matrix.numCols - 1;
+
+    for(var r = startingRow; r <= endingRow; r++) {
+      for(var c = startingCol; c <= endingCol; c++) {
+        var collidable = grid.collidable(r, c);
+        if(collidable) {
+          overwriteHitbox(
+            tileHitbox,
+            grid.loc.x + (c * grid.tileSize.x),
+            grid.loc.y + (r *grid.tileSize.y),
+            grid.tileSize.x,
+            grid.tileSize.y
+          );
+          if(doesCollide(hitbox, tileHitbox)) collidables.push(collidable);
+        }
+      }
+    }
+    return collidables;
   }
 
 

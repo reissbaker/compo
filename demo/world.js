@@ -5,27 +5,25 @@
       Keylogger = demo.Keylogger,
       Player = demo.Player,
       NPC = demo.NPC,
-      Tile = demo.Tile;
+      Level = demo.Level,
+      Matrix = exports.Matrix;
 
   var NUM_NPCS = 20;
 
   var World = Entity.extend({
     start: function() {
-      var i, tile,
+      var i, tile, matrix, level,
           numTiles = Math.ceil(document.body.clientWidth / 48);
       this.push(new Keylogger);
 
+      matrix = new Matrix(2, numTiles);
       for(i = 0; i < numTiles; i++) {
-        tile = new Tile;
-        tile.loc.y = 48 * 10;
-        tile.loc.x = i * 48;
-        this.push(tile);
+        matrix.set(1, i, 1);
       }
-
-      tile = new Tile;
-      tile.loc.y = 48 * 9;
-      tile.loc.x = (numTiles - 1) * 48;
-      this.push(tile);
+      matrix.set(0, numTiles - 1, 1);
+      level = new Level(matrix);
+      level.loc.y = 48 * 10;
+      this.push(level);
 
       for(i = 0; i < NUM_NPCS; i++) {
         this.push(new NPC);
