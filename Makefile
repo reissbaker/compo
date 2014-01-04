@@ -32,7 +32,6 @@ $(BUILD_DIR)/demo.js:
 		demo/game-objects/game-object.js \
 		demo/game-objects/player.js \
 		demo/game-objects/npc.js \
-		demo/game-objects/tile.js \
 		demo/game-objects/level.js \
 		demo/world.js \
 		demo/main.js \
