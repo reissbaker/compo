@@ -19,16 +19,10 @@ Need to really take another look at the runloop stuff. It's a bit hairy at the
 moment.
 
 
-The `extend` method shouldn't blindly copy class attributes: it should only
-copy the `extend` method. ES6 classes don't support class methods, and you
-don't want to write yourself into a corner on this: the library should be
-compatible with ES6.
-
-
 Components should fire events to a global event bus when they're
 initialized/destroyed, to make auto-registration less hacky and monkeypatchy.
 
 
 Get rid of the `decorate` method. The increased abstraction doesn't pay its
-rent. An ordinary function could fulfill its main duty, which is customizing a
+rent. An ordinary function could fulfill its duty, which is customizing a
 generic component before it gets added.
