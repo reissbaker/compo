@@ -27,3 +27,8 @@ compatible with ES6.
 
 Components should fire events to a global event bus when they're
 initialized/destroyed, to make auto-registration less hacky and monkeypatchy.
+
+
+Get rid of the `decorate` method. The increased abstraction doesn't pay its
+rent. An ordinary function could fulfill its main duty, which is customizing a
+generic component before it gets added.
