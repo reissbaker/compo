@@ -20,7 +20,9 @@ $(BUILD_DIR)/demo.js:
 		demo/index.js \
 		demo/constants.js \
 		demo/data/*.js \
+		demo/physics-components/collidable.js \
 		demo/physics-components/physics-component.js \
+		demo/physics-components/collision-grid.js \
 		demo/physics-components/tile-physics.js \
 		demo/graphics-components/graphics.js \
 		demo/graphics-components/renderer.js \
@@ -31,6 +33,7 @@ $(BUILD_DIR)/demo.js:
 		demo/game-objects/player.js \
 		demo/game-objects/npc.js \
 		demo/game-objects/tile.js \
+		demo/game-objects/level.js \
 		demo/world.js \
 		demo/main.js \
 		> $@
