@@ -13,14 +13,17 @@
 
       this.collisionMap = collisionMap(collisionTiles);
       this.collidables = collidables(loc, tileSize, matrix);
-    },
-    hitbox: function() {
-      return new Rect(
+      this._hitbox = new Rect(
         this.loc.x,
         this.loc.y,
         this.width(),
         this.height()
       );
+    },
+    hitbox: function() {
+      this._hitbox.x = this.loc.x;
+      this._hitbox.y = this.loc.y;
+      return this._hitbox;
     },
     width: function() {
       return this.matrix.numCols * this.tileSize.x;
