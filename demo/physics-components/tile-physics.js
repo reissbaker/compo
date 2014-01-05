@@ -1,7 +1,7 @@
-!function(seine, exports) {
+!function(compo, exports) {
   'use strict';
 
-  var System = seine.System,
+  var System = compo.System,
       TilePhysicsComponent = demo.TilePhysicsComponent,
       CollisionGrid = demo.CollisionGrid,
       Collidable = exports.Collidable,
@@ -247,4 +247,4 @@
 
   exports.tilePhysics = new TilePhysics;
 
-}(seine, demo);
+}(compo, demo);

@@ -1,4 +1,4 @@
-!function(window, seine, PIXI, exports) {
+!function(window, PIXI, exports) {
 
   var Graphic = exports.Graphic,
       Frame = exports.Frame;
@@ -41,4 +41,4 @@
 
   exports.TileGraphic = TileGraphic;
 
-}(window, seine, PIXI, demo);
+}(window, PIXI, demo);

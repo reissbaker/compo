@@ -1,7 +1,7 @@
-!function(demo, seine) {
+!function(demo, compo) {
   'use strict';
 
-  var Kernel = seine.Kernel,
+  var Kernel = compo.Kernel,
       keyboard = demo.keyboard,
       tilePhysics = demo.tilePhysics,
       renderer = demo.renderer,
@@ -15,4 +15,4 @@
     kernel.start(new World);
   }, 0);
 
-}(demo, seine);
+}(demo, compo);

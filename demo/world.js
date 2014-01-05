@@ -1,7 +1,7 @@
-!function(seine, exports) {
+!function(compo, exports) {
   'use strict';
 
-  var Entity = seine.Entity,
+  var Entity = compo.Entity,
       Keylogger = demo.Keylogger,
       Player = demo.Player,
       NPC = demo.NPC,
@@ -35,4 +35,4 @@
 
   exports.World = World;
 
-}(seine, demo);
+}(compo, demo);

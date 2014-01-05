@@ -1,7 +1,7 @@
-!function(seine, exports) {
+!function(compo, exports) {
   'use strict';
 
-  var Entity = seine.Entity,
+  var Entity = compo.Entity,
       Position = exports.Position,
       Rect = exports.Rect,
       Direction = exports.Direction;
@@ -15,4 +15,4 @@
     }
   });
 
-}(seine, demo);
+}(compo, demo);

@@ -1,7 +1,7 @@
-!function(seine, exports) {
+!function(compo, exports) {
   'use strict';
 
-  var Component = seine.Component,
+  var Component = compo.Component,
       Collidable = exports.Collidable,
       Rect = exports.Rect;
 
@@ -70,4 +70,4 @@
     return collidables;
   }
 
-}(seine, demo);
+}(compo, demo);

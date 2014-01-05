@@ -1,7 +1,7 @@
-!function(window, seine, exports) {
+!function(window, compo, exports) {
   'use strict';
 
-  var System = seine.System;
+  var System = compo.System;
 
   var NUM_KEYS = 256,
       KEY_CONSTANTS = {
@@ -162,4 +162,4 @@
 
   exports.keyboard = new Keyboard;
 
-}(window, seine, demo);
+}(window, compo, demo);

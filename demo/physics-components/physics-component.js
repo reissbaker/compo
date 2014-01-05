@@ -1,7 +1,7 @@
-!function(seine, exports) {
+!function(compo, exports) {
   'use strict';
 
-  var Component = seine.Component,
+  var Component = compo.Component,
       Point = exports.Point,
       Collidable = exports.Collidable;
 
@@ -22,4 +22,4 @@
 
   exports.TilePhysicsComponent = PhysicsComponent;
 
-}(seine, demo);
+}(compo, demo);

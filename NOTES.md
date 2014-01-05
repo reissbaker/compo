@@ -1,6 +1,3 @@
-Should rename to Compo, instead of Seine.
-
-
 Should make a separate QuadTree lib. The physics lib can use the QuadTree lib,
 as can the rendering lib.
 

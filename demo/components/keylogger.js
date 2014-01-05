@@ -1,7 +1,7 @@
-!function(seine, exports) {
+!function(compo, exports) {
   'use strict';
 
-  var Component = seine.Component,
+  var Component = compo.Component,
       keyboard = demo.keyboard;
 
   var Keylogger = Component.extend({
@@ -13,4 +13,4 @@
 
   exports.Keylogger = Keylogger;
 
-}(seine, demo);
+}(compo, demo);

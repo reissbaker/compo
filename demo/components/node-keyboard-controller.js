@@ -1,7 +1,7 @@
-!function(seine, exports) {
+!function(compo, exports) {
   'use strict';
 
-  var Behavior = seine.Behavior,
+  var Behavior = compo.Behavior,
       keyboard = demo.keyboard,
       constants = exports.constants;
 
@@ -32,4 +32,4 @@
 
   exports.NodeKeyboardController = NodeKeyboardController;
 
-}(seine, demo);
+}(compo, demo);

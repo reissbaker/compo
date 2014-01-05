@@ -1,4 +1,4 @@
-!function(seine, exports) {
+!function(exports) {
 
   var Graphic = exports.Graphic,
       Frame = exports.Frame,
@@ -40,4 +40,4 @@
   });
 
 
-}(seine, demo);
+}(demo);

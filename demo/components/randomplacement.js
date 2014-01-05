@@ -1,7 +1,7 @@
-!function(seine, exports) {
+!function(compo, exports) {
   'use strict';
 
-  var Component = seine.Component;
+  var Component = compo.Component;
   exports.RandomPlacement = Component.extend({
     init: function(loc) {
       this.loc = loc;
@@ -11,4 +11,4 @@
       this.loc.x = Math.random() * width;
     }
   });
-}(seine, demo);
+}(compo, demo);

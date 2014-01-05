@@ -1,7 +1,7 @@
-!function(seine, exports) {
+!function(compo, exports) {
   'use strict';
 
-  var Entity = seine.Entity,
+  var Entity = compo.Entity,
       CollisionGrid = exports.CollisionGrid,
       GridGraphic = exports.GridGraphic,
       Position = exports.Position,
@@ -28,4 +28,4 @@
     }
   });
 
-}(seine, demo);
+}(compo, demo);

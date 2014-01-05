@@ -1,7 +1,7 @@
-!function(seine, exports) {
+!function(compo, exports) {
   'use strict';
 
-  var System = seine.System,
+  var System = compo.System,
       Graphic = demo.Graphic;
 
   var Renderer = System.extend({
@@ -55,4 +55,4 @@
 
   exports.renderer = new Renderer;
 
-}(seine, demo);
+}(compo, demo);

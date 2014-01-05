@@ -1,6 +1,6 @@
-!function(seine, exports) {
+!function(compo, exports) {
 
-  var Component = seine.Component;
+  var Component = compo.Component;
 
   exports.Graphic = Component.extend({
     sprites: function() {
@@ -8,4 +8,4 @@
     }
   });
 
-}(seine, demo);
+}(compo, demo);

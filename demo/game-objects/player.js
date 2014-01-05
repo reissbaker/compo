@@ -1,4 +1,4 @@
-!function(seine, exports) {
+!function(compo, exports) {
   'use strict';
 
   var GameObject = exports.GameObject,
@@ -23,4 +23,4 @@
 
   exports.Player = Player;
 
-}(seine, demo);
+}(compo, demo);

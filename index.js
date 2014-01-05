@@ -1,11 +1,11 @@
 !function(window) {
   'use strict';
 
-  var oldSeine = window.seine;
+  var oldCompo = window.compo;
 
-  window.seine = {
+  window.compo = {
     noConflict: function() {
-      window.seine = oldSeine;
+      window.compo = oldCompo;
       return this;
     }
   };

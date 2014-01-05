@@ -1,4 +1,4 @@
-!function(seine, exports) {
+!function(compo, exports) {
   'use strict';
 
   var GameObject = exports.GameObject,
@@ -19,4 +19,4 @@
       this.push(new RandomPlacement(this.loc));
     }
   });
-}(seine, demo);
+}(compo, demo);

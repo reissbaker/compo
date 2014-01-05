@@ -1,4 +1,4 @@
-!function(PIXI, seine, exports) {
+!function(PIXI, exports) {
   'use strict';
 
   var Point = exports.Point,
@@ -41,4 +41,4 @@
 
   exports.Frame = Frame;
 
-}(PIXI, seine, demo);
+}(PIXI, demo);
