@@ -24,7 +24,10 @@ $(BUILD_DIR)/demo.js:
 		demo/physics-components/physics-component.js \
 		demo/physics-components/collision-grid.js \
 		demo/physics-components/tile-physics.js \
-		demo/graphics-components/graphics.js \
+		demo/graphics-components/frame.js \
+		demo/graphics-components/graphic.js \
+		demo/graphics-components/tile-graphic.js \
+		demo/graphics-components/grid-graphic.js \
 		demo/graphics-components/renderer.js \
 		demo/engine-components/*.js \
 		demo/components/*.js \

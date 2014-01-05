@@ -8,6 +8,6 @@
     JUMP_POWER: 500,
     DRAG: 3000,
     ACCEL: 1000,
-    COLLIDABLE_TILES: [1]
+    COLLIDABLE_TILES: [0]
   };
 }(demo);

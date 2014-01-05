@@ -1,7 +1,7 @@
 !function(exports) {
   'use strict';
 
-  function Matrix(rows, cols) {
+  function Matrix(rows, cols, defaultVal) {
     var r, c, row;
 
     this.numRows = rows;
@@ -12,7 +12,7 @@
       row = new Array(cols);
       this.rows[r] = row;
       for(c = 0; c < cols; c++) {
-        row[c] = 0;
+        row[c] = defaultVal || 0;
       }
     }
   }

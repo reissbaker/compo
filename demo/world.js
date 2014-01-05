@@ -16,11 +16,11 @@
           numTiles = Math.ceil(document.body.clientWidth / 48);
       this.push(new Keylogger);
 
-      matrix = new Matrix(2, numTiles);
+      matrix = new Matrix(2, numTiles, -1);
       for(i = 0; i < numTiles; i++) {
-        matrix.set(1, i, 1);
+        matrix.set(1, i, 0);
       }
-      matrix.set(0, numTiles - 1, 1);
+      matrix.set(0, numTiles - 1, 0);
       level = new Level(matrix);
       level.loc.y = 48 * 10;
       this.push(level);

@@ -3,7 +3,7 @@
 
   exports.decorators = exports.decorators || {};
   var TilePhysicsComponent = exports.TilePhysicsComponent,
-      Graphics = exports.Graphics,
+      TileGraphic = exports.TileGraphic,
       constants = exports.constants;
 
   exports.decorators.swordguy = function(opts) {
@@ -16,7 +16,7 @@
     physics.drag.y = constants.DRAG;
     physics.gravity.y = constants.GRAVITY;
 
-    graphics = new Graphics(opts.loc, opts.dir, '/assets/swordguy.png', {
+    graphics = new TileGraphic(opts.loc, opts.dir, '/assets/swordguy.png', {
       x: 0, y: 0, width: 48, height: 32
     });
 

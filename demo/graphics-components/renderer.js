@@ -2,11 +2,11 @@
   'use strict';
 
   var System = seine.System,
-      Graphics = demo.Graphics;
+      Graphic = demo.Graphic;
 
   var Renderer = System.extend({
     observe: {
-      children: Graphics
+      children: Graphic
     },
 
     init: function() {
@@ -25,10 +25,10 @@
       renderer.view.classList.add('seine-demo');
 
       this.onStart('children', function(child) {
-        stage.addChild(child.sprite);
+        child.sprites().forEach(function(s) { stage.addChild(s); });
       });
       this.onStop('children', function(child) {
-        stage.removeChild(child.sprite);
+        child.sprites().forEach(function(s) { stage.removeChild(s); });
       });
     },
 
