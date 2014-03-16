@@ -9,7 +9,7 @@
     this.dir = options.direction || new Point(1, 1);
     this.offset = options.offset || new Point(0, 0);
 
-    var base = PIXI.BaseTexture.fromImage(url),
+    var base = PIXI.BaseTexture.fromImage(url, false, PIXI.scaleModes.NEAREST),
         slice = options.crop || new Rect(0, 0, base.width, base.height),
         tex = new PIXI.Texture(base, slice);
 
