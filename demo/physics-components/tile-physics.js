@@ -30,15 +30,15 @@
 
   function attemptMove(delta, tile, tiles, grids) {
     if(tile.immovable) return;
-    attempt(X_AXIS, X_DIMENSION, delta, tile, tiles, grids);
-    attempt(Y_AXIS, Y_DIMENSION, delta, tile, tiles, grids);
+    attemptX(delta, tile, tiles, grids);
+    attemptY(delta, tile, tiles, grids);
   }
 
   // Don't reallocate this constantly
   var savedMovementHitbox = new Rect;
-  function attempt(axis, dimension, delta, component, components, grids) {
+  function attemptX(delta, component, components, grids) {
     var collider,
-        v = component.velocity[axis],
+        v = component.velocity.x,
         h = component.collidable.hitbox,
         loc = component.collidable.loc,
         deltaSeconds = delta / 1000,
@@ -46,21 +46,21 @@
         positive = v > 0,
         xDir = positive ? 1 : (v === 0 ? 0 : -1),
         // left edge of a hitbox the size of the movement area
-        startingEdge = positive ? h[axis] + h[dimension] : h[axis] - absMove;
+        startingEdge = positive ? h.x + h.width : h.x - absMove;
 
     // hitbox the size of the movement area
     overwriteHitbox(savedMovementHitbox, h.x, h.y, h.width, h.height);
-    savedMovementHitbox[axis] = startingEdge;
-    savedMovementHitbox[dimension] = absMove;
+    savedMovementHitbox.x = startingEdge;
+    savedMovementHitbox.width = absMove;
     copyOffsetHitbox(savedMovementHitbox, savedMovementHitbox, loc);
 
-    collider = collideAlong(
-      axis, dimension, component, savedMovementHitbox, components, grids, xDir
+    collider = collideAlongX(
+      component, savedMovementHitbox, components, grids, xDir
     );
-    resolve(axis, dimension, xDir, delta, component, collider);
+    resolveX(xDir, delta, component, collider);
   }
 
-  function resolve(axis, dimension, dir, delta, component, collidable) {
+  function resolveX(dir, delta, component, collidable) {
     var max, notAccelerating, noGravity, hasVelocity, cL, cH,
         v = component.velocity,
         h = component.collidable.hitbox,
@@ -70,32 +70,95 @@
         m = component.maxVelocity,
         loc = component.collidable.loc,
         deltaSeconds = delta / 1000,
-        movement = v[axis] * deltaSeconds,
-        aDir = a[axis] > 0 ? 1 : (a[axis] < 0 ? -1 : 0);
+        movement = v.x * deltaSeconds,
+        aDir = a.x > 0 ? 1 : (a.x < 0 ? -1 : 0);
 
     // No collider? Cool, move freely.
     if(!collidable) {
-      max = m[axis] * deltaSeconds;
-      loc[axis] += absClamp(movement, max);
-      v[axis] = absClamp(
-        v[axis] + (a[axis] * deltaSeconds) + (g[axis] * deltaSeconds),
+      max = m.x * deltaSeconds;
+      loc.x += absClamp(movement, max);
+      v.x = absClamp(
+        v.x + (a.x * deltaSeconds) + (g.x * deltaSeconds),
         max
       );
       notAccelerating = (aDir === 0 || (aDir !== dir && dir !== 0));
-      noGravity = g[axis] === 0;
-      hasVelocity = v[axis] !== 0;
+      noGravity = g.x === 0;
+      hasVelocity = v.x !== 0;
       if(notAccelerating && noGravity && hasVelocity) {
-        v[axis] -= dir * d[axis] * deltaSeconds;
-        if(dir === 1 && v[axis] < 0) v[axis] = 0;
-        if(dir !== 1 && v[axis] > 0) v[axis] = 0;
+        v.x -= dir * d.x * deltaSeconds;
+        if(dir === 1 && v.x < 0) v.x = 0;
+        if(dir !== 1 && v.x > 0) v.x = 0;
       }
     } else {
       // Resolve the collision.
       cL = collidable.loc;
       cH = collidable.hitbox;
-      if(dir === 1) loc[axis] = cL[axis] + cH[axis] - h[dimension];
-      else loc[axis] = cL[axis] + cH[axis] + cH[dimension];
-      v[axis] = 0;
+      if(dir === 1) loc.x = cL.x + cH.x - h.width;
+      else loc.x = cL.x + cH.x + cH.width;
+      v.x = 0;
+    }
+  }
+
+  function attemptY(delta, component, components, grids) {
+    var collider,
+        v = component.velocity.y,
+        h = component.collidable.hitbox,
+        loc = component.collidable.loc,
+        deltaSeconds = delta / 1000,
+        absMove = Math.abs(v * deltaSeconds),
+        positive = v > 0,
+        dir = positive ? 1 : (v === 0 ? 0 : -1),
+        // left edge of a hitbox the size of the movement area
+        startingEdge = positive ? h.y + h.height : h.y - absMove;
+
+    // hitbox the size of the movement area
+    overwriteHitbox(savedMovementHitbox, h.x, h.y, h.width, h.height);
+    savedMovementHitbox.y = startingEdge;
+    savedMovementHitbox.height = absMove;
+    copyOffsetHitbox(savedMovementHitbox, savedMovementHitbox, loc);
+
+    collider = collideAlongY(
+      component, savedMovementHitbox, components, grids, dir
+    );
+    resolveY(dir, delta, component, collider);
+  }
+
+  function resolveY(dir, delta, component, collidable) {
+    var max, notAccelerating, noGravity, hasVelocity, cL, cH,
+        v = component.velocity,
+        h = component.collidable.hitbox,
+        a = component.acceleration,
+        d = component.drag,
+        g = component.gravity,
+        m = component.maxVelocity,
+        loc = component.collidable.loc,
+        deltaSeconds = delta / 1000,
+        movement = v.y * deltaSeconds,
+        aDir = a.y > 0 ? 1 : (a.y < 0 ? -1 : 0);
+
+    // No collider? Cool, move freely.
+    if(!collidable) {
+      max = m.y * deltaSeconds;
+      loc.y += absClamp(movement, max);
+      v.y = absClamp(
+        v.y + (a.y * deltaSeconds) + (g.y * deltaSeconds),
+        max
+      );
+      notAccelerating = (aDir === 0 || (aDir !== dir && dir !== 0));
+      noGravity = g.y === 0;
+      hasVelocity = v.y !== 0;
+      if(notAccelerating && noGravity && hasVelocity) {
+        v.y -= dir * d.y * deltaSeconds;
+        if(dir === 1 && v.y < 0) v.y = 0;
+        if(dir !== 1 && v.y > 0) v.y = 0;
+      }
+    } else {
+      // Resolve the collision.
+      cL = collidable.loc;
+      cH = collidable.hitbox;
+      if(dir === 1) loc.y = cL.y + cH.y - h.height;
+      else loc.y = cL.y + cH.y + cH.height;
+      v.y = 0;
     }
   }
 
@@ -106,13 +169,13 @@
   }
 
   /*
-   * Given an axis, dimension, component, hitbox, set of components, a set of
+   * Given a component, hitbox, set of components, a set of
    * grids, and a collision direction, returns the closests `Collidable` from
    * the set of components or grids that overlaps the given component.
    *
    * Oof. This thing could be refactored.
    */
-  function collideAlong(axis, dim, component, hitbox, components, grids, dir) {
+  function collideAlongX(component, hitbox, components, grids, dir) {
     var i, l, curr, minDistance, currDistance, startingEdge,
         min = null,
         colliders = collide(component, hitbox, components, grids);
@@ -122,13 +185,42 @@
     for(i = 0, l = colliders.length; i < l; i++) {
       curr = colliders[i];
 
-      if(dir < 0) startingEdge = hitbox[axis];
-      else startingEdge = hitbox[axis] + hitbox[dim];
+      if(dir < 0) startingEdge = hitbox.x;
+      else startingEdge = hitbox.x + hitbox.width;
 
       currDistance = directionalDistance(
         startingEdge,
-        curr.hitbox[axis] + curr.loc[axis],
-        curr.hitbox[dim],
+        curr.hitbox.x + curr.loc.x,
+        curr.hitbox.width,
+        dir
+      );
+
+      if(min === null || currDistance < minDistance) {
+        min = curr;
+        minDistance = currDistance;
+      }
+    }
+
+    return min;
+  }
+
+  function collideAlongY(component, hitbox, components, grids, dir) {
+    var i, l, curr, minDistance, currDistance, startingEdge,
+        min = null,
+        colliders = collide(component, hitbox, components, grids);
+
+    if(colliders.length === 0) return null;
+
+    for(i = 0, l = colliders.length; i < l; i++) {
+      curr = colliders[i];
+
+      if(dir < 0) startingEdge = hitbox.y;
+      else startingEdge = hitbox.y + hitbox.height;
+
+      currDistance = directionalDistance(
+        startingEdge,
+        curr.hitbox.y + curr.loc.y,
+        curr.hitbox.height,
         dir
       );
 
