@@ -308,10 +308,10 @@
         eastOverlap = hitbox.width + westOverlap,
         southOverlap = hitbox.height + northOverlap;
 
-    var startingRow = Math.floor(northOverlap / grid.tileSize.y),
-        endingRow = Math.floor(southOverlap / grid.tileSize.y),
-        startingCol = Math.floor(westOverlap / grid.tileSize.x),
-        endingCol = Math.floor(eastOverlap / grid.tileSize.x);
+    var startingRow = (northOverlap / grid.tileSize.y) | 0,
+        endingRow = (southOverlap / grid.tileSize.y) | 0,
+        startingCol = (westOverlap / grid.tileSize.x) | 0,
+        endingCol = (eastOverlap / grid.tileSize.x) | 0;
 
     if(startingRow < 0) startingRow = 0;
     if(startingCol < 0) startingCol = 0;
