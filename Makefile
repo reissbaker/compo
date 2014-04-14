@@ -1,5 +1,5 @@
 BUILD_DIR=build
-$(BUILD_DIR)/seine.js:
+$(BUILD_DIR)/compo.js:
 	mkdir -p $(BUILD_DIR)
 	browserify -o $@ --standalone compo index.js
 
@@ -29,7 +29,7 @@ $(BUILD_DIR)/demo.js:
 		demo/main.js \
 		> $@
 
-$(BUILD_DIR)/seine.min.js: $(BUILD_DIR)/seine.js
+$(BUILD_DIR)/compo.min.js: $(BUILD_DIR)/compo.js
 	node_modules/.bin/uglifyjs \
 		-m \
 		-c warnings=false,unsafe=true \
@@ -41,20 +41,22 @@ $(BUILD_DIR)/demo.min.js: $(BUILD_DIR)/demo.js
 		-c warnings=false,unsafe=true \
 		$< > $@
 
-$(BUILD_DIR)/seine.min.js.gz: $(BUILD_DIR)/seine.min.js
+$(BUILD_DIR)/compo.min.js.gz: $(BUILD_DIR)/compo.min.js
 	gzip -c $< > $@
 
 $(BUILD_DIR)/demo.min.js.gz: $(BUILD_DIR)/demo.min.js
 	gzip -c $< > $@
 
-.PHONY: build-seine
-build-seine: $(BUILD_DIR)/seine.js $(BUILD_DIR)/seine.min.js $(BUILD_DIR)/seine.min.js.gz
+.PHONY: build-compo
+build-compo: $(BUILD_DIR)/compo.js $(BUILD_DIR)/compo.min.js \
+	$(BUILD_DIR)/compo.min.js.gz
 
 .PHONY: build-demo
-build-demo: $(BUILD_DIR)/demo.js $(BUILD_DIR)/demo.min.js $(BUILD_DIR)/demo.min.js.gz
+build-demo: $(BUILD_DIR)/demo.js $(BUILD_DIR)/demo.min.js \
+	$(BUILD_DIR)/demo.min.js.gz
 
 .PHONY: build
-build: build-seine build-demo
+build: build-compo build-demo
 
 .PHONY: clean
 clean:
