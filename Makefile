@@ -1,18 +1,7 @@
 BUILD_DIR=build
 $(BUILD_DIR)/seine.js:
 	mkdir -p $(BUILD_DIR)
-	cat \
-		index.js \
-		lib/util/*.js \
-		lib/core/component.js \
-		lib/core/entity.js \
-		lib/core/system.js \
-		lib/core/runloop/runner.js \
-		lib/core/runloop/loop.js \
-		lib/plugin/behavior/behavior.js \
-		lib/plugin/behavior/behavior-system.js \
-		lib/core/kernel.js \
-		> $@
+	browserify -o $@ --standalone compo index.js
 
 $(BUILD_DIR)/demo.js:
 	mkdir -p $(BUILD_DIR)
