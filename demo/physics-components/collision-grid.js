@@ -29,7 +29,7 @@
       return this.matrix.numCols * this.tileSize.x;
     },
     height: function() {
-      return this.matrix.numRows * this.tileSize.y
+      return this.matrix.numRows * this.tileSize.y;
     },
     isCollidable: function(row, col) {
       var tile = this.matrix.get(row, col);
