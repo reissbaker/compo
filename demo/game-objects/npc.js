@@ -1,12 +1,13 @@
 !function(compo, exports) {
   'use strict';
 
-  var GameObject = exports.GameObject,
+  var component = compo.component,
+      GameObject = exports.GameObject,
       RandomPlacement = exports.RandomPlacement,
       swordguy = exports.decorators.swordguy;
 
-  exports.NPC = GameObject.extend({
-    constructor: function(kernel) {
+  exports.NPC = component.extend(GameObject, {
+    constructor: function() {
       GameObject.call(this, 0, 0, 48, 32);
     },
     start: function() {

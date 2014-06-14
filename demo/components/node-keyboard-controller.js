@@ -1,11 +1,11 @@
 !function(compo, exports) {
   'use strict';
 
-  var Behavior = compo.Behavior,
+  var behavior = compo.behavior,
       keyboard = demo.keyboard,
       constants = exports.constants;
 
-  var NodeKeyboardController = Behavior.extend({
+  var NodeKeyboardController = behavior.define({
     init: function(dir, physics) {
       this.physics = physics;
       this.dir = dir;

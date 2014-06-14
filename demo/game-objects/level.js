@@ -1,14 +1,14 @@
 !function(compo, exports) {
   'use strict';
 
-  var Entity = compo.Entity,
+  var entity = compo.entity,
       CollisionGrid = exports.CollisionGrid,
       GridGraphic = exports.GridGraphic,
       Position = exports.Position,
       Point = exports.Point,
       constants = exports.constants;
 
-  exports.Level = Entity.extend({
+  exports.Level = entity.define({
     init: function(matrix) {
       this.matrix = matrix;
       this.loc = new Position;

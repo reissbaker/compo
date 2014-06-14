@@ -1,11 +1,12 @@
 !function(compo, exports) {
   'use strict';
 
-  var GameObject = exports.GameObject,
+  var component = compo.component,
+      GameObject = exports.GameObject,
       Controller = exports.NodeKeyboardController,
       swordguy = exports.decorators.swordguy;
 
-  var Player = GameObject.extend({
+  var Player = component.extend(GameObject, {
     constructor: function() {
       GameObject.call(this, 0, 0, 48, 32);
     },
