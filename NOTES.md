@@ -15,11 +15,3 @@ well, and the functions you'd want to run on them would vary wildly.
 Need to really take another look at the runloop stuff. It's a bit hairy at the
 moment.
 
-
-Components should fire events to a global event bus when they're
-initialized/destroyed, to make auto-registration less hacky and monkeypatchy.
-
-
-Get rid of the `decorate` method. The increased abstraction doesn't pay its
-rent. An ordinary function could fulfill its duty, which is customizing a
-generic component before it gets added.
