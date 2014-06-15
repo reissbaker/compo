@@ -5,11 +5,11 @@ var compo = require('compo'),
 
 var Renderer = compo.extend(System, function() {
   this.table = null;
+  this.stage = new PIXI.Stage;
 
   var width = document.body.clientWidth,
       height = document.body.clientHeight;
 
-  var stage = this.stage = new PIXI.Stage;
   var renderer = this.renderer = new PIXI.WebGLRenderer(width, height);
 
   this._resizeHandler = function() {
@@ -22,7 +22,8 @@ var Renderer = compo.extend(System, function() {
 });
 
 Renderer.prototype.onAttach = function(db) {
-  var table = this.table = db.table();
+  var table = this.table = db.table(),
+      stage = this.stage;
 
   table.on('attach', function(child) {
     child.sprites().forEach(function(s) { stage.addChild(s); });

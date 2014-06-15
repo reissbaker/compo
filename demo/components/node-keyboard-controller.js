@@ -1,35 +1,33 @@
-!function(compo, exports) {
-  'use strict';
+'use strict';
 
-  var behavior = compo.behavior,
-      keyboard = demo.keyboard,
-      constants = exports.constants;
+var compo = require('compo'),
+    keyboard = require('../input/keyboard');
 
-  var NodeKeyboardController = behavior.define({
-    init: function(dir, physics) {
-      this.physics = physics;
-      this.dir = dir;
-    },
-    update: function() {
-      var physics = this.physics;
+var ACCEL = 1000,
+    JUMP_POWER = 500;
 
-      if(keyboard.down(keyboard.key.LEFT)) {
-        physics.acceleration.x = -constants.ACCEL;
-        this.dir.x = -1;
-      } else if(keyboard.down(keyboard.key.RIGHT)) {
-        physics.acceleration.x = constants.ACCEL;
-        this.dir.x = 1;
-      } else {
-        physics.acceleration.x = 0;
-      }
+var Controller = compo.extend(compo.Behavior, function(dir, physics) {
+  compo.Behavior.call(this);
+  this.physics = physics;
+  this.dir = dir;
+});
 
-      if(keyboard.pressed(keyboard.key.UP)) {
-        physics.velocity.y = -constants.JUMP_POWER;
-      }
-    }
-  });
+Controller.prototype.update = function() {
+  var physics = this.physics;
 
+  if(keyboard.down(keyboard.key.LEFT)) {
+    physics.acceleration.x = -ACCEL;
+    this.dir.x = -1;
+  } else if(keyboard.down(keyboard.key.RIGHT)) {
+    physics.acceleration.x = ACCEL;
+    this.dir.x = 1;
+  } else {
+    physics.acceleration.x = 0;
+  }
 
-  exports.NodeKeyboardController = NodeKeyboardController;
+  if(keyboard.pressed(keyboard.key.UP)) {
+    physics.velocity.y = -JUMP_POWER;
+  }
+};
 
-}(compo, demo);
+module.exports = Controller;

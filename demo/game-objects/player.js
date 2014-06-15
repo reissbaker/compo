@@ -1,27 +1,18 @@
-!function(compo, exports) {
-  'use strict';
+'use strict';
 
-  var component = compo.component,
-      GameObject = exports.GameObject,
-      Controller = exports.NodeKeyboardController,
-      swordguy = exports.decorators.swordguy;
+var compo = require('compo'),
+    GameObject = require('./game-object'),
+    behavior = require('../behavior/system'),
+    Controller = require('../components/node-keyboard-controller'),
+    swordguy = require('./decorators/swordguy');
 
-  var Player = component.extend(GameObject, {
-    constructor: function() {
-      GameObject.call(this, 0, 0, 48, 32);
-    },
-    start: function() {
-      var swordguyComponents = this.decorate(swordguy, {
-        loc: this.loc,
-        dir: this.dir,
-        hitbox: this.hitbox
-      });
+module.exports = compo.extend(GameObject, function(entity) {
+  GameObject.call(this, entity, 0, 0, 48, 32);
 
-      this.push(new Controller(this.dir, swordguyComponents.physics));
-    }
-  });
+  var components = swordguy(this);
+  this.physics = components.physics;
+  this.graphics = components.graphics;
 
+  behavior.table.attach(entity, new Controller(this.dir, this.physics));
+});
 
-  exports.Player = Player;
-
-}(compo, demo);

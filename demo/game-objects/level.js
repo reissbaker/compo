@@ -1,31 +1,23 @@
-!function(compo, exports) {
-  'use strict';
+'use strict';
 
-  var entity = compo.entity,
-      CollisionGrid = exports.CollisionGrid,
-      GridGraphic = exports.GridGraphic,
-      Position = exports.Position,
-      Point = exports.Point,
-      constants = exports.constants;
+var compo = require('compo'),
+    physics = require('../physics/system'),
+    renderer = require('../graphics/renderer'),
+    CollisionGrid = require('../physics/grid'),
+    GridGraphic = require('../graphics/grid-graphic'),
+    Point = require('../data/point');
 
-  exports.Level = entity.define({
-    init: function(matrix) {
-      this.matrix = matrix;
-      this.loc = new Position;
-    },
-    start: function() {
-      var r, c,
-          tileSize = new Point(48, 48),
-          grid = new CollisionGrid(
-            this.loc, this.matrix, tileSize, constants.COLLIDABLE_TILES
-          );
+var url = '/assets/tile.png';
 
-      this.push(grid);
+module.exports = function(entity, matrix) {
+  this.entity = entity;
+  this.loc = new Point;
 
-      this.push(new GridGraphic(
-        this.loc, '/assets/tile.png', this.matrix, tileSize
-      ));
-    }
-  });
+  var tileSize = new Point(48, 48);
 
-}(compo, demo);
+  this.grid = new CollisionGrid(this.loc, matrix, tileSize, [0]);
+  physics.grids.attach(entity, this.grid);
+
+  this.graphics = new GridGraphic(this.loc, url, matrix, tileSize);
+  renderer.table.attach(entity, this.graphics);
+};

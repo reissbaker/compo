@@ -1,17 +1,12 @@
-!function(compo, exports) {
-  'use strict';
+'use strict';
 
-  var entity = compo.entity,
-      Position = exports.Position,
-      Rect = exports.Rect,
-      Direction = exports.Direction;
+var Point = require('../data/point'),
+    Rect = require('../data/rect'),
+    Direction = require('../data/direction');
 
-  exports.GameObject = entity.define({
-    init: function(x, y, width, height) {
-      this.loc = new Position;
-      this.hitbox = new Rect(x, y, width, height);
-      this.dir = new Direction;
-    }
-  });
-
-}(compo, demo);
+module.exports = function(entity, x, y, w, h) {
+  this.entity = entity;
+  this.loc = new Point(x, y);
+  this.hitbox = new Rect(0, 0, w, h);
+  this.dir = new Direction;
+};

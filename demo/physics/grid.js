@@ -4,7 +4,7 @@ var compo = require('compo'),
     Collidable = require('./collidable'),
     Rect = require('../data/rect');
 
-var CollisionGrid = compo.extend(compo.Component, function() {
+var CollisionGrid = compo.extend(compo.Component, function(loc, matrix, tileSize, collisionTiles) {
   this.loc = loc;
   this.matrix = matrix;
   this.tileSize = tileSize;
