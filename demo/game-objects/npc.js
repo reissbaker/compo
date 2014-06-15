@@ -1,23 +1,17 @@
-!function(compo, exports) {
-  'use strict';
+'use strict';
 
-  var component = compo.component,
-      GameObject = exports.GameObject,
-      RandomPlacement = exports.RandomPlacement,
-      swordguy = exports.decorators.swordguy;
+var compo = require('compo'),
+    GameObject = require('./game-object'),
+    swordguy = require('./decorators/swordguy');
 
-  exports.NPC = component.extend(GameObject, {
-    constructor: function() {
-      GameObject.call(this, 0, 0, 48, 32);
-    },
-    start: function() {
-      this.decorate(swordguy, {
-        loc: this.loc,
-        dir: this.dir,
-        hitbox: this.hitbox
-      });
+module.exports = compo.extend(GameObject, function(entity) {
+  GameObject.call(this, entity, 0, 0, 48, 32);
 
-      this.push(new RandomPlacement(this.loc));
-    }
-  });
-}(compo, demo);
+  var components = swordguy(this);
+  this.physics = components.physics;
+  this.graphics = components.graphics;
+
+  var width = document.body.clientWidth;
+  this.loc.x = Math.random() * width;
+});
+

@@ -5,13 +5,20 @@ var compo = require('compo'),
     Keylogger = require('./components/keylogger'),
     PositionLogger = require('./components/position-logger'),
     Player = require('./game-objects/player'),
+    NPC = require('./game-objects/npc'),
     Level = require('./game-objects/level'),
     Matrix = require('./data/matrix');
 
+var NUM_NPCS = 20;
+
 module.exports = {
   build: function(kernel) {
-    var world = kernel.root().entity(),
-        player = new Player(world.entity());
+    var world = kernel.root().entity();
+
+    for(i = 0; i < NUM_NPCS; i++) {
+      new NPC(world.entity());
+    }
+
 
     var i, tile, matrix, level,
         numTiles = Math.ceil(document.body.clientWidth / 48);
@@ -24,35 +31,14 @@ module.exports = {
     level = new Level(world.entity(), matrix);
     level.loc.y = 48 * 10;
 
+
+    var player = new Player(world.entity());
+
     behavior.table.attach(player.entity, new PositionLogger(player.loc));
     behavior.table.attach(player.entity, new Keylogger());
+
 
     return world;
   }
 };
 
-
-/*
-var Entity = compo.Entity,
-    Keylogger = demo.Keylogger,
-    Player = demo.Player,
-    NPC = demo.NPC,
-    Level = demo.Level,
-    Matrix = exports.Matrix;
-
-var NUM_NPCS = 20;
-
-var World = Entity.extend({
-  start: function() {
-    this.push(level);
-
-    for(i = 0; i < NUM_NPCS; i++) {
-      this.push(new NPC);
-    }
-
-    this.push(new Player);
-  }
-});
-
-exports.World = World;
-*/
