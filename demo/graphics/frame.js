@@ -22,8 +22,8 @@ Frame.prototype.render = function() {
   var gPos = this.sprite.position,
       gScale = this.sprite.scale;
 
-  gPos.x = Math.round(this.pos.x + this.offset.x);
-  gPos.y = Math.round(this.pos.y + this.offset.y);
+  gPos.x = this.pos.x + this.offset.x;
+  gPos.y = this.pos.y + this.offset.y;
 
   gScale.x = this.dir.x;
   gScale.y = this.dir.y;
