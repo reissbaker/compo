@@ -9,8 +9,7 @@ import BehaviorSystem = require('./plugin/behavior-system');
 import Behavior = require('./plugin/behavior');
 import util = require('./core/util');
 import extend = util.extend;
-import Runner = require('./core/runloop/runner');
-import Looper = require('./core/runloop/looper');
+import Runner = require('./core/runner');
 
 var out = {
   Component: Component,
@@ -21,8 +20,7 @@ var out = {
   BehaviorSystem: BehaviorSystem,
   Behavior: Behavior,
   extend: extend,
-  Runner: Runner,
-  Looper: Looper
+  Runner: Runner
 };
 
 export = out;

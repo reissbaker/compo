@@ -9,22 +9,20 @@ var compo = require('compo'),
     StatSystem = require('./stats/system');
 
 var kernel = new compo.Kernel(),
-    runner = new compo.Runner(kernel),
-    looper = new compo.Looper(function(delta) {
-      runner.run(delta, 30);
-    });
+    runner = new compo.Runner(kernel, 30);
 
-kernel.attach(behavior);
 kernel.attach(keyboard);
+kernel.attach(behavior);
 kernel.attach(physics);
 kernel.attach(renderer);
 
 var stats = new StatSystem();
 stats.appendTo(document.body);
-kernel.attach(stats);
+runner.on('beginFrame', function() { stats.before(); });
+runner.on('endFrame', function() { stats.after(); });
 
 World.build(kernel);
 
-window.demo = { looper: looper };
+window.demo = { runner: runner };
 
-looper.start();
+runner.start();
