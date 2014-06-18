@@ -1,5 +1,11 @@
 'use strict';
 
+export function backwards<T>(array: T[], callback: (el: T) => any) {
+  for(var i = array.length - 1; i >= 0; i--) {
+    callback(array[i]);
+  }
+}
+
 export function each<T>(array: T[], callback: (el: T) => any) {
   for(var i = 0, l = array.length; i < l; i++) {
     callback(array[i]);

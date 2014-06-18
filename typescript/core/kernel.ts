@@ -27,7 +27,7 @@ class Kernel {
     util.each(this._systems, (system) => {
       system.update(delta);
     });
-    util.each(this._systems, (system) => {
+    util.backwards(this._systems, (system) => {
       system.after(delta);
     });
   }
