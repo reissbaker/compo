@@ -25,7 +25,7 @@ Controller.prototype.update = function() {
     physics.acceleration.x = 0;
   }
 
-  if(keyboard.pressed(keyboard.key.UP)) {
+  if(keyboard.pressed(keyboard.key.X)) {
     physics.velocity.y = -JUMP_POWER;
   }
 };

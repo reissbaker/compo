@@ -3,7 +3,7 @@
 var compo = require('compo'),
     GameObject = require('./game-object'),
     behavior = require('../behavior/system'),
-    Controller = require('../components/node-keyboard-controller'),
+    Controller = require('../behavior/keyboard-controller'),
     swordguy = require('./decorators/swordguy');
 
 module.exports = compo.extend(GameObject, function(entity) {
