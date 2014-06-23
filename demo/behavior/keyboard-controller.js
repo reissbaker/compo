@@ -17,10 +17,10 @@ Controller.prototype.update = function() {
 
   if(keyboard.down(keyboard.key.LEFT)) {
     physics.acceleration.x = -ACCEL;
-    this.dir.x = -1;
+    this.dir.x = 1;
   } else if(keyboard.down(keyboard.key.RIGHT)) {
     physics.acceleration.x = ACCEL;
-    this.dir.x = 1;
+    this.dir.x = -1;
   } else {
     physics.acceleration.x = 0;
   }

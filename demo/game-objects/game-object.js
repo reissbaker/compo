@@ -8,5 +8,5 @@ module.exports = function(entity, x, y, w, h) {
   this.entity = entity;
   this.loc = new Point(x, y);
   this.hitbox = new Rect(0, 0, w, h);
-  this.dir = new Direction;
+  this.dir = new Direction(Direction.LEFT);
 };

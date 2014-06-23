@@ -5,7 +5,7 @@ var physics = require('../../physics/system'),
     TileGraphic = require('../../graphics/tile-graphic'),
     renderer = require('../../graphics/renderer');
 
-var url = '/assets/swordguy.png',
+var url = '/assets/player.png',
     MAX_X_VEL = 10000,
     MAX_Y_VEL = 15000,
     GRAVITY = 1900,
@@ -20,7 +20,7 @@ module.exports = function(gameObject) {
   tilePhysics.maxVelocity.x = MAX_X_VEL;
 
   var graphics = new TileGraphic(gameObject.loc, gameObject.dir, url, {
-    x: 0, y: 0, width: 48, height: 32
+    x: 0, y: 0, width: 64, height: 32
   });
   renderer.table.attach(gameObject.entity, graphics);
 
