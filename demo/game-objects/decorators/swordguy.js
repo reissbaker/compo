@@ -3,9 +3,11 @@
 var physics = require('../../physics/system'),
     Tile = require('../../physics/tile'),
     TileGraphic = require('../../graphics/tile-graphic'),
-    renderer = require('../../graphics/renderer');
+    renderer = require('../../graphics/renderer'),
+    Point = require('../../data/point');
 
 var url = '/assets/player.png',
+    pointUrl = '/assets/point.png',
     MAX_X_VEL = 10000,
     MAX_Y_VEL = 15000,
     GRAVITY = 1900,
@@ -23,6 +25,11 @@ module.exports = function(gameObject) {
     x: 0, y: 0, width: 64, height: 32
   }, new Point(-18, 0));
   renderer.table.attach(gameObject.entity, graphics);
+
+  var pointGraphic = new TileGraphic(gameObject.loc, gameObject.dir, pointUrl, {
+    x: 0, y: 0, width: 1, height: 1
+  });
+  renderer.table.attach(gameObject.entity, pointGraphic);
 
   return {
     physics: tilePhysics,
