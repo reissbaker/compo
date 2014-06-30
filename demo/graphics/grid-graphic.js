@@ -29,9 +29,9 @@ var GridGraphic = compo.extend(Graphic, function(position, url, matrix, tileSize
 });
 
 
-Graphic.prototype.render =  function() {
+Graphic.prototype.render =  function(scale) {
   for(var i = 0, l = this.frames.length; i < l; i++) {
-    this.frames[i].render();
+    this.frames[i].render(scale);
   }
 };
 

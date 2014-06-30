@@ -14,19 +14,17 @@ function Frame(position, url, options) {
       tex = new PIXI.Texture(base, slice);
 
   this.sprite = new PIXI.Sprite(tex);
-
-  this.render();
 }
 
-Frame.prototype.render = function() {
+Frame.prototype.render = function(scale) {
   var gPos = this.sprite.position,
       gScale = this.sprite.scale;
 
-  gPos.x = this.pos.x + this.offset.x;
-  gPos.y = this.pos.y + this.offset.y;
+  gPos.x = (this.pos.x + this.offset.x) * scale.x;
+  gPos.y = (this.pos.y + this.offset.y) * scale.y;
 
-  gScale.x = this.dir.x;
-  gScale.y = this.dir.y;
+  gScale.x = this.dir.x * scale.x;
+  gScale.y = this.dir.y * scale.y;
 
   /*
    * Flipping will result in the sprite appearing to jump (flips on the 0,
@@ -37,10 +35,10 @@ Frame.prototype.render = function() {
    */
 
   if(gScale.x < 0) {
-    gPos.x -= this.sprite.width - ((this.offset.x * 1.5) | 0);
+    gPos.x -= (this.sprite.width - ((this.offset.x * 1.5) | 0) * scale.x);
   }
   if(gScale.y < 0) {
-    gPos.y -= this.sprite.height - ((this.offset.y * 1.5) | 0);
+    gPos.y -= (this.sprite.height - ((this.offset.y * 1.5) | 0) * scale.y);
   }
 };
 

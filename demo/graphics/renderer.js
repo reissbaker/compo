@@ -1,11 +1,13 @@
 'use strict';
 
 var compo = require('compo'),
-    System = compo.System;
+    System = compo.System,
+    Point = require('../data/point');
 
 var Renderer = compo.extend(System, function() {
   this.table = null;
   this.stage = new PIXI.Stage;
+  this.scale = new Point(1, 1);
 
   var width = document.body.clientWidth,
       height = document.body.clientHeight;
@@ -48,11 +50,10 @@ Renderer.prototype.render = function() {
       children = this.table.getAttached();
 
   for(i = 0, l = children.length; i < l; i++) {
-    children[i].render();
+    children[i].render(this.scale);
   }
 
   this.renderer.render(this.stage);
 };
 
 module.exports = new Renderer;
-

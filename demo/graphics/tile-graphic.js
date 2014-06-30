@@ -13,8 +13,8 @@ var TileGraphic = compo.extend(Graphic, function(position, direction, url, slice
   });
 });
 
-TileGraphic.prototype.render = function() {
-  this.frame.render();
+TileGraphic.prototype.render = function(scale) {
+  this.frame.render(scale);
 };
 TileGraphic.prototype.sprites = function() {
   return [this.frame.sprite];
