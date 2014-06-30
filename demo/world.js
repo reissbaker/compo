@@ -7,7 +7,7 @@ var compo = require('compo'),
     Level = require('./game-objects/level'),
     Matrix = require('./data/matrix');
 
-var NUM_NPCS = 20;
+var NUM_NPCS = 5;
 
 module.exports = {
   build: function(kernel) {
@@ -35,4 +35,3 @@ module.exports = {
     return world;
   }
 };
-
