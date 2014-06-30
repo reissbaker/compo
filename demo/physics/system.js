@@ -102,8 +102,8 @@ function resolveX(dir, delta, component, collidable) {
     // Resolve the collision.
     cL = collidable.loc;
     cH = collidable.hitbox;
-    if(dir === 1) loc.x = cL.x + cH.x - h.width;
-    else loc.x = cL.x + cH.x + cH.width;
+    if(dir === 1) loc.x = cL.x + cH.x - h.width - h.x;
+    else loc.x = cL.x + cH.x + cH.width - h.x;
     v.x = 0;
   }
 }
@@ -165,8 +165,8 @@ function resolveY(dir, delta, component, collidable) {
     // Resolve the collision.
     cL = collidable.loc;
     cH = collidable.hitbox;
-    if(dir === 1) loc.y = cL.y + cH.y - h.height;
-    else loc.y = cL.y + cH.y + cH.height;
+    if(dir === 1) loc.y = cL.y + cH.y - h.height - h.y;
+    else loc.y = cL.y + cH.y + cH.height - h.y;
     v.y = 0;
   }
 }
