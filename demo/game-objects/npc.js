@@ -5,7 +5,7 @@ var compo = require('compo'),
     swordguy = require('./decorators/swordguy');
 
 module.exports = compo.extend(GameObject, function(entity) {
-  GameObject.call(this, entity, 0, 0, 48, 32);
+  GameObject.call(this, entity, 0, 0, 9, 3, (24 - 9), 32 - 3);
 
   var components = swordguy(this);
   this.physics = components.physics;
@@ -14,4 +14,3 @@ module.exports = compo.extend(GameObject, function(entity) {
   var width = document.body.clientWidth;
   this.loc.x = Math.random() * width;
 });
-

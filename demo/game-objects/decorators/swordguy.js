@@ -21,7 +21,7 @@ module.exports = function(gameObject) {
 
   var graphics = new TileGraphic(gameObject.loc, gameObject.dir, url, {
     x: 0, y: 0, width: 64, height: 32
-  });
+  }, new Point(-18, 0));
   renderer.table.attach(gameObject.entity, graphics);
 
   return {
