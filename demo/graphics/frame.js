@@ -31,11 +31,17 @@ Frame.prototype.render = function() {
   /*
    * Flipping will result in the sprite appearing to jump (flips on the 0,
    * rather than mid-sprite), so subtract the sprite's size from its position
-   * if it's flipped.
+   * if it's flipped. To handle rotation around the offset, multiply the offset
+   * by 1.5 for MATH REASONS and add it (or rather, subtract it from the
+   * subtraction).
    */
 
-  if(gScale.x < 0) gPos.x -= this.sprite.width;
-  if(gScale.y < 0) gPos.y -= this.sprite.height;
+  if(gScale.x < 0) {
+    gPos.x -= this.sprite.width - ((this.offset.x * 1.5) | 0);
+  }
+  if(gScale.y < 0) {
+    gPos.y -= this.sprite.height - ((this.offset.y * 1.5) | 0);
+  }
 };
 
 
