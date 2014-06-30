@@ -11,6 +11,6 @@ module.exports = compo.extend(GameObject, function(entity) {
   this.physics = components.physics;
   this.graphics = components.graphics;
 
-  var width = document.body.clientWidth;
+  var width = document.body.clientWidth / 4;
   this.loc.x = Math.random() * width;
 });

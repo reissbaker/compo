@@ -19,7 +19,7 @@ module.exports = {
 
 
     var i, tile, matrix, level,
-        numTiles = Math.ceil(document.body.clientWidth / 48);
+        numTiles = Math.ceil(document.body.clientWidth / (48 * 4));
 
     matrix = new Matrix(2, numTiles, -1);
     for(i = 0; i < numTiles; i++) {
@@ -27,7 +27,7 @@ module.exports = {
     }
     matrix.set(0, numTiles - 1, 0);
     level = new Level(world.entity(), matrix);
-    level.loc.y = 48 * 10;
+    level.loc.y = ((48 * 10) / 4) | 0;
 
 
     var player = new Player(world.entity());
