@@ -5,11 +5,13 @@ var PIXI = window.PIXI,
     Graphic = require('./graphic'),
     Frame = require('./frame');
 
-var TileGraphic = compo.extend(Graphic, function(position, direction, url, slice, offset) {
+var TileGraphic = compo.extend(Graphic, function(position, direction, url, slice, options) {
+  options = options || {};
   this.frame = new Frame(position, url, {
     direction: direction,
-    offset: offset,
-    crop: slice
+    offset: options.offset,
+    crop: slice,
+    midpoint: options.midpoint
   });
 });
 

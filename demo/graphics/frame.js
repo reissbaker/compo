@@ -13,6 +13,9 @@ function Frame(position, url, options) {
       slice = options.crop || new Rect(0, 0, base.width, base.height),
       tex = new PIXI.Texture(base, slice);
 
+  this.midpoint = options.midpoint ||
+                  new Point((slice.width / 2), (slice.height / 2));
+
   this.sprite = new PIXI.Sprite(tex);
 }
 
@@ -28,17 +31,15 @@ Frame.prototype.render = function(scale) {
 
   /*
    * Flipping will result in the sprite appearing to jump (flips on the 0,
-   * rather than mid-sprite), so subtract the sprite's size from its position
-   * if it's flipped. To handle rotation around the offset, multiply the offset
-   * by 1.5 for MATH REASONS and add it (or rather, subtract it from the
-   * subtraction).
+   * rather than mid-sprite), so add the sprite's midpoint * 2 to the current
+   * position.
    */
 
   if(gScale.x < 0) {
-    gPos.x -= (this.sprite.width - ((this.offset.x * 1.5) | 0) * scale.x);
+    gPos.x += this.midpoint.x * 2 * scale.x;
   }
   if(gScale.y < 0) {
-    gPos.y -= (this.sprite.height - ((this.offset.y * 1.5) | 0) * scale.y);
+    gPos.y += this.midpoint.y * 2 * scale.y;
   }
 };
 
