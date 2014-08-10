@@ -45,12 +45,12 @@ Renderer.prototype.onDetach = function(db) {
   document.body.removeChild(this.renderer.view);
 };
 
-Renderer.prototype.render = function() {
+Renderer.prototype.render = function(delta) {
   var i, l,
       children = this.table.getAttached();
 
   for(i = 0, l = children.length; i < l; i++) {
-    children[i].render(this.scale);
+    children[i].render(this.scale, delta);
   }
 
   this.renderer.render(this.stage);
