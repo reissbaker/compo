@@ -7,7 +7,7 @@ var compo = require('compo'),
     Level = require('./game-objects/level'),
     Matrix = require('./data/matrix');
 
-var NUM_NPCS = 5;
+var NUM_NPCS = 10;
 
 module.exports = {
   build: function(kernel) {
@@ -19,7 +19,7 @@ module.exports = {
 
 
     var i, tile, matrix, level,
-        numTiles = Math.ceil(document.body.clientWidth / (48 * 4));
+        numTiles = Math.ceil(document.body.clientWidth / (24 * 3));
 
     matrix = new Matrix(2, numTiles, -1);
     for(i = 0; i < numTiles; i++) {
@@ -27,7 +27,7 @@ module.exports = {
     }
     matrix.set(0, numTiles - 1, 0);
     level = new Level(world.entity(), matrix);
-    level.loc.y = ((48 * 10) / 4) | 0;
+    level.loc.y = ((24 * 20) / 3) | 0;
 
 
     var player = new Player(world.entity());

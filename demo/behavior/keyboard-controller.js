@@ -3,8 +3,8 @@
 var compo = require('compo'),
     keyboard = require('../input/keyboard');
 
-var ACCEL = 1000,
-    JUMP_POWER = 500;
+var ACCEL = 900,
+    JUMP_POWER = 400;
 
 var Controller = compo.extend(compo.Behavior, function(dir, physics) {
   compo.Behavior.call(this);

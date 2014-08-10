@@ -16,7 +16,7 @@ kernel.attach(behavior);
 kernel.attach(physics);
 kernel.attach(renderer);
 
-renderer.scale.x = renderer.scale.y = 4;
+renderer.scale.x = renderer.scale.y = 3;
 
 var stats = new StatSystem();
 stats.appendTo(document.body);

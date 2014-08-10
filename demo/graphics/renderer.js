@@ -6,7 +6,7 @@ var compo = require('compo'),
 
 var Renderer = compo.extend(System, function() {
   this.table = null;
-  this.stage = new PIXI.Stage;
+  this.stage = new PIXI.Stage(0x222222);
   this.scale = new Point(1, 1);
 
   var width = document.body.clientWidth,

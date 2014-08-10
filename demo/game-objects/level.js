@@ -13,7 +13,7 @@ module.exports = function(entity, matrix) {
   this.entity = entity;
   this.loc = new Point;
 
-  var tileSize = new Point(48, 48);
+  var tileSize = new Point(24, 24);
 
   this.grid = new CollisionGrid(this.loc, matrix, tileSize, [0]);
   physics.grids.attach(entity, this.grid);
