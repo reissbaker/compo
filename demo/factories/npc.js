@@ -1,12 +1,13 @@
 'use strict';
 
 var compo = require('compo'),
-    GameData = require('./game-data'),
+    GameData = require('./data/game-data'),
     physics = require('../physics/system'),
     Tile = require('../physics/tile'),
     TileGraphic = require('../graphics/tile-graphic'),
     renderer = require('../graphics/renderer'),
-    Point = require('../data/point');
+    Point = require('../data/point'),
+    Character = require('./data/character');
 
 var url = '/assets/allenemiessheet.png',
     pointUrl = '/assets/point.png',
@@ -16,41 +17,41 @@ var url = '/assets/allenemiessheet.png',
     DRAG = 3000;
 
 module.exports = function(entity) {
-  this.entity = entity;
-  this.data = new GameData(0, 0, 4, 8, 19 - 4, 24 - 8);
+  var data = new GameData(0, 0, 4, 8, 19 - 4, 24 - 8);
 
-  var components = enemy(this);
-  this.physics = components.physics;
-  this.graphics = components.graphics;
+  var physics = buildPhysics(entity, data);
+  var graphics = buildGraphics(entity, data);
 
   var width = document.body.clientWidth / 4;
-  this.data.loc.x = Math.random() * width;
+  data.loc.x = Math.random() * width;
+
+  return new Character(data, physics, graphics);
 };
 
-
-function enemy(gameObject) {
-  var data = gameObject.data;
+function buildPhysics(entity, data) {
   var tilePhysics = new Tile(data.loc, data.hitbox);
-  physics.tiles.attach(gameObject.entity, tilePhysics);
+  physics.tiles.attach(entity, tilePhysics);
+
   tilePhysics.gravity.y = GRAVITY;
   tilePhysics.maxVelocity.y = MAX_Y_VEL;
   tilePhysics.drag.x = DRAG;
   tilePhysics.maxVelocity.x = MAX_X_VEL;
 
+  return tilePhysics;
+}
+
+function buildGraphics(entity, data) {
   var graphics = new TileGraphic(data.loc, data.dir, url, {
     x: 0, y: 0, width: 24, height: 24
   }, {
     midpoint: new Point(12, 12)
   });
-  renderer.table.attach(gameObject.entity, graphics);
+  renderer.table.attach(entity, graphics);
 
   var pointGraphic = new TileGraphic(data.loc, data.dir, pointUrl, {
     x: 0, y: 0, width: 1, height: 1
   });
-  renderer.table.attach(gameObject.entity, pointGraphic);
+  renderer.table.attach(entity, pointGraphic);
 
-  return {
-    physics: tilePhysics,
-    graphics: graphics
-  };
+  return graphics;
 };

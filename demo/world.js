@@ -2,9 +2,9 @@
 
 var compo = require('compo'),
     behavior = require('./behavior/system'),
-    Player = require('./game-objects/player'),
-    NPC = require('./game-objects/npc'),
-    Level = require('./game-objects/level'),
+    buildPlayer = require('./factories/player'),
+    buildNpc = require('./factories/npc'),
+    buildLevel = require('./factories/level'),
     Matrix = require('./data/matrix');
 
 var NUM_NPCS = 10;
@@ -14,7 +14,7 @@ module.exports = {
     var world = kernel.root().entity();
 
     for(i = 0; i < NUM_NPCS; i++) {
-      new NPC(world.entity());
+      buildNpc(world.entity());
     }
 
 
@@ -26,11 +26,11 @@ module.exports = {
       matrix.set(1, i, 0);
     }
     matrix.set(0, numTiles - 1, 0);
-    level = new Level(world.entity(), matrix);
+    level = buildLevel(world.entity(), matrix);
     level.loc.y = ((24 * 20) / 3) | 0;
 
 
-    var player = new Player(world.entity());
+    buildPlayer(world.entity());
 
     return world;
   }

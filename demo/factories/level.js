@@ -10,14 +10,20 @@ var compo = require('compo'),
 var url = '/assets/tile.png';
 
 module.exports = function(entity, matrix) {
-  this.entity = entity;
-  this.loc = new Point;
-
+  var loc = new Point;
   var tileSize = new Point(24, 24);
 
-  this.grid = new CollisionGrid(this.loc, matrix, tileSize, [0]);
-  physics.grids.attach(entity, this.grid);
+  var grid = new CollisionGrid(loc, matrix, tileSize, [0]);
+  physics.grids.attach(entity, grid);
 
-  this.graphics = new GridGraphic(this.loc, url, matrix, tileSize);
-  renderer.table.attach(entity, this.graphics);
+  var graphics = new GridGraphic(loc, url, matrix, tileSize);
+  renderer.table.attach(entity, graphics);
+
+  return new Level(loc, grid, graphics);
 };
+
+function Level(loc, grid, graphics) {
+  this.loc = loc;
+  this.grid = grid;
+  this.graphics = graphics;
+}
