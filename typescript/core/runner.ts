@@ -7,9 +7,7 @@ import Emitter = events.Emitter;
 var TARGET_FPS = 60,
     TARGET_FRAMETIME = 1000 / TARGET_FPS,
     MIN_FRAMETIME = 10,
-    MAX_FRAMESKIP = 5,
-    BEGIN_EVENT = 'beginFrame',
-    END_EVENT = 'endFrame';
+    MAX_FRAMESKIP = 5;
 
 var rAF = window.requestAnimationFrame || fallback;
 
@@ -18,9 +16,15 @@ function fallback(callback: () => any) {
 }
 
 class Runner {
+  static BEGIN_EVENT: string = 'beginFrame';
+  static END_EVENT: string = 'endFrame';
+
   _stopped: boolean = false;
   _prevTime: number;
-  _emitter: Emitter<void> = new Emitter<void>(BEGIN_EVENT, END_EVENT);
+  _emitter: Emitter<void> = new Emitter<void>(
+    Runner.BEGIN_EVENT,
+    Runner.END_EVENT
+  );
 
   _elapsed: number = 0;
 
@@ -60,9 +64,9 @@ function onTick(runner: Runner) {
     if(runner._stopped) return;
 
     var timestamp = (new Date).valueOf();
-    runner._emitter.trigger(BEGIN_EVENT, null);
+    runner._emitter.trigger(Runner.BEGIN_EVENT, null);
     runUpdate(runner, timestamp - runner._prevTime);
-    runner._emitter.trigger(END_EVENT, null);
+    runner._emitter.trigger(Runner.END_EVENT, null);
     runner._prevTime = timestamp;
 
     rAF(loop);
