@@ -12,11 +12,21 @@ var Animation = compo.extend(Graphic, function(options) {
     direction: options.direction,
     offset: options.offset,
     crop: options.crop,
+    width: options.width,
+    height: options.height,
     numFrames: options.numFrames,
     midpoint: options.frameMidpoint,
     frameTime: options.frameTime
   });
 });
+
+Animation.prototype.defineLoop = function(name, frames) {
+  this.clip.defineLoop(name, frames);
+};
+
+Animation.prototype.playLoop = function(name) {
+  this.clip.playLoop(name);
+};
 
 Animation.prototype.render = function(scale, delta) {
   this.clip.render(scale, delta);

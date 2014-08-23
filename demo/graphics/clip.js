@@ -14,28 +14,53 @@ function Clip(options) {
   this.frameTime = options.frameTime;
   this.numFrames = options.numFrames;
 
-  var i,
+  this.loops = {};
+  this.currentLoop = null;
+
+  var x, y,
+      count = 0,
       numFrames = options.numFrames,
       texes = [],
       base = PIXI.BaseTexture.fromImage(options.url, false, PIXI.scaleModes.NEAREST),
       slice = options.crop || new Rect(0, 0, base.width, base.height),
-      frameWidth = slice.width / numFrames;
+      frameWidth = options.width,
+      frameHeight = options.height;
 
-  for(i = 0; i < numFrames; i++) {
-    texes.push(new PIXI.Texture(base, {
-      x: frameWidth * i,
-      y: slice.y,
-      width: frameWidth,
-      height: slice.height
-    }));
+  if(!numFrames) {
+    var numX = slice.width / frameWidth,
+        numY = slice.height / frameHeight;
+    numFrames = numX * numY;
   }
 
-  this.midpoint = options.midpoint || new Point(slice.width / 2, slice.height / 2);
+  for(y = 0; y < slice.height && count < numFrames; y += frameHeight) {
+    for(x = 0; x < slice.width && count < numFrames; x += frameWidth) {
+      texes.push(new PIXI.Texture(base, {
+        x: x,
+        y: y,
+        width: frameWidth,
+        height: frameHeight
+      }));
+
+      count++;
+    }
+  }
+
+  this.midpoint = options.midpoint || new Point(frameWidth / 2, frameHeight / 2);
   this.sprite = new PIXI.MovieClip(texes);
 }
 
+Clip.prototype.defineLoop = function(name, frameArray) {
+  this.loops[name] = frameArray;
+};
+
+Clip.prototype.playLoop = function(name) {
+  this.currentLoop = name;
+  this.frameIndex = 0;
+};
+
 Clip.prototype.render = function(scale, delta) {
-  var gPos = this.sprite.position,
+  var frames,
+      gPos = this.sprite.position,
       gScale = this.sprite.scale;
 
   gPos.x = (this.pos.x + this.offset.x) * scale.x;
@@ -50,19 +75,18 @@ Clip.prototype.render = function(scale, delta) {
    * position.
    */
 
-  if(gScale.x < 0) {
-    gPos.x += this.midpoint.x * 2 * scale.x;
-  }
-  if(gScale.y < 0) {
-    gPos.y += this.midpoint.y * 2 * scale.y;
-  }
+  if(gScale.x < 0) gPos.x += this.midpoint.x * 2 * scale.x;
+  if(gScale.y < 0) gPos.y += this.midpoint.y * 2 * scale.y;
 
+  if(!this.currentLoop) return;
+
+  frames = this.loops[this.currentLoop];
   this.elapsed += delta;
   while(this.elapsed > this.frameTime) {
     this.elapsed -= this.frameTime;
-    this.frameIndex = (this.frameIndex + 1) % this.numFrames;
+    this.frameIndex = (this.frameIndex + 1) % frames.length;
   }
-  this.sprite.gotoAndStop(this.frameIndex);
+  this.sprite.gotoAndStop(frames[this.frameIndex]);
 };
 
 module.exports = Clip;
