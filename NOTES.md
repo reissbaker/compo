@@ -15,39 +15,3 @@ well, and the functions you'd want to run on them would vary wildly.
 Need to really take another look at the runloop stuff. It's a bit hairy at the
 moment.
 
-
-Rather than using singletons everywhere, you should create an Engine object
-that has a kernel and the variety systems the game needs. Every game should
-have something that extends the Engine class, and passes the engine object
-around to the factories so that the factories don't need to use singletons (and
-are thus more easily testable).
-
-For example:
-
-```typescript
-class Engine {
-  kernel: Kernel;
-  constructor(kernel: Kernel) {
-    this.kernel = kernel;
-  }
-}
-
-// In client code
-class Engine2D extends Engine {
-  renderer: Renderer;
-  physics: Physics;
-  behavior: Behavior;
-  input: InputSystem;
-
-  constructor(kernel: Kernel) {
-    super(kernel);
-
-    // set up systems
-  }
-}
-
-interface InputSystem {
-  keyboard: System;
-}
-```
-
