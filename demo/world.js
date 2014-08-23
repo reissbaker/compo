@@ -10,8 +10,8 @@ var compo = require('compo'),
 var NUM_NPCS = 10;
 
 module.exports = {
-  build: function(kernel) {
-    var world = kernel.root().entity();
+  build: function(engine) {
+    var world = engine.kernel.root().entity();
 
     for(i = 0; i < NUM_NPCS; i++) {
       buildNpc(world.entity());

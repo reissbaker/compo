@@ -10,6 +10,7 @@ import Behavior = require('./plugin/behavior');
 import util = require('./core/util');
 import extend = util.extend;
 import Runner = require('./core/runner');
+import Engine = require('./core/engine');
 
 var out = {
   Component: Component,
@@ -20,7 +21,8 @@ var out = {
   BehaviorSystem: BehaviorSystem,
   Behavior: Behavior,
   extend: extend,
-  Runner: Runner
+  Runner: Runner,
+  Engine: Engine
 };
 
 export = out;
