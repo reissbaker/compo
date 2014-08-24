@@ -11,6 +11,8 @@ import util = require('./core/util');
 import extend = util.extend;
 import Runner = require('./core/runner');
 import Engine = require('./core/engine');
+import State = require('./state/state');
+import StateMachine = require('./state/state-machine');
 
 var out = {
   Component: Component,
@@ -22,7 +24,9 @@ var out = {
   Behavior: Behavior,
   extend: extend,
   Runner: Runner,
-  Engine: Engine
+  Engine: Engine,
+  State: State,
+  StateMachine: StateMachine
 };
 
 export = out;
