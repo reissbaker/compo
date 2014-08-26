@@ -25,8 +25,8 @@ var out = {
   extend: extend,
   Runner: Runner,
   Engine: Engine,
-  State: State,
-  StateMachine: StateMachine
+  StateMachine: StateMachine,
+  State: State
 };
 
 export = out;

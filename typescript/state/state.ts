@@ -1,6 +1,14 @@
 'use strict';
 
+import StateMachine = require('./state-machine');
+
 class State {
+  private _machine: StateMachine;
+
+  attach(machine: StateMachine) {
+    this._machine = machine;
+  }
+
   begin(): void {
   }
 
@@ -8,6 +16,10 @@ class State {
   }
 
   end(): void {
+  }
+
+  transition(stateName: string): State {
+    return this._machine.setState(stateName);
   }
 }
 

@@ -1,12 +1,19 @@
 'use strict';
 
 import State = require('./state');
+import StateMap = require('./state-map');
 
 class StateMachine {
+  private _map: StateMap;
   private _state: State = null;
 
-  constructor(state: State) {
-    this._state = state;
+  constructor(states: StateMap) {
+    this._map = states;
+    for(var prop in states) {
+      if(states.hasOwnProperty(prop)) {
+        states[prop].attach(this);
+      }
+    }
   }
 
   begin(): void {
@@ -21,12 +28,20 @@ class StateMachine {
     this._state.end();
   }
 
-  transition(state: State): State {
-    this._state.end();
-    this._state = state;
+  state(name: string): State {
+    return this._map[name];
+  }
+
+  currentState(): State {
+    return this._state;
+  }
+
+  setState(name: string): State {
+    if(this._state) this._state.end();
+    this._state = this._map[name];
     this._state.begin();
 
-    return state;
+    return this._state;
   }
 }
 
