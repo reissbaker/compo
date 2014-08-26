@@ -16,14 +16,17 @@ export class Emitter<T> {
   }
 
   on(event: string, callback: Callback<T>) {
+    if(!this._handlers[event]) this._handlers[event] = [];
     this._handlers[event].push(callback);
   }
 
   off(event: string, callback: Callback<T>) {
+    if(!this._handlers[event]) return;
     util.remove(this._handlers[event], callback);
   }
 
   trigger(event: string, object: T) {
+    if(!this._handlers[event]) return;
     util.each(this._handlers[event], (callback: Callback<T>) => {
       callback(object);
     });
