@@ -7,8 +7,8 @@ var MAX_X_VEL = 8000,
     GRAVITY = 1600,
     DRAG = 3000;
 
-module.exports = function(engine, entity, data) {
-  var tilePhysics = new Tile(data.loc, data.hitbox);
+module.exports = function(engine, entity, data, type) {
+  var tilePhysics = new Tile(data.loc, data.hitbox, type);
   engine.physics.tiles.attach(entity, tilePhysics);
 
   tilePhysics.gravity.y = GRAVITY;

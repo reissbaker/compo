@@ -13,7 +13,7 @@ var url = '/assets/allenemiessheet.png',
 module.exports = function(engine, entity) {
   var data = new GameData(0, 0, 4, 8, 19 - 4, 24 - 8);
 
-  var physics = buildPhysics(engine, entity, data);
+  var physics = buildPhysics(engine, entity, data, 'npc');
   var graphics = buildGraphics(engine, entity, data);
 
   var width = document.body.clientWidth / 4;

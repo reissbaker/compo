@@ -11,7 +11,7 @@ module.exports = function(engine, entity, matrix) {
   var loc = new Point;
   var tileSize = new Point(24, 24);
 
-  var grid = new CollisionGrid(loc, matrix, tileSize, [0]);
+  var grid = new CollisionGrid(loc, matrix, tileSize, [0], 'level');
   engine.physics.grids.attach(entity, grid);
 
   var graphics = new GridGraphic(loc, url, matrix, tileSize);

@@ -11,7 +11,7 @@ var compo = require('compo'),
 module.exports = function(engine, entity) {
   var data = new GameData(0, 0, 4, 9, 20 - 4, 24 - 9);
 
-  var physics = buildPhysics(engine, entity, data);
+  var physics = buildPhysics(engine, entity, data, 'player');
   var graphics = buildGraphics(engine, entity, data);
 
   var character = new Character(data, physics, graphics);
