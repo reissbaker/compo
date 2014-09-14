@@ -23,6 +23,10 @@ module.exports = function(engine, entity) {
 
   engine.behavior.table.attach(entity, new Controller(character, states));
 
+  physics.emitter.on('collide:bottom', function() {
+    states.land();
+  });
+
   return character;
 };
 

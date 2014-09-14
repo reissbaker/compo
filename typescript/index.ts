@@ -13,6 +13,7 @@ import Runner = require('./core/runner');
 import Engine = require('./core/engine');
 import State = require('./state/state');
 import StateMachine = require('./state/state-machine');
+import events = require('./core/events');
 
 var out = {
   Component: Component,
@@ -26,7 +27,8 @@ var out = {
   Runner: Runner,
   Engine: Engine,
   StateMachine: StateMachine,
-  State: State
+  State: State,
+  Emitter: events.Emitter
 };
 
 export = out;

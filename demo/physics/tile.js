@@ -14,6 +14,8 @@ var PhysicsComponent = compo.extend(compo.Component, function(loc, hitbox) {
   this.gravity = new Point;
 
   this.immovable = false;
+
+  this.emitter = new compo.Emitter();
 });
 
 
