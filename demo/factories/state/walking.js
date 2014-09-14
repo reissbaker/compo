@@ -3,8 +3,6 @@
 var compo = require('compo'),
     PlayerState = require('./player');
 
-var ACCEL = 900;
-
 var WalkingState = compo.extend(PlayerState, function(args) {
   PlayerState.call(this, args);
   this.moved = false;
@@ -16,15 +14,13 @@ WalkingState.prototype.begin = function() {
 };
 
 WalkingState.prototype.left = function() {
+  PlayerState.prototype.left.call(this);
   this.moved = true;
-  this.physics.acceleration.x = -ACCEL;
-  this.dir.x = -1;
 };
 
 WalkingState.prototype.right = function() {
+  PlayerState.prototype.right.call(this);
   this.moved = true;
-  this.physics.acceleration.x = ACCEL;
-  this.dir.x = 1;
 };
 
 WalkingState.prototype.jump = function() {

@@ -19,6 +19,7 @@ module.exports = function(engine, entity, data) {
   });
   graphics.defineLoop(exports.STAND, [5]);
   graphics.defineLoop(exports.WALK, [0, 1, 2, 3]);
+  graphics.defineLoop(exports.JUMP, [7]);
   graphics.playLoop(exports.STAND);
   engine.renderer.table.attach(entity, graphics);
 
@@ -32,4 +33,5 @@ module.exports = function(engine, entity, data) {
 
 exports.WALK = 'walk';
 exports.STAND = 'stand';
+exports.JUMP = 'jump';
 
