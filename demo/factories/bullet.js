@@ -19,8 +19,6 @@ function create(engine, world) {
   var graphics = buildGraphics(engine, entity, data);
   var physics = buildPhysics(engine, entity, data);
 
-  console.log(graphics);
-
   return new Bullet(data, physics, graphics);
 }
 
