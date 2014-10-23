@@ -24,5 +24,9 @@ StandingState.prototype.jump = function() {
   this.transition('jumping');
 };
 
+StandingState.prototype.attack = function() {
+  this.transition('shooting');
+};
+
 module.exports = StandingState;
 

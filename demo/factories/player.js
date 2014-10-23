@@ -8,7 +8,8 @@ var compo = require('compo'),
     buildGraphics = require('./components/player-animation'),
     buildPhysics = require('./components/physics');
 
-module.exports = function(engine, entity) {
+module.exports = function(engine, world) {
+  var entity = world.entity();
   var data = new GameData(0, 0, 4, 9, 20 - 4, 24 - 9);
 
   var physics = buildPhysics(engine, entity, data, 'player');
@@ -17,6 +18,7 @@ module.exports = function(engine, entity) {
   var character = new Character(data, physics, graphics);
 
   var states = new PlayerStateMachine({
+    world: world,
     engine: engine,
     character: character
   });

@@ -10,7 +10,8 @@ var compo = require('compo'),
 var url = '/assets/allenemiessheet.png',
     pointUrl = '/assets/point.png';
 
-module.exports = function(engine, entity) {
+module.exports = function(engine, world) {
+  var entity = world.entity();
   var data = new GameData(0, 0, 4, 8, 19 - 4, 24 - 8);
 
   var physics = buildPhysics(engine, entity, data, 'npc');

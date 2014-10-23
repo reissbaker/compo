@@ -7,7 +7,8 @@ var compo = require('compo'),
 
 var url = '/assets/tile.png';
 
-module.exports = function(engine, entity, matrix) {
+module.exports = function(engine, world, matrix) {
+  var entity = world.entity();
   var loc = new Point;
   var tileSize = new Point(24, 24);
 

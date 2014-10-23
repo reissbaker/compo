@@ -7,10 +7,13 @@ var PlayerState = compo.extend(compo.State, function(args) {
   compo.State.call(this);
   this.states = args.states;
   this.engine = args.engine;
+  this.world = args.world;
   this.character = args.character;
+
   this.physics = this.character.physics;
   this.anim = this.character.graphics;
   this.dir = this.character.data.dir;
+  this.loc = this.character.data.loc;
 });
 
 PlayerState.prototype.jump = function() {};

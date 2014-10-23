@@ -14,7 +14,7 @@ module.exports = {
     var world = engine.kernel.root().entity();
 
     for(i = 0; i < NUM_NPCS; i++) {
-      buildNpc(engine, world.entity());
+      buildNpc(engine, world);
     }
 
 
@@ -27,11 +27,11 @@ module.exports = {
     }
 
     matrix.set(0, numTiles - 1, 0);
-    level = buildLevel(engine, world.entity(), matrix);
+    level = buildLevel(engine, world, matrix);
     level.loc.y = ((24 * 20) / 3) | 0;
 
 
-    buildPlayer(engine, world.entity());
+    buildPlayer(engine, world);
 
     return world;
   }

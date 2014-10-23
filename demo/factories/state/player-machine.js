@@ -3,13 +3,17 @@
 var compo = require('compo'),
     StandingState = require('./standing'),
     WalkingState = require('./walking'),
-    JumpingState = require('./jumping');
+    JumpingState = require('./jumping'),
+    ShootingState = require('./shooting'),
+    DrawState = require('./draw');
 
 var PlayerStateMachine = compo.extend(compo.StateMachine, function(args) {
   compo.StateMachine.call(this, {
     standing: new StandingState(args),
     walking: new WalkingState(args),
-    jumping: new JumpingState(args)
+    jumping: new JumpingState(args),
+    shooting: new ShootingState(args),
+    draw: new DrawState(args)
   });
 
   this.setState('standing');

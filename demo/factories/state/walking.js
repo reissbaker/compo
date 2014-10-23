@@ -27,6 +27,10 @@ WalkingState.prototype.jump = function() {
   this.transition('jumping');
 };
 
+WalkingState.prototype.attack = function() {
+  this.transition('shooting');
+};
+
 WalkingState.prototype.update = function() {
   if(!this.moved) this.transition('standing');
   this.moved = false;
