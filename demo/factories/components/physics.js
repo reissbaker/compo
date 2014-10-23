@@ -17,4 +17,4 @@ module.exports = function(engine, entity, data, type) {
   tilePhysics.maxVelocity.x = MAX_X_VEL;
 
   return tilePhysics;
-}
+};
