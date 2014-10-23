@@ -28,6 +28,14 @@ Animation.prototype.playLoop = function(name) {
   this.clip.playLoop(name);
 };
 
+Animation.prototype.playAndStop = function(name) {
+  this.clip.playAndStop(name);
+};
+
+Animation.prototype.stopped = function() {
+  return this.clip.stopped;
+};
+
 Animation.prototype.render = function(scale, delta) {
   this.clip.render(scale, delta);
 };

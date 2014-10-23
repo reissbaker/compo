@@ -16,6 +16,8 @@ function Clip(options) {
 
   this.loops = {};
   this.currentLoop = null;
+  this.looping = false;
+  this.stopped = true;
 
   var x, y,
       count = 0,
@@ -25,6 +27,7 @@ function Clip(options) {
       slice = options.crop || new Rect(0, 0, base.width, base.height),
       frameWidth = options.width,
       frameHeight = options.height;
+
 
   if(!numFrames) {
     var numX = slice.width / frameWidth,
@@ -54,9 +57,20 @@ Clip.prototype.defineLoop = function(name, frameArray) {
 };
 
 Clip.prototype.playLoop = function(name) {
-  this.currentLoop = name;
-  this.frameIndex = 0;
+  beginPlaying(this, name);
+  this.looping = true;
 };
+
+Clip.prototype.playAndStop = function(name) {
+  beginPlaying(this, name);
+  this.looping = false;
+};
+
+function beginPlaying(clip, name) {
+  clip.currentLoop = name;
+  clip.frameIndex = 0;
+  clip.stopped = false;
+}
 
 Clip.prototype.render = function(scale, delta) {
   var frames,
@@ -84,7 +98,9 @@ Clip.prototype.render = function(scale, delta) {
   this.elapsed += delta;
   while(this.elapsed > this.frameTime) {
     this.elapsed -= this.frameTime;
-    this.frameIndex = (this.frameIndex + 1) % frames.length;
+    if(this.looping) this.frameIndex = (this.frameIndex + 1) % frames.length;
+    else if(this.frameIndex < frames.length - 1) this.frameIndex++;
+    else this.stopped = true;
   }
   this.sprite.gotoAndStop(frames[this.frameIndex]);
 };
