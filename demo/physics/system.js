@@ -57,6 +57,11 @@ function attemptX(delta, component, components, grids) {
       // left edge of a hitbox the size of the movement area
       startingEdge = positive ? h.x + h.width : h.x - absMove;
 
+  if(!component.collidable.active) {
+    resolveX(xDir, delta, component, null);
+    return;
+  }
+
   // hitbox the size of the movement area
   overwriteHitbox(savedMovementHitbox, h.x, h.y, h.width, h.height);
   savedMovementHitbox.x = startingEdge;
@@ -79,12 +84,12 @@ function resolveX(dir, delta, component, collidable) {
       m = component.maxVelocity,
       loc = component.collidable.loc,
       deltaSeconds = delta / 1000,
-      movement = v.x * deltaSeconds,
+      max = m.x * deltaSeconds,
+      movement = absClamp(v.x, max) * deltaSeconds,
       aDir = a.x > 0 ? 1 : (a.x < 0 ? -1 : 0);
 
   // No collider? Cool, move freely.
   if(!collidable) {
-    max = m.x * deltaSeconds;
     loc.x += absClamp(movement, max);
     v.x = absClamp(
       v.x + (a.x * deltaSeconds) + (g.x * deltaSeconds),
@@ -125,6 +130,11 @@ function attemptY(delta, component, components, grids) {
       // left edge of a hitbox the size of the movement area
       startingEdge = positive ? h.y + h.height : h.y - absMove;
 
+  if(!component.collidable.active) {
+    resolveY(dir, delta, component, null);
+    return;
+  }
+
   // hitbox the size of the movement area
   overwriteHitbox(savedMovementHitbox, h.x, h.y, h.width, h.height);
   savedMovementHitbox.y = startingEdge;
@@ -147,12 +157,12 @@ function resolveY(dir, delta, component, collidable) {
       m = component.maxVelocity,
       loc = component.collidable.loc,
       deltaSeconds = delta / 1000,
-      movement = v.y * deltaSeconds,
+      max = m.y * deltaSeconds,
+      movement = absClamp(v.y, max) * deltaSeconds,
       aDir = a.y > 0 ? 1 : (a.y < 0 ? -1 : 0);
 
   // No collider? Cool, move freely.
   if(!collidable) {
-    max = m.y * deltaSeconds;
     loc.y += absClamp(movement, max);
     v.y = absClamp(
       v.y + (a.y * deltaSeconds) + (g.y * deltaSeconds),
@@ -203,6 +213,7 @@ function collideAlongX(component, hitbox, components, grids, dir) {
 
   for(i = 0, l = colliders.length; i < l; i++) {
     curr = colliders[i];
+    if(!curr.active) continue;
 
     if(dir < 0) startingEdge = hitbox.x;
     else startingEdge = hitbox.x + hitbox.width;
@@ -232,6 +243,7 @@ function collideAlongY(component, hitbox, components, grids, dir) {
 
   for(i = 0, l = colliders.length; i < l; i++) {
     curr = colliders[i];
+    if(!curr.active) continue;
 
     if(dir < 0) startingEdge = hitbox.y;
     else startingEdge = hitbox.y + hitbox.height;
