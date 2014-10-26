@@ -5,8 +5,7 @@ var Point = require('../../data/point'),
     TileGraphic = require('../../graphics/tile-graphic'),
     Animation = require('../../graphics/animation');
 
-var url = '/assets/astrosheet.png',
-    pointUrl = '/assets/point.png';
+var url = '/assets/astrosheet.png';
 
 module.exports = function(engine, entity, data) {
   var graphics = new Animation({
@@ -28,12 +27,6 @@ module.exports = function(engine, entity, data) {
   graphics.playLoop(exports.STAND);
 
   engine.renderer.table.attach(entity, graphics);
-
-  var pointGraphic = new TileGraphic(data.loc, data.dir, pointUrl, {
-    x: 0, y: 0, width: 1, height: 1
-  });
-
-  engine.renderer.table.attach(entity, pointGraphic);
 
   return graphics;
 };
