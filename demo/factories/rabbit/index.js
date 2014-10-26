@@ -1,14 +1,14 @@
 'use strict';
 
 var compo = require('compo'),
+    NpcController = require('../../behavior/npc-controller'),
+    RabbitStateMachine = require('./state/machine'),
     GameData = require('../shared/game-data'),
     TileGraphic = require('../../graphics/tile-graphic'),
     Point = require('../../data/point'),
     Character = require('../shared/character'),
+    buildGraphics = require('./animation'),
     buildPhysics = require('../shared/character-physics');
-
-var url = '/assets/allenemiessheet.png',
-    pointUrl = '/assets/point.png';
 
 module.exports = function(engine, world) {
   var entity = world.entity();
@@ -20,21 +20,21 @@ module.exports = function(engine, world) {
   var width = document.body.clientWidth / 4;
   data.loc.x = Math.random() * width;
 
-  return new Character(data, physics, graphics);
+  var character = new Character(data, physics, graphics);
+
+  var state = new RabbitStateMachine({
+    engine: engine,
+    world: world,
+    character: character,
+    entity: entity
+  });
+
+  physics.emitter.on('collide', function(collidable) {
+    if(collidable.type === 'bullet') state.takeDamage();
+  });
+
+  engine.behavior.table.attach(entity, new NpcController(state));
+
+  return character;
 };
 
-function buildGraphics(engine, entity, data) {
-  var graphics = new TileGraphic(data.loc, data.dir, url, {
-    x: 0, y: 0, width: 24, height: 24
-  }, {
-    midpoint: new Point(12, 12)
-  });
-  engine.renderer.table.attach(entity, graphics);
-
-  var pointGraphic = new TileGraphic(data.loc, data.dir, pointUrl, {
-    x: 0, y: 0, width: 1, height: 1
-  });
-  engine.renderer.table.attach(entity, pointGraphic);
-
-  return graphics;
-};
