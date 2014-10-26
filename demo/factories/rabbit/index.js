@@ -1,11 +1,11 @@
 'use strict';
 
 var compo = require('compo'),
-    GameData = require('./data/game-data'),
-    TileGraphic = require('../graphics/tile-graphic'),
-    Point = require('../data/point'),
-    Character = require('./data/character'),
-    buildPhysics = require('./components/physics');
+    GameData = require('../shared/game-data'),
+    TileGraphic = require('../../graphics/tile-graphic'),
+    Point = require('../../data/point'),
+    Character = require('../shared/character'),
+    buildPhysics = require('../shared/character-physics');
 
 var url = '/assets/allenemiessheet.png',
     pointUrl = '/assets/point.png';

@@ -1,12 +1,12 @@
 'use strict';
 
 var compo = require('compo'),
-    GameData = require('./data/game-data'),
-    Controller = require('../behavior/keyboard-controller'),
-    Character = require('./data/character'),
+    GameData = require('../shared/game-data'),
+    Controller = require('../../behavior/keyboard-controller'),
+    Character = require('../shared/character'),
     PlayerStateMachine = require('./state/player-machine'),
-    buildGraphics = require('./components/player-animation'),
-    buildPhysics = require('./components/physics');
+    buildGraphics = require('./animation'),
+    buildPhysics = require('../shared/character-physics');
 
 module.exports = function(engine, world) {
   var entity = world.entity();

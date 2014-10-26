@@ -3,7 +3,7 @@
 var compo = require('compo'),
     behavior = require('./behavior/system'),
     buildPlayer = require('./factories/player'),
-    buildNpc = require('./factories/npc'),
+    buildNpc = require('./factories/rabbit'),
     buildLevel = require('./factories/level'),
     Matrix = require('./data/matrix');
 

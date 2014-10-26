@@ -1,9 +1,9 @@
 'use strict';
 
-var GameData = require('./data/game-data'),
-    Bullet = require('./data/bullet'),
-    buildGraphics = require('./components/bullet-animation'),
-    buildPhysics = require('./components/bullet-physics');
+var GameData = require('../shared/game-data'),
+    Bullet = require('./bullet'),
+    buildGraphics = require('./animation'),
+    buildPhysics = require('./physics');
 
 var pool = [];
 

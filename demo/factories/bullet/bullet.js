@@ -1,6 +1,6 @@
 'use strict';
 
-var physics = require('../components/bullet-physics'),
+var physics = require('./physics'),
     Direction = require('../../data/direction');
 
 function Bullet(data, physics, graphics) {

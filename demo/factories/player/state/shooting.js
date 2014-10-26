@@ -1,7 +1,7 @@
 'use strict';
 
 var compo = require('compo'),
-    bulletFactory = require('../bullet'),
+    bulletFactory = require('../../bullet'),
     PlayerState = require('./player');
 
 var ShootingState = compo.extend(PlayerState, function(args) {
