@@ -7,7 +7,7 @@ var MAX_X_VEL = 400,
 
 module.exports = function(engine, entity, data, type) {
   var tilePhysics = new Tile(data.loc, data.hitbox, type);
-  tilePhysics.collidable.active = false;
+  engine.physics.restrictCollisions('bullet', ['npc']);
   engine.physics.tiles.attach(entity, tilePhysics);
 
   tilePhysics.maxVelocity.y = MAX_Y_VEL;
