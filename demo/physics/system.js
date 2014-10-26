@@ -121,12 +121,16 @@ function resolveX(dir, delta, component, collidable) {
     cH = collidable.hitbox;
     if(dir === 1) {
       loc.x = cL.x + cH.x - h.width - h.x;
-      component.emitter.trigger('collide:right', null);
-      collidable.emitter.trigger('collide:left', null);
+      component.emitter.trigger('collide:right', collidable);
+      component.emitter.trigger('collide', collidable);
+      collidable.emitter.trigger('collide:left', component.collidable);
+      collidable.emitter.trigger('collide', component.collidable);
     } else {
       loc.x = cL.x + cH.x + cH.width - h.x;
-      component.emitter.trigger('collide:left', null);
-      collidable.emitter.trigger('collide:right', null);
+      component.emitter.trigger('collide:left', collidable);
+      component.emitter.trigger('collide', collidable);
+      collidable.emitter.trigger('collide:right', component.collidable);
+      collidable.emitter.trigger('collide', component.collidable);
     }
     v.x = 0;
   }
@@ -196,12 +200,16 @@ function resolveY(dir, delta, component, collidable) {
     cH = collidable.hitbox;
     if(dir === 1) {
       loc.y = cL.y + cH.y - h.height - h.y;
-      component.emitter.trigger('collide:bottom', null);
-      collidable.emitter.trigger('collide:top', null);
+      component.emitter.trigger('collide:bottom', collidable);
+      component.emitter.trigger('collide', collidable);
+      collidable.emitter.trigger('collide:top', component.collidable);
+      collidable.emitter.trigger('collide', component.collidable);
     } else {
       loc.y = cL.y + cH.y + cH.height - h.y;
-      component.emitter.trigger('collide:top', null);
-      collidable.emitter.trigger('collide:bottom', null);
+      component.emitter.trigger('collide:top', collidable);
+      component.emitter.trigger('collide', collidable);
+      collidable.emitter.trigger('collide:bottom', component.collidable);
+      collidable.emitter.trigger('collide', component.collidable);
     }
     v.y = 0;
   }
