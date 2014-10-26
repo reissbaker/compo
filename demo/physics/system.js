@@ -47,7 +47,7 @@ function attemptMove(delta, tile, tiles, grids) {
 var savedMovementHitbox = new Rect;
 function attemptX(delta, component, components, grids) {
   var collider,
-      v = component.velocity.x,
+      v = absClamp(component.velocity.x, component.maxVelocity.x),
       h = component.collidable.hitbox,
       loc = component.collidable.loc,
       deltaSeconds = delta / 1000,
@@ -85,7 +85,7 @@ function resolveX(dir, delta, component, collidable) {
       loc = component.collidable.loc,
       deltaSeconds = delta / 1000,
       max = m.x * deltaSeconds,
-      movement = absClamp(v.x, max) * deltaSeconds,
+      movement = absClamp(v.x, m.x) * deltaSeconds,
       aDir = a.x > 0 ? 1 : (a.x < 0 ? -1 : 0);
 
   // No collider? Cool, move freely.
@@ -93,7 +93,7 @@ function resolveX(dir, delta, component, collidable) {
     loc.x += absClamp(movement, max);
     v.x = absClamp(
       v.x + (a.x * deltaSeconds) + (g.x * deltaSeconds),
-      max
+      m.x
     );
     notAccelerating = (aDir === 0 || (aDir !== dir && dir !== 0));
     noGravity = g.x === 0;
@@ -120,7 +120,7 @@ function resolveX(dir, delta, component, collidable) {
 
 function attemptY(delta, component, components, grids) {
   var collider,
-      v = component.velocity.y,
+      v = absClamp(component.velocity.y, component.maxVelocity.y),
       h = component.collidable.hitbox,
       loc = component.collidable.loc,
       deltaSeconds = delta / 1000,
@@ -158,7 +158,7 @@ function resolveY(dir, delta, component, collidable) {
       loc = component.collidable.loc,
       deltaSeconds = delta / 1000,
       max = m.y * deltaSeconds,
-      movement = absClamp(v.y, max) * deltaSeconds,
+      movement = absClamp(v.y, m.y) * deltaSeconds,
       aDir = a.y > 0 ? 1 : (a.y < 0 ? -1 : 0);
 
   // No collider? Cool, move freely.
@@ -166,7 +166,7 @@ function resolveY(dir, delta, component, collidable) {
     loc.y += absClamp(movement, max);
     v.y = absClamp(
       v.y + (a.y * deltaSeconds) + (g.y * deltaSeconds),
-      max
+      m.y
     );
     notAccelerating = (aDir === 0 || (aDir !== dir && dir !== 0));
     noGravity = g.y === 0;

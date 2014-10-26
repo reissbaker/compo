@@ -17,7 +17,7 @@ function create(engine, world) {
   var data = new GameData(0, 0, 0, 0, 5, 5);
 
   var graphics = buildGraphics(engine, entity, data);
-  var physics = buildPhysics(engine, entity, data);
+  var physics = buildPhysics(engine, entity, data, 'bullet');
 
   return new Bullet(data, physics, graphics);
 }

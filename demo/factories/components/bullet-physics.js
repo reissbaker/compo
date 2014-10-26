@@ -2,7 +2,7 @@
 
 var Tile = require('../../physics/tile');
 
-var MAX_X_VEL = 10000,
+var MAX_X_VEL = 400,
     MAX_Y_VEL = MAX_X_VEL;
 
 module.exports = function(engine, entity, data, type) {

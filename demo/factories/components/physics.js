@@ -2,8 +2,8 @@
 
 var Tile = require('../../physics/tile');
 
-var MAX_X_VEL = 8000,
-    MAX_Y_VEL = 12000,
+var MAX_X_VEL = 250,
+    MAX_Y_VEL = 350,
     GRAVITY = 1600,
     DRAG = 3000;
 
