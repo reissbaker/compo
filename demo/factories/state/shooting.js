@@ -31,7 +31,7 @@ ShootingState.prototype.update = function() {
       // The player has a gun, which this state fires.
       // Gun instance determines rate of fire.
       this.count++;
-      if(this.count >= 20) {
+      if(this.count >= 10) {
         fire(this.engine, this.world, this.anim, this.character.data);
         this.count = 0;
       }
@@ -52,7 +52,7 @@ function shootBullet(engine, world, shooterData) {
   var bulletMid = bullet.data.hitbox.height / 2;
   var shooterMid = shooterData.hitbox.height / 2;
   bullet.data.loc.x = shooterData.loc.x;
-  bullet.data.loc.y = shooterData.loc.y + shooterMid - bulletMid;
+  bullet.data.loc.y = shooterData.loc.y + shooterMid - bulletMid + 4;
   bullet.physics.velocity.x = bullet.physics.maxVelocity.x * shooterData.dir.x;
   bullet.data.loc.x += shooterData.hitbox.width / 2 * shooterData.dir.x;
 }
