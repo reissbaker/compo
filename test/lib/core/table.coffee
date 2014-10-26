@@ -48,6 +48,7 @@ describe 'table', ->
       table.attach(entity, component)
       table.attach(entity, other)
       table.detach(entity, component)
+      table.compact()
 
       expect(table.getComponents(entity)).to.deep.equal([other])
 
@@ -56,6 +57,7 @@ describe 'table', ->
       component = new Component
       table.attach(entity, component)
       table.detach(entity, component)
+      table.compact()
 
       expect(table.getComponents(entity)).to.equal(undefined)
 
@@ -118,3 +120,70 @@ describe 'table', ->
         done() if times == 0
       table.detachAllFrom(entity)
 
+  describe 'attached', ->
+    it 'does nothing if there are no components', ->
+      ran = false
+      table.attached -> ran = true
+      expect(ran).to.be.false
+
+    it 'runs over all attached components', ->
+      entity = db.entity()
+      a = table.attach(entity, new Component)
+      b = table.attach(entity, new Component)
+      all = [a, b]
+      times = all.length
+      table.attached (c) ->
+        expect(all).to.include.members([c])
+        times--
+      expect(times).to.equal(0)
+
+    it 'does not include nulled-out components even before compaction', ->
+      entity = db.entity()
+      a = table.attach(entity, new Component)
+      b = table.attach(entity, new Component)
+      table.detach(entity, b)
+      table.attached (c) ->
+        expect(c).to.equal(a)
+
+  describe 'getAttached', ->
+    it 'returns an empty array if there are no attached components', ->
+      expect(table.getAttached()).to.deep.equal([])
+
+    it 'returns the array of attached components', ->
+      entity = db.entity()
+      components = []
+      components.push(table.attach(entity, new Component))
+      components.push(table.attach(entity, new Component))
+      components.push(table.attach(entity, new Component))
+      expect(table.getAttached()).to.deep.equal(components)
+
+    it 'is sparse if compaction has not been run', ->
+      entity = db.entity()
+      table.attach(entity, new Component)
+      toRemove = table.attach(entity, new Component)
+      table.attach(entity, new Component)
+      table.detach(entity, toRemove)
+      sparse = false
+
+      for item in table.getAttached()
+        expect(item).to.not.equal(toRemove)
+        if item == null
+          sparse = true
+
+      expect(sparse).to.be.true
+
+    it 'is not sparse if compaction has been run', ->
+      entity = db.entity()
+      table.attach(entity, new Component)
+      toRemove = table.attach(entity, new Component)
+      table.attach(entity, new Component)
+      table.detach(entity, toRemove)
+      table.compact()
+      sparse = false
+
+      for item in table
+        expect(item).to.not.equal(toRemove)
+        if item == null
+          sparse = true
+
+      expect(sparse).to.be.false

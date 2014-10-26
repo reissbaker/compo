@@ -12,6 +12,13 @@ export function each<T>(array: T[], callback: (el: T) => any) {
   }
 }
 
+export function safeEach<T>(array: T[], callback: (el: T) => any) {
+  for(var i = 0, l = array.length; i < l; i++) {
+    var curr = array[i];
+    if(curr != null) callback(curr);
+  }
+}
+
 export function remove<T>(array: T[], item: T) {
   for(var i = 0, l = array.length; i < l; i++) {
     if(array[i] === item) {
@@ -19,6 +26,39 @@ export function remove<T>(array: T[], item: T) {
       return;
     }
   }
+}
+
+export function nullify<T>(array: T[], item: T) {
+  for(var i = 0, l = array.length; i < l; i++) {
+    if(array[i] === item) {
+      array[i] = null;
+      return;
+    }
+  }
+}
+
+export function compact<T>(array: T[]) {
+  var start = -1,
+      runLength = 0,
+      inRun = false;
+
+  for(var i = 0, l = array.length; i < l; i++) {
+    if(array[i] === null) {
+      if(!inRun) {
+        inRun = true;
+        start = i;
+      }
+    } else if(inRun) {
+      runLength = i - start;
+      array.splice(start, runLength);
+      i -= runLength;
+      l -= runLength;
+      inRun = false;
+    }
+  }
+
+  // Clean up at end
+  if(inRun) array.splice(start, i - start);
 }
 
 export interface Constructor {

@@ -54,6 +54,12 @@ class Database {
     return entity;
   }
 
+  compact() {
+    util.each(this._tables, (table) => {
+      table.compact();
+    });
+  }
+
   reset() {
     this._alive = {};
     this._children = {};

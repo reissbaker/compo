@@ -14,6 +14,7 @@ class Table<T extends Component> {
   private _attached: T[] = [];
   private _primaryIdx: { [s: number ]: T[] } = {};
   private _emitter = new Emitter<T>(ATTACH_EVENT, DETACH_EVENT);
+  private _detached: Entity[] = [];
 
 
   /*
@@ -42,13 +43,15 @@ class Table<T extends Component> {
     var row = this._primaryIdx[entity.id];
     if(!row) return;
 
-    // remove all indices
-    util.remove(this._attached, component);
-    util.remove(row, component);
-
-    if(row.length === 0) delete this._primaryIdx[entity.id];
-
+    // trigger the singular event first, for consistency with `detachAllFrom`
     this._emitter.trigger(DETACH_EVENT, component);
+
+    // track removals for compaction
+    this._detached.push(entity);
+
+    // null out all indices
+    util.nullify(this._attached, component);
+    util.nullify(row, component);
 
     return component;
   }
@@ -62,20 +65,40 @@ class Table<T extends Component> {
     var row = this._primaryIdx[entity.id];
     if(!row) return;
 
-    // remove secondary indices
-    util.each(row, (component: T) => {
-      util.remove(this._attached, component);
-    });
-
-    // remove primary index
-    delete this._primaryIdx[entity.id];
-
-    // trigger events after removal finishes
+    // trigger events before nulling out indices
     util.each(row, (component: T) => {
       this._emitter.trigger(DETACH_EVENT, component)
     });
 
+    // null out secondary indices
+    util.each(row, (component: T) => {
+      util.nullify(this._attached, component);
+    });
+
+    // null out and remove primary index immediately, rather than waiting for
+    // compaction
+    for(var i = 0, l = row.length; i < l; i++) {
+      row[i] = null;
+    }
+    delete this._primaryIdx[entity.id];
+
     return row;
+  }
+
+
+  /*
+   * Compacts the indices. Should be called periodically to ensure null
+   * references get cleaned up.
+   */
+
+  compact() {
+    var curr: Entity;
+    for(var curr = this._detached.pop(); curr; curr = this._detached.pop()) {
+      var row = this._primaryIdx[curr.id];
+      util.compact(row);
+      if(row.length === 0) delete this._primaryIdx[curr.id];
+    }
+    util.compact(this._attached);
   }
 
 
@@ -113,13 +136,13 @@ class Table<T extends Component> {
    */
 
   attached(callback: Callback<T>) {
-    util.each(this._attached, callback);
+    util.safeEach(this._attached, callback);
   }
 
   components(entity: Entity, callback: Callback<T>) {
     var row = this._primaryIdx[entity.id];
     if(!row) return;
-    util.each(row, callback);
+    util.safeEach(row, callback);
   }
 
 

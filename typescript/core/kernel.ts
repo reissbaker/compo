@@ -30,6 +30,7 @@ class Kernel {
     util.backwards(this._systems, (system) => {
       system.after(delta);
     });
+    this.db.compact();
   }
 
   render(delta: number) {
