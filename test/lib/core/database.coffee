@@ -50,7 +50,7 @@ describe 'database', ->
     it 'destroys the entity', ->
       a = db.entity()
       db.destroy(a)
-      expect(db.isAlive(a)).to.not.be.true
+      expect(db.isAlive(a)).to.be.false
 
     it 'destroys child entities when the parent is destroyed', ->
       a = db.entity()

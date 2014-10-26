@@ -75,7 +75,7 @@ class Database {
   }
 
   isAlive(entity: Entity): boolean {
-    return this._alive[entity.id];
+    return !!this._alive[entity.id];
   }
 }
 
