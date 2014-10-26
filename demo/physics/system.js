@@ -43,7 +43,9 @@ TilePhysics.prototype.update = function(delta) {
       grids = this.grids.getAttached();
 
   for(i = 0, l = tiles.length; i < l; i++) {
-    attemptMove(delta, tiles[i], tiles, grids, this._typedColliders);
+    if(tiles[i]) {
+      attemptMove(delta, tiles[i], tiles, grids, this._typedColliders);
+    }
   }
 };
 
@@ -227,7 +229,7 @@ function collideAlongX(component, hitbox, components, grids, dir, typedColliders
 
   for(i = 0, l = colliders.length; i < l; i++) {
     curr = colliders[i];
-    if(!curr.active) continue;
+    if(!curr || !curr.active) continue;
 
     if(dir < 0) startingEdge = hitbox.x;
     else startingEdge = hitbox.x + hitbox.width;
@@ -257,7 +259,7 @@ function collideAlongY(component, hitbox, components, grids, dir, typedColliders
 
   for(i = 0, l = colliders.length; i < l; i++) {
     curr = colliders[i];
-    if(!curr.active) continue;
+    if(!curr || !curr.active) continue;
 
     if(dir < 0) startingEdge = hitbox.y;
     else startingEdge = hitbox.y + hitbox.height;
@@ -295,6 +297,8 @@ function collide(component, movementHitbox, components, grids, typedColliders) {
 
   for(i = 0, l = components.length; i < l; i++) {
     curr = components[i];
+    if(!curr) continue;
+
     collidable = curr.collidable;
     if(!collisionAllowed(component.collidable, collidable, typedColliders)) {
       continue;
@@ -309,6 +313,7 @@ function collide(component, movementHitbox, components, grids, typedColliders) {
 
   for(i = 0, l = grids.length; i < l; i++) {
     grid = grids[i];
+    if(!grid) continue;
     gridCollisions = gridCollide(movementHitbox, grid);
     for(g = 0, gL = gridCollisions.length; g < gL; g++) {
       collidable = gridCollisions[g];
