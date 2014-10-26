@@ -1,5 +1,10 @@
 'use strict';
 
+/*
+ * Ugh, this is a mess. Known broken thing that's a pain to fix with the current
+ * design: collision events may trigger twice for a given collision.
+ */
+
 var compo = require('compo'),
     Tile = require('./tile'),
     CollisionGrid = require('./grid'),
@@ -15,6 +20,7 @@ var X_AXIS = 'x',
 var TilePhysics = compo.extend(compo.System, function() {
   this.tiles = null;
   this.grids = null;
+  this._typedColliders = {};
 });
 
 TilePhysics.prototype.onAttach = function(db) {
@@ -27,25 +33,29 @@ TilePhysics.prototype.onDetach = function(db) {
   db.drop(this.grids);
 };
 
+TilePhysics.prototype.restrictCollisions = function(type, types) {
+  this._typedColliders[type] = types;
+};
+
 TilePhysics.prototype.update = function(delta) {
   var i, l,
       tiles = this.tiles.getAttached(),
       grids = this.grids.getAttached();
 
   for(i = 0, l = tiles.length; i < l; i++) {
-    attemptMove(delta, tiles[i], tiles, grids);
+    attemptMove(delta, tiles[i], tiles, grids, this._typedColliders);
   }
 };
 
-function attemptMove(delta, tile, tiles, grids) {
+function attemptMove(delta, tile, tiles, grids, typedColliders) {
   if(tile.immovable) return;
-  attemptX(delta, tile, tiles, grids);
-  attemptY(delta, tile, tiles, grids);
+  attemptX(delta, tile, tiles, grids, typedColliders);
+  attemptY(delta, tile, tiles, grids, typedColliders);
 }
 
 // Don't reallocate this constantly
 var savedMovementHitbox = new Rect;
-function attemptX(delta, component, components, grids) {
+function attemptX(delta, component, components, grids, typedColliders) {
   var collider,
       v = absClamp(component.velocity.x, component.maxVelocity.x),
       h = component.collidable.hitbox,
@@ -69,7 +79,7 @@ function attemptX(delta, component, components, grids) {
   copyOffsetHitbox(savedMovementHitbox, savedMovementHitbox, loc);
 
   collider = collideAlongX(
-    component, savedMovementHitbox, components, grids, xDir
+    component, savedMovementHitbox, components, grids, xDir, typedColliders
   );
   resolveX(xDir, delta, component, collider);
 }
@@ -110,15 +120,17 @@ function resolveX(dir, delta, component, collidable) {
     if(dir === 1) {
       loc.x = cL.x + cH.x - h.width - h.x;
       component.emitter.trigger('collide:right', null);
+      collidable.emitter.trigger('collide:left', null);
     } else {
       loc.x = cL.x + cH.x + cH.width - h.x;
       component.emitter.trigger('collide:left', null);
+      collidable.emitter.trigger('collide:right', null);
     }
     v.x = 0;
   }
 }
 
-function attemptY(delta, component, components, grids) {
+function attemptY(delta, component, components, grids, typedColliders) {
   var collider,
       v = absClamp(component.velocity.y, component.maxVelocity.y),
       h = component.collidable.hitbox,
@@ -142,7 +154,7 @@ function attemptY(delta, component, components, grids) {
   copyOffsetHitbox(savedMovementHitbox, savedMovementHitbox, loc);
 
   collider = collideAlongY(
-    component, savedMovementHitbox, components, grids, dir
+    component, savedMovementHitbox, components, grids, dir, typedColliders
   );
   resolveY(dir, delta, component, collider);
 }
@@ -183,9 +195,11 @@ function resolveY(dir, delta, component, collidable) {
     if(dir === 1) {
       loc.y = cL.y + cH.y - h.height - h.y;
       component.emitter.trigger('collide:bottom', null);
+      collidable.emitter.trigger('collide:top', null);
     } else {
       loc.y = cL.y + cH.y + cH.height - h.y;
       component.emitter.trigger('collide:top', null);
+      collidable.emitter.trigger('collide:bottom', null);
     }
     v.y = 0;
   }
@@ -204,10 +218,10 @@ function absClamp(val, max) {
  *
  * Oof. This thing could be refactored.
  */
-function collideAlongX(component, hitbox, components, grids, dir) {
+function collideAlongX(component, hitbox, components, grids, dir, typedColliders) {
   var i, l, curr, minDistance, currDistance, startingEdge,
       min = null,
-      colliders = collide(component, hitbox, components, grids);
+      colliders = collide(component, hitbox, components, grids, typedColliders);
 
   if(colliders.length === 0) return null;
 
@@ -234,10 +248,10 @@ function collideAlongX(component, hitbox, components, grids, dir) {
   return min;
 }
 
-function collideAlongY(component, hitbox, components, grids, dir) {
+function collideAlongY(component, hitbox, components, grids, dir, typedColliders) {
   var i, l, curr, minDistance, currDistance, startingEdge,
       min = null,
-      colliders = collide(component, hitbox, components, grids);
+      colliders = collide(component, hitbox, components, grids, typedColliders);
 
   if(colliders.length === 0) return null;
 
@@ -271,7 +285,7 @@ function collideAlongY(component, hitbox, components, grids, dir) {
  * component.
  */
 var computedHitbox = new Rect;
-function collide(component, movementHitbox, components, grids) {
+function collide(component, movementHitbox, components, grids, typedColliders) {
   var i, l, curr, collidable, grid, gridCollisions, g, gL,
       collidables = [];
 
@@ -282,6 +296,10 @@ function collide(component, movementHitbox, components, grids) {
   for(i = 0, l = components.length; i < l; i++) {
     curr = components[i];
     collidable = curr.collidable;
+    if(!collisionAllowed(component.collidable, collidable, typedColliders)) {
+      continue;
+    }
+
     copyOffsetHitbox(computedHitbox, collidable.hitbox, collidable.loc);
 
     if(component !== curr && doesCollide(movementHitbox, computedHitbox)) {
@@ -293,11 +311,30 @@ function collide(component, movementHitbox, components, grids) {
     grid = grids[i];
     gridCollisions = gridCollide(movementHitbox, grid);
     for(g = 0, gL = gridCollisions.length; g < gL; g++) {
-      collidables.push(gridCollisions[g]);
+      collidable = gridCollisions[g];
+      if(!collisionAllowed(component.collidable, collidable, typedColliders)) {
+        continue;
+      }
+      collidables.push(collidable);
     }
   }
 
   return collidables;
+}
+
+function collisionAllowed(a, b, typedColliders) {
+  return leftCollisionAllowed(a, b, typedColliders) &&
+         leftCollisionAllowed(b, a, typedColliders);
+}
+
+function leftCollisionAllowed(a, b, typedColliders) {
+  var types = typedColliders[a.type],
+      target = b.type;
+  if(!types) return true;
+  for(var i = 0, l = types.length; i < l; i++) {
+    if(types[i] === target) return true;
+  }
+  return false;
 }
 
 

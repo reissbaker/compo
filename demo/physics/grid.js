@@ -11,7 +11,7 @@ var CollisionGrid = compo.extend(compo.Component, function(loc, matrix, tileSize
   this.type = type;
 
   this.collisionMap = collisionMap(collisionTiles);
-  this.collidables = collidables(loc, tileSize, matrix);
+  this.collidables = collidables(loc, tileSize, matrix, type);
   this._hitbox = new Rect(
     this.loc.x,
     this.loc.y,
@@ -53,7 +53,7 @@ function collisionMap(collidableTiles) {
   return collisionMap;
 }
 
-function collidables(loc, tileSize, matrix) {
+function collidables(loc, tileSize, matrix, type) {
   var r, c,
       collidables = [];
   for(r = 0; r < matrix.numRows; r++) {
@@ -66,7 +66,8 @@ function collidables(loc, tileSize, matrix) {
           r * tileSize.y,
           tileSize.x,
           tileSize.y
-        )
+        ),
+        type
       ));
     }
   }

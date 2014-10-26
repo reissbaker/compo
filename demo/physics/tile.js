@@ -5,8 +5,7 @@ var compo = require('compo'),
     Collidable = require('./collidable');
 
 var PhysicsComponent = compo.extend(compo.Component, function(loc, hitbox, type) {
-  this.collidable = new Collidable(loc, hitbox);
-  this.type = type;
+  this.collidable = new Collidable(loc, hitbox, type);
 
   this.velocity = new Point;
   this.maxVelocity = new Point;
@@ -16,7 +15,7 @@ var PhysicsComponent = compo.extend(compo.Component, function(loc, hitbox, type)
 
   this.immovable = false;
 
-  this.emitter = new compo.Emitter();
+  this.emitter = this.collidable.emitter;
 });
 
 
