@@ -19,6 +19,10 @@ function create(engine, world) {
   var graphics = buildGraphics(engine, entity, data);
   var physics = buildPhysics(engine, entity, data, 'bullet');
 
+  physics.emitter.on('collide', function() {
+    engine.kernel.db.destroy(entity);
+  });
+
   return new Bullet(data, physics, graphics);
 }
 
