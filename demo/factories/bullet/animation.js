@@ -14,12 +14,14 @@ module.exports = function(engine, entity, data) {
     url: url,
     width: 12,
     height: 12,
-    frameTime: 100,
+    frameTime: 40,
     frameMidpoint: new Point(6, 6),
     crop: new Rect(0, 0, 96, 36)
   });
 
+  graphics.defineLoop(exports.FIRE, [0, 1]);
   graphics.defineLoop(exports.FLASH, [2,2,2,3,3,3]);
+  graphics.defineLoop(exports.EXPLODE, [4, 5, 6]);
   engine.renderer.table.attach(entity, graphics);
 
   graphics.playLoop(exports.FLASH);
@@ -28,3 +30,5 @@ module.exports = function(engine, entity, data) {
 };
 
 exports.FLASH = 'flash';
+exports.EXPLODE = 'explode';
+exports.FIRE = 'fire';
