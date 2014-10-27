@@ -43,7 +43,7 @@ export function compact<T>(array: T[]) {
       inRun = false;
 
   for(var i = 0, l = array.length; i < l; i++) {
-    if(array[i] === null) {
+    if(array[i] == null) {
       if(!inRun) {
         inRun = true;
         start = i;
