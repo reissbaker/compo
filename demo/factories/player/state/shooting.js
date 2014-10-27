@@ -48,7 +48,7 @@ function fire(engine, world, anim, shooterData) {
 }
 
 function shootBullet(engine, world, shooterData) {
-  var bullet = bulletFactory.build(engine, world);
+  var bullet = bulletFactory(engine, world);
   var bulletMid = bullet.data.hitbox.height / 2;
   var shooterMid = shooterData.hitbox.height / 2;
   bullet.data.loc.x = shooterData.loc.x;
