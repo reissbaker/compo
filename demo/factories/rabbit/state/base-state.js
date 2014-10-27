@@ -13,9 +13,10 @@ var BaseState = compo.extend(compo.State, function(args) {
 
   this.graphics = args.character.graphics;
   this.physics = args.character.physics;
+  this.dir = args.character.data.dir;
 });
 
 BaseState.prototype.update = function(delta) {};
-BaseState.prototype.takeDamage = function() {};
+BaseState.prototype.takeDamage = function(xDir, yDir) {};
 
 module.exports = BaseState;

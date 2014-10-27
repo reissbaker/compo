@@ -1,11 +1,10 @@
 'use strict';
 
 var compo = require('compo'),
+    Direction = require('../../data/direction'),
     NpcController = require('../../behavior/npc-controller'),
     RabbitStateMachine = require('./state/machine'),
     GameData = require('../shared/game-data'),
-    TileGraphic = require('../../graphics/tile-graphic'),
-    Point = require('../../data/point'),
     Character = require('../shared/character'),
     buildGraphics = require('./animation'),
     buildPhysics = require('../shared/character-physics');
@@ -29,8 +28,14 @@ module.exports = function(engine, world) {
     entity: entity
   });
 
+  physics.emitter.on('collide:left', function(collidable) {
+    if(collidable.type === 'bullet') state.takeDamage(Direction.LEFT, 0);
+  });
+  physics.emitter.on('collide:right', function(collidable) {
+    if(collidable.type === 'bullet') state.takeDamage(Direction.RIGHT, 0);
+  });
   physics.emitter.on('collide', function(collidable) {
-    if(collidable.type === 'bullet') state.takeDamage();
+    if(collidable.type === 'bullet') state.takeDamage(0, 0);
   });
 
   engine.behavior.table.attach(entity, new NpcController(state));

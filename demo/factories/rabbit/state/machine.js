@@ -18,8 +18,8 @@ RabbitStateMachine.prototype.update = function(delta) {
   this.currentState().update(delta);
 };
 
-RabbitStateMachine.prototype.takeDamage = function() {
-  this.currentState().takeDamage();
+RabbitStateMachine.prototype.takeDamage = function(xDir, yDir) {
+  this.currentState().takeDamage(xDir, yDir);
 };
 
 module.exports = RabbitStateMachine;

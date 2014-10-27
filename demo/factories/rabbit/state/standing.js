@@ -11,7 +11,8 @@ StandingState.prototype.begin = function() {
   this.graphics.playLoop('stand');
 };
 
-StandingState.prototype.takeDamage = function() {
+StandingState.prototype.takeDamage = function(xDir) {
+  this.dir.x = -xDir;
   this.transition('dying');
 };
 
