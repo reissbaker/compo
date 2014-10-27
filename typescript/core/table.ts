@@ -43,7 +43,7 @@ class Table<T extends Component> {
     var row = this._primaryIdx[entity.id];
     if(!row) return;
 
-    // trigger the singular event first, for consistency with `detachAllFrom`
+    // trigger the event first, for consistency with `detachAllFrom`
     this._emitter.trigger(DETACH_EVENT, component);
 
     // track removals for compaction
@@ -76,7 +76,8 @@ class Table<T extends Component> {
     });
 
     // null out and remove primary index immediately, rather than waiting for
-    // compaction
+    // compaction. we know it can be deleted, the only question is whether
+    // existing code is iterating through the now-dead components.
     for(var i = 0, l = row.length; i < l; i++) {
       row[i] = null;
     }
