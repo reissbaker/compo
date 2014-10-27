@@ -55,6 +55,7 @@ function shootBullet(engine, world, shooterData) {
   bullet.data.loc.y = shooterData.loc.y + shooterMid - bulletMid + 4;
   bullet.physics.velocity.x = bullet.physics.maxVelocity.x * shooterData.dir.x;
   bullet.data.loc.x += shooterData.hitbox.width / 2 * shooterData.dir.x;
+  bullet.data.dir.x = shooterData.dir.x;
 }
 
 module.exports = ShootingState;
