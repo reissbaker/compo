@@ -89,15 +89,20 @@ class Table<T extends Component> {
   /*
    * Compacts the indices. Should be called periodically to ensure null
    * references get cleaned up.
+   *
+   * (In practice, the kernel currently compacts all tables at the end of every
+   * `tick` call.)
    */
 
   compact() {
     var curr: Entity;
-    for(var curr = this._detached.pop(); curr; curr = this._detached.pop()) {
+
+    while(curr = this._detached.pop()) {
       var row = this._primaryIdx[curr.id];
       util.compact(row);
       if(row.length === 0) delete this._primaryIdx[curr.id];
     }
+
     util.compact(this._attached);
   }
 
