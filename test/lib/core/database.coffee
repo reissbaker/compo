@@ -60,6 +60,13 @@ describe 'database', ->
       expect(db.isAlive(b)).to.not.be.true
       expect(db.getChildren(a)).to.equal(undefined)
 
+    it 'removes the entity from its parents list of children', ->
+      a = db.entity()
+      b = db.entity(a)
+      db.destroy(b)
+      expect(db.getChildren(a)).to.equal(undefined)
+
+
     it 'detaches all attached components from tables', (done) ->
       entity = db.entity()
       table = db.table()

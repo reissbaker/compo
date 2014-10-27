@@ -42,13 +42,17 @@ class Database {
   destroy(entity: Entity): Entity {
     if(!this._alive[entity.id]) return;
 
-    kill(entity, this._tables, this._alive, this._children, this._parents);
-
+    // get parent before entity is killed, since the reference will disappear
     var parent = this._parents[entity.id];
 
+    // kill entity
+    kill(entity, this._tables, this._alive, this._children, this._parents);
+
+    // clean up parent's child
     if(parent) {
       var parentChildArray = this._children[parent.id];
       util.remove(parentChildArray, entity);
+      if(parentChildArray.length === 0) delete this._children[parent.id];
     }
 
     return entity;

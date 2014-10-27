@@ -123,6 +123,7 @@ class Table<T extends Component> {
     this._emitter = new Emitter<T>(ATTACH_EVENT, DETACH_EVENT);
     this._attached = [];
     this._primaryIdx = {};
+    this._detached = [];
   }
 
 
