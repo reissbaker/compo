@@ -12,9 +12,7 @@ DyingState.prototype.begin = function() {
 };
 
 DyingState.prototype.update = function() {
-  if(this.graphics.stopped()) {
-    this.engine.kernel.db.destroy(this.entity);
-  }
+  if(this.graphics.stopped()) this.entity.destroy();
 };
 
 module.exports = DyingState;

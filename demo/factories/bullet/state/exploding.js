@@ -12,9 +12,7 @@ ExplodingState.prototype.begin = function() {
 };
 
 ExplodingState.prototype.update = function() {
-  if(this.graphics.stopped()) {
-    this.engine.kernel.db.destroy(this.entity);
-  }
+  if(this.graphics.stopped()) this.entity.destroy();
 };
 
 module.exports = ExplodingState;
