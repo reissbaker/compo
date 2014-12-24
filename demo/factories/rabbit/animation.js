@@ -21,6 +21,7 @@ module.exports = function(engine, entity, data) {
 
   graphics.defineLoop(exports.STAND, [2]);
   graphics.defineLoop(exports.DIE, [4, 5]);
+  graphics.defineLoop(exports.HOP, [3, 3]);
 
   graphics.playLoop(exports.STAND);
 
@@ -31,3 +32,4 @@ module.exports = function(engine, entity, data) {
 
 exports.STAND = 'stand';
 exports.DIE = 'die';
+exports.HOP = 'hop';

@@ -9,6 +9,17 @@ var StandingState = compo.extend(BaseState, function(args) {
 
 StandingState.prototype.begin = function() {
   this.graphics.playLoop('stand');
+  this.physics.acceleration.x = 0;
+};
+
+StandingState.prototype.left = function() {
+  BaseState.prototype.left.call(this);
+  this.transition('moving');
+};
+
+StandingState.prototype.right = function() {
+  BaseState.prototype.right.call(this);
+  this.transition('moving');
 };
 
 StandingState.prototype.takeDamage = function(xDir) {
