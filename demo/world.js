@@ -19,16 +19,16 @@ module.exports = {
 
 
     var i, tile, matrix, level,
-        numTiles = Math.ceil(document.body.clientWidth / (24 * 3));
+        numTiles = Math.ceil(document.body.clientWidth / (16 * 3));
 
     matrix = new Matrix(2, numTiles, -1);
     for(i = 0; i < numTiles; i++) {
-      matrix.set(1, i, 0);
+      matrix.set(1, i, 22);
     }
 
-    matrix.set(0, numTiles - 1, 0);
+    matrix.set(0, numTiles - 1, 22);
     level = buildLevel(engine, world, matrix);
-    level.loc.y = ((24 * 20) / 3) | 0;
+    level.loc.y = ((16 * 30) / 3) | 0;
 
 
     buildPlayer(engine, world);
