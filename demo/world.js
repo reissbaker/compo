@@ -31,7 +31,7 @@ module.exports = {
     level.loc.y = ((16 * 30) / 3) | 0;
 
 
-    buildPlayer(engine, world);
+    engine.player = buildPlayer(engine, world);
 
     return world;
   }

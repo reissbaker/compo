@@ -20,5 +20,7 @@ module.exports = compo.extend(compo.Engine, function(kernel) {
 
   this.renderer = renderer;
   kernel.attach(renderer);
+
+  this.player = null;
 });
 
