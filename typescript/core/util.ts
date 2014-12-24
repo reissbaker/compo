@@ -72,3 +72,11 @@ export function extend(Klass: Constructor, OtherKlass: Constructor) {
   OtherKlass.prototype.constructor = OtherKlass;
   return OtherKlass;
 }
+
+export interface NumericMap<V> {
+  [ key: number ]: V;
+}
+
+export interface StringMap<V> {
+  [ key: string]: V;
+}

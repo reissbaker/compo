@@ -8,9 +8,9 @@ import Entity = require('./entity');
 class Database {
   private _guid: number = 0;
 
-  private _alive: { [id: number]: boolean } = {};
-  private _children: { [id: number]: Entity[] } = {};
-  private _parents: { [id: number]: Entity } = {};
+  private _alive: util.NumericMap<boolean> = {};
+  private _children: util.NumericMap<Entity[]> = {};
+  private _parents: util.NumericMap<Entity> = {};
 
   private _tables: Table<any>[] = [];
 
