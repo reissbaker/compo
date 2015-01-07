@@ -22,9 +22,4 @@ StandingState.prototype.right = function() {
   this.transition('moving');
 };
 
-StandingState.prototype.takeDamage = function(xDir) {
-  this.dir.x = -xDir;
-  this.transition('dying');
-};
-
 module.exports = StandingState;

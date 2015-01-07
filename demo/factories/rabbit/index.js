@@ -38,8 +38,8 @@ module.exports = function(engine, world) {
     if(collidable.type === 'bullet') state.takeDamage(0, 0);
   });
 
-  engine.behavior.table.attach(entity, new NpcController(state));
+  var controller = new NpcController(state, engine, character);
+  engine.behavior.table.attach(entity, controller);
 
   return character;
 };
-

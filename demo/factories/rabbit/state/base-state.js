@@ -20,7 +20,10 @@ var BaseState = compo.extend(compo.State, function(args) {
 });
 
 BaseState.prototype.update = function(delta) {};
-BaseState.prototype.takeDamage = function(xDir, yDir) {};
+BaseState.prototype.takeDamage = function(xDir, yDir) {
+  this.dir.x = -xDir;
+  this.transition('dying');
+};
 BaseState.prototype.left = function() {
   this.dir.x = Direction.LEFT;
   this.physics.acceleration.x = ACCEL;

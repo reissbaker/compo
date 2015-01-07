@@ -15,4 +15,7 @@ DyingState.prototype.update = function() {
   if(this.graphics.stopped()) this.entity.destroy();
 };
 
+// When you're dying, don't keep taking more damage.
+DyingState.prototype.takeDamage = function() {};
+
 module.exports = DyingState;
