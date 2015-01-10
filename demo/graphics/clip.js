@@ -77,8 +77,8 @@ Clip.prototype.render = function(camera, scale, delta) {
       gPos = this.sprite.position,
       gScale = this.sprite.scale;
 
-  gPos.x = (camera.x + this.pos.x + this.offset.x) * scale.x;
-  gPos.y = (camera.y + this.pos.y + this.offset.y) * scale.y;
+  gPos.x = (-camera.x + this.pos.x + this.offset.x) * scale.x;
+  gPos.y = (-camera.y + this.pos.y + this.offset.y) * scale.y;
 
   gScale.x = this.dir.x * scale.x;
   gScale.y = this.dir.y * scale.y;
