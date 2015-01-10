@@ -6,6 +6,9 @@
 
 node_modules/
 
-build/
+build/*.gz
+build/*.js
+build/**/*.js
+build/**/**/*.js
 
 test/**/**/*.js

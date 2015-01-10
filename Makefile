@@ -18,6 +18,7 @@ $(LIB_DIR)/index.js:
 	mkdir -p $(LIB_DIR)
 	./node_modules/.bin/tsc  \
 		-m commonjs \
+		--declaration \
 		--outDir $(LIB_DIR) \
 		--noImplicitAny \
 		-t ES5 \
@@ -75,11 +76,13 @@ run-test:
 		test/
 
 .PHONY: build-compo
-build-compo: $(BUILD_DIR)/compo.js $(BUILD_DIR)/compo.min.js \
+build-compo: $(BUILD_DIR)/compo.js \
+	$(BUILD_DIR)/compo.min.js \
 	$(BUILD_DIR)/compo.min.js.gz
 
 .PHONY: build-demo
-build-demo: $(BUILD_DIR)/demo.js $(BUILD_DIR)/demo.min.js \
+build-demo: $(BUILD_DIR)/demo.js \
+	$(BUILD_DIR)/demo.min.js \
 	$(BUILD_DIR)/demo.min.js.gz
 
 .PHONY: build
@@ -94,4 +97,3 @@ rebuild: clean build
 
 .PHONY: test
 test: rebuild build-test run-test
-
