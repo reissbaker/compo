@@ -15,8 +15,8 @@ var TileGraphic = compo.extend(Graphic, function(position, direction, url, slice
   });
 });
 
-TileGraphic.prototype.render = function(scale) {
-  this.frame.render(scale);
+TileGraphic.prototype.render = function(camera, scale) {
+  this.frame.render(camera, scale);
 };
 TileGraphic.prototype.sprites = function() {
   return [this.frame.sprite];

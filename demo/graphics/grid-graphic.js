@@ -39,9 +39,9 @@ var GridGraphic = compo.extend(Graphic, function(args) {
 });
 
 
-Graphic.prototype.render =  function(scale) {
+Graphic.prototype.render =  function(camera, scale) {
   for(var i = 0, l = this.frames.length; i < l; i++) {
-    this.frames[i].render(scale);
+    this.frames[i].render(camera, scale);
   }
 };
 

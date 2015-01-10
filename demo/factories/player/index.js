@@ -2,6 +2,7 @@
 
 var compo = require('compo'),
     GameData = require('../shared/game-data'),
+    CameraTarget = require('../../behavior/camera-target'),
     Controller = require('../../behavior/keyboard-controller'),
     Character = require('../shared/character'),
     PlayerStateMachine = require('./state/player-machine'),
@@ -24,6 +25,7 @@ module.exports = function(engine, world) {
   });
 
   engine.behavior.table.attach(entity, new Controller(character, states));
+  engine.behavior.table.attach(entity, new CameraTarget(engine, character.data.loc));
 
   physics.emitter.on('collide:bottom', function() {
     states.land();
@@ -31,4 +33,3 @@ module.exports = function(engine, world) {
 
   return character;
 };
-
