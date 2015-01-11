@@ -24,8 +24,11 @@ module.exports = function(engine, world) {
     character: character
   });
 
-  engine.behavior.table.attach(entity, new Controller(character, states));
-  engine.behavior.table.attach(entity, new CameraTarget(engine, character.data.loc));
+  var cameraTarget = new CameraTarget(engine, character.data.loc);
+  engine.behavior.table.attach(entity, cameraTarget);
+
+  var controller = new Controller(character, states);
+  engine.behavior.table.attach(entity, controller);
 
   physics.emitter.on('collide:bottom', function() {
     states.land();
