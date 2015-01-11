@@ -3,8 +3,6 @@
 var Point = require('../data/point');
 
 function Camera() {
-  // Does scale also belong to the camera? It kind of seems like it...
-
   // The camera should support "deadzoning" a la latest Flixel: have a bounding
   // box of tolerance in which the camera doesn't move, and only move when a
   // line of the bounding box is crossed.
@@ -20,6 +18,12 @@ function Camera() {
 
 
   this._viewport = new Point(0, 0);
+
+  // Scale is awkward in here and makes it annoying to provide your own camera.
+  // Move it out. The only reason it's in here is because the camera needs to
+  // know the viewport size, but the renderer can be passed in on attach() and
+  // the camera can query it about the viewport rather than the camera owning
+  // the rendering scale.
   this.scale = new Point(1, 1);
 
   this._el = null;
@@ -63,6 +67,16 @@ Camera.prototype.viewportHeight = function() {
   return this._viewport.y / this.scale.y;
 };
 
+
+/*
+ * Movement
+ * -----------------------------------------------------------------------------
+ *
+ * Smoothly moves the camera to the provided coordinates. Use these for in-game
+ * camera motion; use the setters to set or reset the camera to exact points
+ * without smoothing.
+ */
+
 Camera.prototype.moveToCenterOn = function(x, y) {
   var xCen = x - this.viewportWidth() / 2,
       yCen = y - this.viewportHeight() / 2;
@@ -103,6 +117,57 @@ Camera.prototype.moveToY = function(y) {
   }
 };
 
+
+/*
+ * Setters
+ * -----------------------------------------------------------------------------
+ *
+ * These snap the camera to exact coordinates. Note that they still obey the
+ * camera bounds, so the camera may not go to the exact coordinate passed in if
+ * the bounds disallow it.
+ */
+
+Camera.prototype.centerOn = function(x, y) {
+  this.moveToCenterOn(x, y);
+  snap(this);
+};
+
+Camera.prototype.set = function(x, y) {
+  this.setX(x);
+  this.setY(y);
+};
+
+Camera.prototype.setX = function(x) {
+  this.moveToX(x);
+  xSnap(this);
+};
+
+
+Camera.prototype.setY = function(y) {
+  this.moveToY(y);
+  ySnap(this);
+};
+
+
+function snap(camera) {
+  xSnap(camera);
+  ySnap(camera);
+}
+
+function xSnap(camera) {
+  camera.loc.x = camera._target.x;
+}
+
+function ySnap(camera) {
+  camera.loc.y = camera._target.y;
+}
+
+
+/*
+ * Getters
+ * -----------------------------------------------------------------------------
+ */
+
 Camera.prototype.getX = function() {
   return this.loc.x;
 };
@@ -112,11 +177,13 @@ Camera.prototype.getY = function() {
 };
 
 Camera.prototype.update = function(delta) {
-  // Note: replace with deadzoning. Or deadzoning + lerp?
+  // TODO: Replace with deadzoning. Or deadzoning + lerp?
   var loc = this.loc,
       lerp = this.lerp,
       target = this._target;
 
+  // TODO: Throw some epsilon values in here to avoid constant infinitesimal
+  // changes.
   if(lerp.x) loc.x = smootherstep(loc.x, target.x, delta * lerp.x);
   else loc.x = target.x;
 
