@@ -11,19 +11,24 @@ function Camera() {
   this.loc = new Point(0, 0);
   this.target = new Point(0, 0);
   this.lerp = { x: 0.01, y: 0.01 };
-  this.bounds = { x: null, y: null, width: null, height: null };
+  this.bounds = {
+    left: null,
+    top: null,
+    right: null,
+    bottom: null
+  };
 }
 
 Camera.prototype.setX = function(x) {
   var bounds = this.bounds,
-      xNull = bounds.x === null,
-      widthNull = bounds.width === null;
+      leftNull = bounds.left === null,
+      rightNull = bounds.right === null;
 
-  if(xNull && widthNull) {
+  if(leftNull && rightNull) {
     this.target.x = x;
   } else {
-    if(!xNull) this.target.x = Math.max(x, bounds.x);
-    if(!widthNull) this.target.x = Math.min(x, bounds.width);
+    if(!leftNull) this.target.x = Math.max(x, bounds.left);
+    if(!rightNull) this.target.x = Math.min(x, bounds.right);
   }
 };
 
@@ -33,14 +38,14 @@ Camera.prototype.getX = function() {
 
 Camera.prototype.setY = function(y) {
   var bounds = this.bounds,
-      yNull = bounds.y === null,
-      heightNull = bounds.height === null;
+      topNull = bounds.top === null,
+      bottomNull = bounds.bottom === null;
 
-  if(yNull && heightNull) {
+  if(topNull && bottomNull) {
     this.target.y = y;
   } else {
-    if(!yNull) this.target.y = Math.max(y, bounds.y);
-    if(!heightNull) this.target.y = Math.min(y, bounds.height);
+    if(!topNull) this.target.y = Math.max(y, bounds.top);
+    if(!bottomNull) this.target.y = Math.min(y, bounds.bottom);
   }
 };
 

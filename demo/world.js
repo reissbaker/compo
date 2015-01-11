@@ -23,11 +23,11 @@ module.exports = {
     matrix = levelMatrix(ctxFromImage(levels[0]));
     level = buildLevel(engine, world, matrix);
 
-    engine.renderer.camera.bounds.x = 0;
+    var camera = engine.renderer.camera;
+    camera.bounds.left = 0;
     // HACK: the viewport height thing should be handled by camera class.
     // If viewport is resized this breaks.
-    engine.renderer.camera.bounds.height = matrix.numRows * 16 - engine.renderer.viewportHeight();
-    window.camera = engine.renderer.camera;
+    camera.bounds.bottom = matrix.numRows * 16 - engine.renderer.viewportHeight();
 
     engine.player = buildPlayer(engine, world);
     engine.player.data.loc.y = 200;
