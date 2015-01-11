@@ -37,6 +37,11 @@ module.exports = {
   }
 };
 
+
+/*
+ * These functions belong elsewhere.
+ */
+
 function levelMatrix(canvas) {
   var ctx = canvas.getContext('2d');
   var matrix = new Matrix(canvas.height, canvas.width, -1);

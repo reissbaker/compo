@@ -4,19 +4,22 @@ var Point = require('../data/point');
 
 function Camera() {
   // Does scale also belong to the camera? It kind of seems like it...
+
   // The camera should support "deadzoning" a la latest Flixel: have a bounding
   // box of tolerance in which the camera doesn't move, and only move when a
   // line of the bounding box is crossed.
 
   this.loc = new Point(0, 0);
   this.target = new Point(0, 0);
-  this.lerp = { x: 0.01, y: 0.01 };
   this.bounds = {
     left: null,
     top: null,
     right: null,
     bottom: null
   };
+
+  // These values are total BS.
+  this.lerp = { x: 0.01, y: 0.01 };
 }
 
 Camera.prototype.setX = function(x) {

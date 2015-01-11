@@ -4,6 +4,7 @@ var compo = require('compo'),
     Camera = require('./camera'),
     Point = require('../data/point');
 
+// Possibly allow camera to be passed in, to allow different camera impls?
 var Renderer = compo.extend(compo.System, function() {
   this.table = null;
   this.stage = new PIXI.Stage(0x222222);
