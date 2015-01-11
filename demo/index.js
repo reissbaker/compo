@@ -16,8 +16,12 @@ stats.appendTo(document.body);
 runner.on('beginFrame', function() { stats.before(); });
 runner.on('endFrame', function() { stats.after(); });
 
-World.build(engine);
-
 window.demo = { runner: runner };
 
-runner.start();
+var image = new Image();
+image.src = "/assets/level1.png";
+
+image.onload = function() {
+  World.build(engine, [image]);
+  runner.start();
+};
