@@ -23,7 +23,7 @@ Camera.prototype.setX = function(x) {
     this.target.x = x;
   } else {
     if(!xNull) this.target.x = Math.max(x, bounds.x);
-    if(!widthNull) this.target.x = Math.min(x, bounds.x + bounds.width);
+    if(!widthNull) this.target.x = Math.min(x, bounds.width);
   }
 };
 
@@ -40,7 +40,7 @@ Camera.prototype.setY = function(y) {
     this.target.y = y;
   } else {
     if(!yNull) this.target.y = Math.max(y, bounds.y);
-    if(!heightNull) this.target.y = Math.min(y, bounds.y + bounds.height);
+    if(!heightNull) this.target.y = Math.min(y, bounds.height);
   }
 };
 
