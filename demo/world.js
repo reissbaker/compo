@@ -11,7 +11,7 @@ var NUM_NPCS = 10;
 
 module.exports = {
   build: function(engine) {
-    engine.renderer.cameraBounds.x = 0;
+    engine.renderer.camera.bounds.x = 0;
 
     var world = engine.kernel.root().entity();
 

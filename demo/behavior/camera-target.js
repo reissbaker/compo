@@ -11,8 +11,8 @@ var CameraTarget = compo.extend(compo.Behavior, function(engine, target) {
 CameraTarget.prototype.update = function(delta) {
   var renderer = this.engine.renderer;
 
-  renderer.setCameraX(this.target.x - renderer.viewportWidth() / 2);
-  renderer.setCameraY(this.target.y - renderer.viewportHeight() / 2);
+  renderer.camera.setX(this.target.x - renderer.viewportWidth() / 2);
+  renderer.camera.setY(this.target.y - renderer.viewportHeight() / 2);
 };
 
 module.exports = CameraTarget;
