@@ -13,21 +13,17 @@ module.exports = {
   build: function(engine, levels) {
     var world = engine.kernel.root().entity();
 
-    for(i = 0; i < NUM_NPCS; i++) {
+    for(var i = 0; i < NUM_NPCS; i++) {
       buildNpc(engine, world);
     }
 
-    var i, tile, matrix, level,
-        numTiles = Math.ceil(document.body.clientWidth / (16 * 3));
-
-    matrix = levelMatrix(ctxFromImage(levels[0]));
-    level = buildLevel(engine, world, matrix);
+    var matrix = levelMatrix(ctxFromImage(levels[0]));
+    var level = buildLevel(engine, world, matrix);
 
     var camera = engine.renderer.camera;
+
     camera.bounds.left = 0;
-    // HACK: the viewport height thing should be handled by camera class.
-    // If viewport is resized this breaks.
-    camera.bounds.bottom = matrix.numRows * 16 - engine.renderer.viewportHeight();
+    camera.bounds.bottom = matrix.numRows * 16;
 
     engine.player = buildPlayer(engine, world);
     engine.player.data.loc.y = 200;

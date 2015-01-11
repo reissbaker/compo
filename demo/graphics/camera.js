@@ -10,7 +10,7 @@ function Camera() {
   // line of the bounding box is crossed.
 
   this.loc = new Point(0, 0);
-  this.target = new Point(0, 0);
+  this._target = new Point(0, 0);
   this.bounds = {
     left: null,
     top: null,
@@ -18,38 +18,93 @@ function Camera() {
     bottom: null
   };
 
+
+  this._viewport = new Point(0, 0);
+  this.scale = new Point(1, 1);
+
+  this._el = null;
+  var that = this;
+  this._resizeHandler = function() {
+    that._viewport.x = that._el.width;
+    that._viewport.y = that._el.height;
+
+    // Update target in case there are bounds overlaps
+    that.setX(that._target.x);
+    that.setY(that._target.y);
+  };
+
   // These values are total BS.
   this.lerp = { x: 0.01, y: 0.01 };
 }
 
-Camera.prototype.setX = function(x) {
+Camera.prototype.attach = function(el) {
+  this.detach();
+
+  this._el = el;
+  this._viewport.x = el.width;
+  this._viewport.y = el.height;
+
+  window.addEventListener('resize', this._resizeHandler);
+};
+
+Camera.prototype.detach = function() {
+  this._el = null;
+  this._viewport.x = 0;
+  this._viewport.y = 0;
+
+  window.removeEventListener('resize', this._resizeHandler);
+};
+
+Camera.prototype.viewportWidth = function() {
+  return this._viewport.x / this.scale.x;
+};
+
+Camera.prototype.viewportHeight = function() {
+  return this._viewport.y / this.scale.y;
+};
+
+Camera.prototype.moveToCenterOn = function(x, y) {
+  var xCen = x - this.viewportWidth() / 2,
+      yCen = y - this.viewportHeight() / 2;
+
+  this.moveTo(xCen, yCen);
+};
+
+Camera.prototype.moveTo = function(x, y) {
+  this.moveToX(x);
+  this.moveToY(y);
+};
+
+Camera.prototype.moveToX = function(x) {
   var bounds = this.bounds,
+      target = this._target,
       leftNull = bounds.left === null,
       rightNull = bounds.right === null;
 
   if(leftNull && rightNull) {
-    this.target.x = x;
+    target.x = x;
   } else {
-    if(!leftNull) this.target.x = Math.max(x, bounds.left);
-    if(!rightNull) this.target.x = Math.min(x, bounds.right);
+    if(!leftNull) target.x = Math.max(x, bounds.left);
+    if(!rightNull) target.x = Math.min(x, bounds.right - this.viewportWidth());
+  }
+};
+
+Camera.prototype.moveToY = function(y) {
+  var bounds = this.bounds,
+      target = this._target,
+      topNull = bounds.top === null,
+      bottomNull = bounds.bottom === null;
+
+  if(topNull && bottomNull) {
+    target.y = y;
+  } else {
+    if(!topNull) target.y = Math.max(y, bounds.top);
+    if(!bottomNull) target.y = Math.min(y, bounds.bottom - this.viewportHeight());
   }
 };
 
 Camera.prototype.getX = function() {
   return this.loc.x;
-};
-
-Camera.prototype.setY = function(y) {
-  var bounds = this.bounds,
-      topNull = bounds.top === null,
-      bottomNull = bounds.bottom === null;
-
-  if(topNull && bottomNull) {
-    this.target.y = y;
-  } else {
-    if(!topNull) this.target.y = Math.max(y, bounds.top);
-    if(!bottomNull) this.target.y = Math.min(y, bounds.bottom);
-  }
 };
 
 Camera.prototype.getY = function() {
@@ -60,7 +115,7 @@ Camera.prototype.update = function(delta) {
   // Note: replace with deadzoning. Or deadzoning + lerp?
   var loc = this.loc,
       lerp = this.lerp,
-      target = this.target;
+      target = this._target;
 
   if(lerp.x) loc.x = smootherstep(loc.x, target.x, delta * lerp.x);
   else loc.x = target.x;

@@ -36,8 +36,8 @@ Animation.prototype.stopped = function() {
   return this.clip.stopped;
 };
 
-Animation.prototype.render = function(camera, scale, delta) {
-  this.clip.render(camera, scale, delta);
+Animation.prototype.render = function(camera, delta) {
+  this.clip.render(camera, delta);
 };
 
 Animation.prototype.sprites = function() {

@@ -72,8 +72,9 @@ function beginPlaying(clip, name) {
   clip.stopped = false;
 }
 
-Clip.prototype.render = function(camera, scale, delta) {
+Clip.prototype.render = function(camera, delta) {
   var frames,
+      scale = camera.scale,
       gPos = this.sprite.position,
       gScale = this.sprite.scale;
 

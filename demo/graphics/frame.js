@@ -19,8 +19,9 @@ function Frame(position, url, options) {
   this.sprite = new PIXI.Sprite(tex);
 }
 
-Frame.prototype.render = function(camera, scale) {
-  var gPos = this.sprite.position,
+Frame.prototype.render = function(camera) {
+  var scale = camera.scale,
+      gPos = this.sprite.position,
       gScale = this.sprite.scale;
 
   gPos.x = ((-camera.getX() + this.pos.x + this.offset.x) * scale.x) | 0;
