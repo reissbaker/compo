@@ -37,6 +37,9 @@ function Camera() {
     that.setY(that._target.y);
   };
 
+  // Minimum amount of camera offset allowed from a given location to a target.
+  this.smoothingEpsilon = new Point(0.5, 0.5);
+
   // These values are total BS.
   this.lerp = { x: 0.01, y: 0.01 };
 }
@@ -178,18 +181,31 @@ Camera.prototype.getY = function() {
 
 Camera.prototype.update = function(delta) {
   // TODO: Replace with deadzoning. Or deadzoning + lerp?
-  var loc = this.loc,
+  var smoothed,
+      loc = this.loc,
       lerp = this.lerp,
+      epsilon = this.smoothingEpsilon,
       target = this._target;
 
-  // TODO: Throw some epsilon values in here to avoid constant infinitesimal
-  // changes.
-  if(lerp.x) loc.x = smootherstep(loc.x, target.x, delta * lerp.x);
-  else loc.x = target.x;
+  if(lerp.x) {
+    smoothed = smootherstep(loc.x, target.x, delta * lerp.x);
+    loc.x = epsilonSnap(smoothed, target.x, epsilon.x);
+  } else {
+    loc.x = target.x;
+  }
 
-  if(lerp.y) loc.y = smootherstep(loc.y, target.y, delta * lerp.y);
-  else loc.y = target.y;
+  if(lerp.y) {
+    smoothed = smootherstep(loc.y, target.y, delta * lerp.y);
+    loc.y = epsilonSnap(smoothed, target.y, epsilon.y);
+  } else {
+    loc.y = target.y;
+  }
 };
+
+function epsilonSnap(current, target, epsilon) {
+  if(Math.abs(target - current) < epsilon) return target;
+  return current;
+}
 
 function smootherstep(a, b, t) {
   var t2 = t*t*t * (t * (6*t - 15) + 10);
