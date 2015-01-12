@@ -13,18 +13,19 @@ module.exports = {
   build: function(engine, levels) {
     var world = engine.kernel.root().entity();
 
+    var camera = engine.renderer.camera;
+
     for(var i = 0; i < NUM_NPCS; i++) {
       var rabbit = buildNpc(engine, world);
       var loc = rabbit.data.loc;
       loc.y = 32;
       if(loc.x < 16) loc.x = 32;
-      if(loc.x > document.body.clientWidth / 3 - 16) loc.x = 32;
+      if(loc.x > camera.viewportWidth() - 16) loc.x = 32;
     }
 
     var matrix = levelMatrix(ctxFromImage(levels[0]));
     var level = buildLevel(engine, world, matrix);
 
-    var camera = engine.renderer.camera;
 
     camera.bounds.left = 0;
     camera.bounds.top = 0;
