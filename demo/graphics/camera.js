@@ -98,12 +98,27 @@ Camera.prototype.moveToX = function(x) {
       leftNull = bounds.left === null,
       rightNull = bounds.right === null;
 
-  if(leftNull && rightNull) {
-    target.x = x;
-  } else {
-    if(!leftNull) target.x = Math.max(x, bounds.left);
-    if(!rightNull) target.x = Math.min(x, bounds.right - this.viewportWidth());
+  // Test for a too-large viewport
+  if(!leftNull && !rightNull) {
+    var boundSize = bounds.right - bounds.left;
+    if(boundSize < this.viewportWidth()) {
+      target.x = -(this.viewportWidth() - boundSize) / 2;
+      return;
+    }
   }
+
+  if(!leftNull && x < bounds.left) {
+    target.x = bounds.left;
+    return;
+  } else if(!rightNull) {
+    var right = bounds.right - this.viewportWidth();
+    if(x > right) {
+      target.x = right;
+      return;
+    }
+  }
+
+  target.x = x;
 };
 
 Camera.prototype.moveToY = function(y) {
@@ -112,12 +127,28 @@ Camera.prototype.moveToY = function(y) {
       topNull = bounds.top === null,
       bottomNull = bounds.bottom === null;
 
-  if(topNull && bottomNull) {
-    target.y = y;
-  } else {
-    if(!topNull) target.y = Math.max(y, bounds.top);
-    if(!bottomNull) target.y = Math.min(y, bounds.bottom - this.viewportHeight());
+  // Test for a too-large viewport
+  if(!topNull && !bottomNull) {
+    var boundSize = bounds.bottom - bounds.top;
+    if(boundSize < this.viewportHeight()) {
+      target.y = -(this.viewportHeight() - boundSize) / 2;
+      return;
+    }
   }
+
+  if(!topNull && y < bounds.top) {
+    target.y = bounds.top;
+    return;
+  }
+  else if(!bottomNull) {
+    var bottom = bounds.bottom - this.viewportHeight();
+    if(y > bottom) {
+      target.y = bottom;
+      return;
+    }
+  }
+
+  target.y = y;
 };
 
 

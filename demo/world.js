@@ -23,6 +23,8 @@ module.exports = {
     var camera = engine.renderer.camera;
 
     camera.bounds.left = 0;
+    camera.bounds.top = 0;
+    camera.bounds.right = matrix.numCols * 16;
     camera.bounds.bottom = matrix.numRows * 16;
 
     engine.player = buildPlayer(engine, world);
