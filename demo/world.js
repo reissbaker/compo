@@ -14,7 +14,11 @@ module.exports = {
     var world = engine.kernel.root().entity();
 
     for(var i = 0; i < NUM_NPCS; i++) {
-      buildNpc(engine, world);
+      var rabbit = buildNpc(engine, world);
+      var loc = rabbit.data.loc;
+      loc.y = 32;
+      if(loc.x < 16) loc.x = 32;
+      if(loc.x > document.body.clientWidth / 3 - 16) loc.x = 32;
     }
 
     var matrix = levelMatrix(ctxFromImage(levels[0]));
