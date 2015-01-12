@@ -17,7 +17,7 @@ ShootingState.prototype.right = function() {};
 ShootingState.prototype.begin = function() {
   this.physics.acceleration.x = 0;
   this.count = 0;
-  fire(this.engine, this.world, this.anim, this.character.data);
+  fire(this.engine, this.world, this.anim, this.character);
 };
 
 ShootingState.prototype.attack = function() {
@@ -32,7 +32,7 @@ ShootingState.prototype.update = function() {
       // Gun instance determines rate of fire.
       this.count++;
       if(this.count >= 10) {
-        fire(this.engine, this.world, this.anim, this.character.data);
+        fire(this.engine, this.world, this.anim, this.character);
         this.count = 0;
       }
     } else {
@@ -42,9 +42,11 @@ ShootingState.prototype.update = function() {
   this.keepShooting = false;
 };
 
-function fire(engine, world, anim, shooterData) {
+function fire(engine, world, anim, shooter) {
   anim.playAndStop('shoot');
-  shootBullet(engine, world, shooterData);
+  shooter.physics.velocity.x = -shooter.data.dir.x * 200;
+  shooter.physics.velocity.y = -50;
+  shootBullet(engine, world, shooter.data);
 }
 
 function shootBullet(engine, world, shooterData) {

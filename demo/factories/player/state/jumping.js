@@ -29,6 +29,11 @@ JumpingState.prototype.land = function() {
   this.transition('standing');
 };
 
+// TODO: A jumping-and-shooting state that tracks landings but allows
+// shooting for neat mid-air reversals.
+// Shooting here would transition to that state.
+// Mid-air shooting should prob have more x-velocity.
+
 JumpingState.prototype.update = function() {
   if(!this.moved) this.physics.acceleration.x = 0;
   this.moved = false;
