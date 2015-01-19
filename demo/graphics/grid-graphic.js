@@ -31,7 +31,8 @@ var GridGraphic = compo.extend(Graphic, function(args) {
       if(curr >= 0) {
         this.frames.push(new Frame(position, url, {
           offset: new Point(c * tileSize.x, r * tileSize.y),
-          crop: new Rect(x, y, tileSize.x, tileSize.y)
+          crop: new Rect(x, y, tileSize.x, tileSize.y),
+          parallax: args.parallax
         }));
       }
     }

@@ -9,6 +9,8 @@ function Clip(options) {
   this.dir = options.direction || new Point(1, 1);
   this.offset = options.offset || new Point(0, 0);
 
+  this.parallax = options.parallax || 0;
+
   this.elapsed = 0;
   this.frameIndex = 0;
   this.frameTime = options.frameTime;
@@ -75,11 +77,12 @@ function beginPlaying(clip, name) {
 Clip.prototype.render = function(camera, delta) {
   var frames,
       scale = camera.scale,
+      cLoc = 1 - this.parallax,
       gPos = this.sprite.position,
       gScale = this.sprite.scale;
 
-  gPos.x = ((-camera.getX() + this.pos.x + this.offset.x) * scale.x) | 0;
-  gPos.y = ((-camera.getY() + this.pos.y + this.offset.y) * scale.y) | 0;
+  gPos.x = ((-(cLoc * camera.getX()) + this.pos.x + this.offset.x) * scale.x) | 0;
+  gPos.y = ((-(cLoc * camera.getY()) + this.pos.y + this.offset.y) * scale.y) | 0;
 
   gScale.x = this.dir.x * scale.x;
   gScale.y = this.dir.y * scale.y;

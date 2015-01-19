@@ -8,6 +8,7 @@ function Frame(position, url, options) {
   this.pos = position;
   this.dir = options.direction || new Point(1, 1);
   this.offset = options.offset || new Point(0, 0);
+  this.parallax = options.parallax || 0;
 
   var base = PIXI.BaseTexture.fromImage(url, false, PIXI.scaleModes.NEAREST),
       slice = options.crop || new Rect(0, 0, base.width, base.height),
@@ -21,11 +22,12 @@ function Frame(position, url, options) {
 
 Frame.prototype.render = function(camera) {
   var scale = camera.scale,
+      cLoc = 1 - this.parallax,
       gPos = this.sprite.position,
       gScale = this.sprite.scale;
 
-  gPos.x = ((-camera.getX() + this.pos.x + this.offset.x) * scale.x) | 0;
-  gPos.y = ((-camera.getY() + this.pos.y + this.offset.y) * scale.y) | 0;
+  gPos.x = ((-(cLoc * camera.getX()) + this.pos.x + this.offset.x) * scale.x) | 0;
+  gPos.y = ((-(cLoc * camera.getY()) + this.pos.y + this.offset.y) * scale.y) | 0;
 
   gScale.x = this.dir.x * scale.x;
   gScale.y = this.dir.y * scale.y;
