@@ -7,7 +7,7 @@ var compo = require('compo'),
 // Possibly allow camera to be passed in, to allow different camera impls?
 var Renderer = compo.extend(compo.System, function() {
   this.table = null;
-  this.stage = new PIXI.Stage(0x222222);
+  this.stage = new PIXI.Stage(0x000000);
 
   this.camera = new Camera();
 
