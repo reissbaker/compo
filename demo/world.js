@@ -13,6 +13,9 @@ module.exports = {
   build: function(engine, levels) {
     var world = engine.kernel.root().entity();
 
+    var matrix = levelMatrix(ctxFromImage(levels[0]));
+    var level = buildLevel(engine, world, matrix);
+
     var camera = engine.renderer.camera;
 
     for(var i = 0; i < NUM_NPCS; i++) {
@@ -23,8 +26,6 @@ module.exports = {
       if(loc.x > camera.viewportWidth() - 16) loc.x = 32;
     }
 
-    var matrix = levelMatrix(ctxFromImage(levels[0]));
-    var level = buildLevel(engine, world, matrix);
 
 
     camera.bounds.left = 0;

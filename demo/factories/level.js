@@ -1,11 +1,12 @@
 'use strict';
 
 var compo = require('compo'),
+    Matrix = require('../data/matrix'),
     CollisionGrid = require('../physics/grid'),
     GridGraphic = require('../graphics/grid-graphic'),
     Point = require('../data/point');
 
-var url = '/assets/bugtilesblueb.png';
+var url = '/assets/bugtilesbrown.png';
 
 module.exports = function(engine, world, matrix) {
   var entity = world.entity();
@@ -14,6 +15,19 @@ module.exports = function(engine, world, matrix) {
 
   var grid = new CollisionGrid(loc, matrix, tileSize, [22], 'level');
   engine.physics.grids.attach(entity, grid);
+
+  var backdropMatrix = new Matrix(matrix.numRows, matrix.numCols, 59);
+  var backdrop = new GridGraphic({
+    position: loc,
+    url: url,
+    matrix: backdropMatrix,
+    tileSize: tileSize,
+    crop: { x: 0, y: 0, width: 169, height: 169 },
+    spacing: 1,
+    parallax: 0.5
+  });
+  engine.renderer.table.attach(entity, backdrop);
+
 
   var graphics = new GridGraphic({
     position: loc,
