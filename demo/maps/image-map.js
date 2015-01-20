@@ -38,15 +38,21 @@ function ImageMap(args) {
 }
 
 function isBlock(pixel) {
-  return pixel[0] === 0 && pixel[1] === 0 && pixel[2] === 0 && pixel[3] === 255;
+  return isColor(pixel, 0, 0, 0);
 }
 
 function isNpcSpawnPoint(pixel) {
-  return false;
+  return isColor(pixel, 0, 255, 0);
 }
 
 function isPlayerSpawnPoint(pixel) {
-  return false;
+  return isColor(pixel, 0, 0, 255);
+}
+
+function isColor(pixel, r, g, b, a) {
+  if(typeof a === 'undefined') a = 255;
+
+  return pixel[0] === r && pixel[1] === g && pixel[2] === b && pixel[3] === a;
 }
 
 
