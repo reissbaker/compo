@@ -9,6 +9,7 @@ var PlayerState = compo.extend(compo.State, function(args) {
   this.engine = args.engine;
   this.world = args.world;
   this.character = args.character;
+  this.gun = args.gun;
 
   this.physics = this.character.physics;
   this.anim = this.character.graphics;

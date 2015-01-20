@@ -29,6 +29,10 @@ FallingState.prototype.land = function() {
   this.transition('standing');
 };
 
+FallingState.prototype.attack = function() {
+  if(this.gun.canFire()) this.transition('jumpingAndShooting');
+};
+
 FallingState.prototype.update = function() {
   if(!this.moved) this.physics.acceleration.x = 0;
   this.moved = false;

@@ -6,6 +6,7 @@ var compo = require('compo'),
     Controller = require('../../behavior/keyboard-controller'),
     Character = require('../shared/character'),
     PlayerStateMachine = require('./state/player-machine'),
+    Gun = require('./gun'),
     buildGraphics = require('./animation'),
     buildPhysics = require('../shared/character-physics');
 
@@ -17,11 +18,14 @@ module.exports = function(engine, world) {
   var graphics = buildGraphics(engine, entity, data);
 
   var character = new Character(data, physics, graphics);
+  var gun = new Gun(engine, world, character);
+  engine.behavior.table.attach(entity, gun);
 
   var states = new PlayerStateMachine({
     world: world,
     engine: engine,
-    character: character
+    character: character,
+    gun: gun
   });
 
   var cameraTarget = new CameraTarget(engine, character.data.loc);

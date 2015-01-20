@@ -28,7 +28,7 @@ WalkingState.prototype.jump = function() {
 };
 
 WalkingState.prototype.attack = function() {
-  this.transition('shooting');
+  if(this.gun.canFire()) this.transition('shooting');
 };
 
 WalkingState.prototype.update = function() {

@@ -25,7 +25,7 @@ StandingState.prototype.jump = function() {
 };
 
 StandingState.prototype.attack = function() {
-  this.transition('shooting');
+  if(this.gun.canFire()) this.transition('shooting');
 };
 
 module.exports = StandingState;

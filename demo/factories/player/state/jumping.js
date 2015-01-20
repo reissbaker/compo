@@ -26,7 +26,7 @@ JumpingState.prototype.right = function() {
 };
 
 JumpingState.prototype.attack = function() {
-  this.transition('jumpingAndShooting');
+  if(this.gun.canFire()) this.transition('jumpingAndShooting');
 };
 
 JumpingState.prototype.land = function() {
