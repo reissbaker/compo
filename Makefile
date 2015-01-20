@@ -7,6 +7,8 @@ SLOW = 300
 TIMEOUT = 600
 
 BUILD_DIR=build
+ASSET_DIR=assets
+ASSET_BUILD_DIR=$(BUILD_DIR)/assets
 LIB_DIR=$(BUILD_DIR)/lib
 
 
@@ -56,6 +58,12 @@ $(BUILD_DIR)/compo.min.js.gz: $(BUILD_DIR)/compo.min.js
 $(BUILD_DIR)/demo.min.js.gz: $(BUILD_DIR)/demo.min.js
 	gzip -c $< > $@
 
+$(ASSET_BUILD_DIR)/level1.png: $(ASSET_DIR)/level1.png
+	mkdir -p $(ASSET_BUILD_DIR)
+	pngcrush -rem gAMA -rem cHRM -rem iCCP -rem sRGB $< $@
+
+
+
 
 #
 # Commands
@@ -83,7 +91,8 @@ build-compo: $(BUILD_DIR)/compo.js \
 .PHONY: build-demo
 build-demo: $(BUILD_DIR)/demo.js \
 	$(BUILD_DIR)/demo.min.js \
-	$(BUILD_DIR)/demo.min.js.gz
+	$(BUILD_DIR)/demo.min.js.gz \
+	$(ASSET_BUILD_DIR)/level1.png
 
 .PHONY: build
 build: build-compo build-demo

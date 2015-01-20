@@ -20,7 +20,7 @@ runner.on('endFrame', function() { stats.after(); });
 window.demo = { runner: runner };
 
 var image = new Image();
-image.src = "/assets/level1.png";
+image.src = "/build/assets/level1.png";
 
 image.onload = function() {
   World.build(engine, [image]);
