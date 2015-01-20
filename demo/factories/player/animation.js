@@ -23,7 +23,7 @@ module.exports = function(engine, entity, data) {
   graphics.defineLoop(exports.WALK, [0, 1, 2, 3]);
   graphics.defineLoop(exports.JUMP, [7]);
   graphics.defineLoop(exports.DRAW, [15]);
-  graphics.defineLoop(exports.SHOOT, [16, 17]);
+  graphics.defineLoop(exports.SHOOT, [16, 16, 17]);
   graphics.playLoop(exports.STAND);
 
   engine.renderer.table.attach(entity, graphics);
