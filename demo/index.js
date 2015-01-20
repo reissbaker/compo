@@ -10,7 +10,7 @@ var kernel = new compo.Kernel(),
     engine = new Engine(kernel);
 
 var camera = engine.renderer.camera;
-camera.scale.x = camera.scale.y = 3;
+camera.scale.x = camera.scale.y = 4;
 
 var stats = new StatSystem();
 stats.appendTo(document.body);

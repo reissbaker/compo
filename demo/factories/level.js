@@ -6,7 +6,7 @@ var compo = require('compo'),
     GridGraphic = require('../graphics/grid-graphic'),
     Point = require('../data/point');
 
-var url = '/assets/bugtilesbrown.png';
+var url = '/assets/bugtilesblueb.png';
 
 module.exports = function(engine, world, matrix) {
   var entity = world.entity();
