@@ -26,13 +26,13 @@ module.exports = {
 
     var camera = engine.renderer.camera;
 
-    for(var i = 0; i < NUM_NPCS; i++) {
+    map.npcSpawnPoints.forEach(function(spawnPoint) {
       var rabbit = buildNpc(engine, world);
       var loc = rabbit.data.loc;
-      loc.y = 32;
-      if(loc.x < 16) loc.x = 32;
-      if(loc.x > camera.viewportWidth() - 16) loc.x = 32;
-    }
+      var hitbox = rabbit.data.hitbox;
+      loc.x = spawnPoint.x - (hitbox.width - 16);
+      loc.y = spawnPoint.y - (hitbox.height - 16);
+    });
 
     camera.bounds.left = 0;
     camera.bounds.top = 0;
@@ -40,8 +40,12 @@ module.exports = {
     camera.bounds.bottom = map.levelMatrix.numRows * 16;
 
     engine.player = buildPlayer(engine, world);
-    engine.player.data.loc.y = 200;
-    engine.player.data.loc.x = 32;
+    var loc = engine.player.data.loc;
+    var hitbox = engine.player.data.hitbox;
+    loc.y = map.playerSpawnPoint.y - (hitbox.height - 16);
+    loc.x = map.playerSpawnPoint.x - (hitbox.width - 16);
+
+    camera.centerOn(loc.x, loc.y);
 
     return world;
   }
