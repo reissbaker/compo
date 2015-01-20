@@ -12,6 +12,9 @@ Controller.prototype.update = function(delta) {
   if(keyboard.down(keyboard.key.LEFT)) this.state.left();
   else if(keyboard.down(keyboard.key.RIGHT)) this.state.right();
 
+  // TODO: this should be "pressed" and not "down," but the state machine should
+  // keep track of near misses (where you press slightly too early) and count
+  // those as jumps as well once the state allows you to jump.
   if(keyboard.down(keyboard.key.X)) this.state.jump();
   if(keyboard.down(keyboard.key.C)) this.state.attack();
 
