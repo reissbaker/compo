@@ -4,31 +4,34 @@ var compo = require('compo'),
     bulletFactory = require('../../bullet'),
     PlayerState = require('./player');
 
-var ShootingState = compo.extend(PlayerState, function(args) {
+var JUMP_POWER = 400;
+
+var JumpingAndShootingState = compo.extend(PlayerState, function(args) {
   PlayerState.call(this, args);
-  this.keepShooting = false;
+  this.moved = false;
   this.count = 0;
+  this.keepShooting = false;
 });
 
-// Disable movement.
-ShootingState.prototype.left = function() {};
-ShootingState.prototype.right = function() {};
-
-ShootingState.prototype.begin = function() {
+JumpingAndShootingState.prototype.begin = function() {
+  this.keepShooting = false;
   this.physics.acceleration.x = 0;
   this.count = 0;
   fire(this.engine, this.world, this.anim, this.character);
 };
 
-ShootingState.prototype.jump = function() {
-  this.transition('jumping');
-};
+JumpingAndShootingState.prototype.left = function() {};
+JumpingAndShootingState.prototype.right = function() {};
 
-ShootingState.prototype.attack = function() {
+JumpingAndShootingState.prototype.attack = function() {
   this.keepShooting = true;
 };
 
-ShootingState.prototype.update = function() {
+JumpingAndShootingState.prototype.land = function() {
+  this.transition('standing');
+};
+
+JumpingAndShootingState.prototype.update = function() {
   if(this.anim.stopped()) {
     if(this.keepShooting) {
       // TODO: Refactor all of the bullet firing into a Gun class.
@@ -40,7 +43,7 @@ ShootingState.prototype.update = function() {
         this.count = 0;
       }
     } else {
-      this.transition('walking');
+      this.transition('falling');
     }
   }
   this.keepShooting = false;
@@ -49,7 +52,7 @@ ShootingState.prototype.update = function() {
 function fire(engine, world, anim, shooter) {
   anim.playAndStop('shoot');
   shooter.physics.velocity.x = -shooter.data.dir.x * 200;
-  shooter.physics.velocity.y = -50;
+  shooter.physics.velocity.y -= 50;
   shootBullet(engine, world, shooter.data);
 }
 
@@ -64,4 +67,5 @@ function shootBullet(engine, world, shooterData) {
   bullet.data.dir.x = shooterData.dir.x;
 }
 
-module.exports = ShootingState;
+module.exports = JumpingAndShootingState;
+

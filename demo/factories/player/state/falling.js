@@ -5,38 +5,34 @@ var compo = require('compo'),
 
 var JUMP_POWER = 400;
 
-var JumpingState = compo.extend(PlayerState, function(args) {
+var FallingState = compo.extend(PlayerState, function(args) {
   PlayerState.call(this, args);
   this.moved = false;
 });
 
-JumpingState.prototype.begin = function() {
-  this.physics.velocity.y = -JUMP_POWER;
+FallingState.prototype.begin = function() {
   this.moved = true;
   this.anim.playLoop('jump');
 };
 
-JumpingState.prototype.left = function() {
+FallingState.prototype.left = function() {
   PlayerState.prototype.left.call(this);
   this.moved = true;
 };
-JumpingState.prototype.right = function() {
+
+FallingState.prototype.right = function() {
   PlayerState.prototype.right.call(this);
   this.moved = true;
 };
 
-JumpingState.prototype.attack = function() {
-  this.transition('jumpingAndShooting');
-};
-
-JumpingState.prototype.land = function() {
+FallingState.prototype.land = function() {
   this.transition('standing');
 };
 
-JumpingState.prototype.update = function() {
+FallingState.prototype.update = function() {
   if(!this.moved) this.physics.acceleration.x = 0;
   this.moved = false;
 };
 
-module.exports = JumpingState;
+module.exports = FallingState;
 
