@@ -52,9 +52,14 @@ function shootBullet(engine, world, shooterData) {
   var shooterMid = shooterData.hitbox.height / 2;
 
   bullet.data.loc.x = shooterData.loc.x;
+  if(shooterData.dir.x > 0) {
+    bullet.data.loc.x += shooterData.hitbox.width;
+    bullet.data.loc.x -= 5;
+  } else {
+    bullet.data.loc.x += 5;
+  }
   bullet.data.loc.y = shooterData.loc.y + shooterMid - bulletMid + 4;
   bullet.physics.velocity.x = bullet.physics.maxVelocity.x * shooterData.dir.x;
-  bullet.data.loc.x += shooterData.hitbox.width / 2 * shooterData.dir.x;
   bullet.data.dir.x = shooterData.dir.x;
 }
 
