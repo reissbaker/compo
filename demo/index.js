@@ -3,7 +3,9 @@
 var compo = require('compo'),
     World = require('./world'),
     Engine = require('./engine'),
-    StatSystem = require('./stats/system');
+    StatSystem = require('./stats/system'),
+    assetMap = require('./assets/map'),
+    load = require('./assets/loader');
 
 var kernel = new compo.Kernel(),
     runner = new compo.Runner(kernel, 30),
@@ -19,10 +21,9 @@ runner.on('endFrame', function() { stats.after(); });
 
 window.demo = { runner: runner };
 
-var image = new Image();
-image.src = "/build/assets/level1.png";
-
-image.onload = function() {
-  World.build(engine, [image]);
-  runner.start();
-};
+load(assetMap, function(err, assets) {
+  if(!err) {
+    World.build(engine, [assets.images.map]);
+    runner.start();
+  }
+});
