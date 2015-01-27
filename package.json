@@ -8,7 +8,7 @@
     "coffee-script": "^1.7.1",
     "chai": "^1.9.1",
     "mocha": "^1.21.5",
-    "wate": "^0.0.3"
+    "wate": "^0.1.0"
   },
   "typescript": {
     "definition": "build/lib/index.d.ts"
