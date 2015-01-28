@@ -21,11 +21,11 @@
   "main": "build/lib/index.js",
   "devDependencies": {
     "typescript": "^1.4.0",
-    "uglify-js": "^2.2.5",
-    "browserify": "^3.46.1",
-    "coffee-script": "^1.7.1",
-    "chai": "^1.9.1",
-    "mocha": "^1.21.5",
+    "uglify-js": "^2.4.16",
+    "browserify": "^8.1.1",
+    "coffee-script": "^1.8.0",
+    "chai": "^1.10.0",
+    "mocha": "^2.1.0",
     "wate": "^0.1.1"
   },
   "typescript": {

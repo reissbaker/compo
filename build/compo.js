@@ -1,4 +1,4 @@
-require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 var Component = (function () {
     function Component() {
@@ -557,9 +557,7 @@ function extend(Klass, OtherKlass) {
 }
 exports.extend = extend;
 
-},{}],"compo":[function(require,module,exports){
-module.exports=require('0dzFUX');
-},{}],"0dzFUX":[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 var Component = require('./core/component');
 var Table = require('./core/table');
@@ -592,7 +590,7 @@ var out = {
 };
 module.exports = out;
 
-},{"./core/component":1,"./core/database":2,"./core/engine":3,"./core/events":5,"./core/kernel":6,"./core/runner":7,"./core/system":8,"./core/table":9,"./core/util":10,"./plugin/behavior":14,"./plugin/behavior-system":13,"./state/state":16,"./state/state-machine":15}],13:[function(require,module,exports){
+},{"./core/component":1,"./core/database":2,"./core/engine":3,"./core/events":5,"./core/kernel":6,"./core/runner":7,"./core/system":8,"./core/table":9,"./core/util":10,"./plugin/behavior":13,"./plugin/behavior-system":12,"./state/state":15,"./state/state-machine":14}],12:[function(require,module,exports){
 'use strict';
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -621,7 +619,7 @@ var BehaviorSystem = (function (_super) {
 })(System);
 module.exports = BehaviorSystem;
 
-},{"../core/system":8}],14:[function(require,module,exports){
+},{"../core/system":8}],13:[function(require,module,exports){
 'use strict';
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -641,7 +639,7 @@ var Behavior = (function (_super) {
 })(Component);
 module.exports = Behavior;
 
-},{"../core/component":1}],15:[function(require,module,exports){
+},{"../core/component":1}],14:[function(require,module,exports){
 'use strict';
 var StateMachine = (function () {
     function StateMachine(states) {
@@ -679,7 +677,7 @@ var StateMachine = (function () {
 })();
 module.exports = StateMachine;
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 var State = (function () {
     function State() {
@@ -700,4 +698,4 @@ var State = (function () {
 })();
 module.exports = State;
 
-},{}]},{},["0dzFUX"])
+},{}]},{},[11]);
