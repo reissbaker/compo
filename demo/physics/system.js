@@ -119,6 +119,7 @@ function resolveX(dir, delta, component, collidable) {
     // Resolve the collision.
     cL = collidable.loc;
     cH = collidable.hitbox;
+    v.x = 0;
     if(dir === 1) {
       loc.x = cL.x + cH.x - h.width - h.x;
       component.emitter.trigger('collide', collidable);
@@ -132,7 +133,6 @@ function resolveX(dir, delta, component, collidable) {
       collidable.emitter.trigger('collide', component.collidable);
       collidable.emitter.trigger('collide:right', component.collidable);
     }
-    v.x = 0;
   }
 }
 
@@ -198,6 +198,7 @@ function resolveY(dir, delta, component, collidable) {
     // Resolve the collision.
     cL = collidable.loc;
     cH = collidable.hitbox;
+    v.y = 0;
     if(dir === 1) {
       loc.y = cL.y + cH.y - h.height - h.y;
       component.emitter.trigger('collide', collidable);
@@ -211,7 +212,6 @@ function resolveY(dir, delta, component, collidable) {
       collidable.emitter.trigger('collide', component.collidable);
       collidable.emitter.trigger('collide:bottom', component.collidable);
     }
-    v.y = 0;
   }
 }
 
