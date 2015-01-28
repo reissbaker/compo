@@ -45,4 +45,8 @@ PlayerStateMachine.prototype.takeDamage = function() {
   this.currentState().takeDamage();
 };
 
+PlayerStateMachine.prototype.stomp = function() {
+  this.currentState().stomp();
+};
+
 module.exports = PlayerStateMachine;

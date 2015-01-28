@@ -42,6 +42,10 @@ module.exports = function(engine, world) {
   physics.emitter.on('collide:right', npcDamage(states));
   physics.emitter.on('collide:top', npcDamage(states));
 
+  physics.emitter.on('collide:bottom', function(collider) {
+    if(collider.type === 'npc') states.stomp();
+  });
+
   return character;
 };
 

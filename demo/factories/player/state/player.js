@@ -31,6 +31,10 @@ PlayerState.prototype.attack = function() {};
 PlayerState.prototype.takeDamage = function() {
   this.engine.endGame();
 };
+PlayerState.prototype.stomp = function() {
+  this.physics.acceleration.y = 0;
+  this.physics.velocity.y = -200;
+};
 
 module.exports = PlayerState;
 
