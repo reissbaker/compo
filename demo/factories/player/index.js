@@ -38,5 +38,18 @@ module.exports = function(engine, world) {
     states.land();
   });
 
+  physics.emitter.on('collide:left', npcDamage(states));
+  physics.emitter.on('collide:right', npcDamage(states));
+  physics.emitter.on('collide:top', npcDamage(states));
+
   return character;
 };
+
+function npcDamage(state) {
+  return function(collider) {
+    if(collider.type === 'npc') {
+      console.log(collider.type);
+      state.takeDamage();
+    }
+  }
+}

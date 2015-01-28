@@ -28,7 +28,9 @@ PlayerState.prototype.right = function() {
   this.dir.x = 1;
 };
 PlayerState.prototype.attack = function() {};
-PlayerState.prototype.takeDamage = function() {};
+PlayerState.prototype.takeDamage = function() {
+  this.engine.endGame();
+};
 
 module.exports = PlayerState;
 
