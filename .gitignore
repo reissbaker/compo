@@ -12,4 +12,4 @@ build/*/*.png
 build/**/*.js
 build/**/**/*.js
 
-test/**/**/*.js
+test/**/*.js

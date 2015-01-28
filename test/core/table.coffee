@@ -1,7 +1,7 @@
 {expect} = require 'chai'
-Table = require '../../../build/lib/core/table'
-Component = require '../../../build/lib/core/component'
-Database = require '../../../build/lib/core/database'
+Table = require '../../build/lib/core/table'
+Component = require '../../build/lib/core/component'
+Database = require '../../build/lib/core/database'
 
 describe 'table', ->
   db = null
