@@ -8,6 +8,7 @@ var DyingState = compo.extend(BaseState, function(args) {
 });
 
 DyingState.prototype.begin = function() {
+  this.physics.active = false;
   this.graphics.playAndStop('die');
 };
 
