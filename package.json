@@ -1,6 +1,24 @@
 {
   "name": "compo",
   "version": "0.0.1",
+  "author": "Matt Baker",
+  "description": "A tiny, Component-based kernel of a game engine.",
+  "repository": [
+    {
+      "type": "git",
+      "url": "https://github.com/reissbaker/compo.git"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/reissbaker/compo/issues"
+  },
+  "keywords": [
+    "game", "engine", "game engine", "videogame"
+  ],
+  "scripts": {
+    "test": "make test"
+  },
+  "main": "build/lib/index.js",
   "devDependencies": {
     "typescript": "^1.4.0",
     "uglify-js": "^2.2.5",
@@ -8,9 +26,10 @@
     "coffee-script": "^1.7.1",
     "chai": "^1.9.1",
     "mocha": "^1.21.5",
-    "wate": "^0.1.0"
+    "wate": "^0.1.1"
   },
   "typescript": {
     "definition": "build/lib/index.d.ts"
-  }
+  },
+  "license": "MIT"
 }
