@@ -1,5 +1,5 @@
 {
-  "name": "compo",
+  "name": "compo-engine",
   "version": "0.0.1",
   "author": "Matt Baker",
   "description": "A tiny, Component-based kernel of a game engine.",
