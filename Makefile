@@ -6,7 +6,7 @@ REPORTER = dot
 SLOW = 300
 TIMEOUT = 600
 
-BUILD_DIR=build/
+BUILD_DIR=build
 LIB_DIR=$(BUILD_DIR)/lib
 
 
@@ -22,7 +22,7 @@ $(LIB_DIR)/index.js:
 		--outDir $(LIB_DIR) \
 		--noImplicitAny \
 		-t ES5 \
-		typescript/index.ts
+		lib/index.ts
 
 $(BUILD_DIR)/compo.js: $(LIB_DIR)/index.js
 	mkdir -p $(BUILD_DIR)
