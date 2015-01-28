@@ -21,6 +21,8 @@ module.exports = compo.extend(compo.Engine, function(kernel) {
   this.renderer = renderer;
   kernel.attach(renderer);
 
+  this.endGame = null;
+
   this.player = null;
 });
 

@@ -21,6 +21,15 @@ runner.on('endFrame', function() { stats.after(); });
 
 window.demo = { runner: runner };
 
+engine.endGame = function() {
+  kernel.nextTick(function() {
+    kernel.resetRoot();
+    load(assetMap, function(err, assets) {
+      World.build(engine, [assets.images.map]);
+    });
+  });
+};
+
 load(assetMap, function(err, assets) {
   if(!err) {
     World.build(engine, [assets.images.map]);
