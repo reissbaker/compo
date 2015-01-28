@@ -11,17 +11,17 @@ class Kernel {
   private _root = this.db.entity();
   private _callbacks: Array<() => any> = [];
 
-  attach(system: System) {
+  attach(system: System): void {
     this._systems.push(system);
     system.onAttach(this.db);
   }
 
-  detach(system: System) {
+  detach(system: System): void {
     util.remove(this._systems, system);
     system.onDetach(this.db);
   }
 
-  tick(delta: number) {
+  tick(delta: number): void {
     while(this._callbacks.length > 0) {
       this._callbacks.pop()();
     }
@@ -41,7 +41,7 @@ class Kernel {
     this._callbacks.push(callback);
   }
 
-  render(delta: number) {
+  render(delta: number): void {
     util.each(this._systems, (system) => {
       system.render(delta);
     });
