@@ -9,6 +9,7 @@ class Kernel {
   db: Database = new Database();
   private _systems: System[] = [];
   private _root = this.db.entity();
+  private _callbacks: Array<() => any> = [];
 
   attach(system: System) {
     this._systems.push(system);
@@ -21,6 +22,9 @@ class Kernel {
   }
 
   tick(delta: number) {
+    while(this._callbacks.length > 0) {
+      this._callbacks.pop()();
+    }
     util.each(this._systems, (system) => {
       system.before(delta);
     });
@@ -31,6 +35,10 @@ class Kernel {
       system.after(delta);
     });
     this.db.compact();
+  }
+
+  nextTick(callback: () => any): void {
+    this._callbacks.push(callback);
   }
 
   render(delta: number) {
