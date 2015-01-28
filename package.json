@@ -1,16 +1,16 @@
 {
-  "name": "compo-engine",
+  "name": "gamekernel",
   "version": "0.0.1",
   "author": "Matt Baker",
   "description": "A tiny, Component-based kernel of a game engine.",
   "repository": [
     {
       "type": "git",
-      "url": "https://github.com/reissbaker/compo.git"
+      "url": "https://github.com/reissbaker/gamekernel.git"
     }
   ],
   "bugs": {
-    "url": "https://github.com/reissbaker/compo/issues"
+    "url": "https://github.com/reissbaker/gamekernel/issues"
   },
   "keywords": [
     "game", "engine", "game engine", "videogame"
