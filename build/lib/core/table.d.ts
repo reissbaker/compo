@@ -1,5 +1,6 @@
 import Component = require('./component');
 import events = require('./events');
+import Callback = events.Callback;
 import Entity = require('./entity');
 declare class Table<T extends Component> {
     private _attached;
@@ -10,11 +11,11 @@ declare class Table<T extends Component> {
     detach(entity: Entity, component: T): T;
     detachAllFrom(entity: Entity): T[];
     compact(): void;
-    on(event: string, callback: events.Callback<T>): void;
-    off(event: string, callback: events.Callback<T>): void;
+    on(event: string, callback: Callback<T>): void;
+    off(event: string, callback: Callback<T>): void;
     reset(): void;
-    attached(callback: events.Callback<T>): void;
-    components(entity: Entity, callback: events.Callback<T>): void;
+    attached(callback: Callback<T>): void;
+    components(entity: Entity, callback: Callback<T>): void;
     getAttached(): T[];
     getComponents(entity: Entity): T[];
 }

@@ -19,7 +19,7 @@ declare var out: {
     Kernel: typeof Kernel;
     BehaviorSystem: typeof BehaviorSystem;
     Behavior: typeof Behavior;
-    extend: typeof util.extend;
+    extend: (Klass: util.Constructor, OtherKlass: util.Constructor) => util.Constructor;
     Runner: typeof Runner;
     Engine: typeof Engine;
     StateMachine: typeof StateMachine;

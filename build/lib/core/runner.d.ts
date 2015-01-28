@@ -1,11 +1,12 @@
 import Kernel = require('./kernel');
 import events = require('./events');
+import Emitter = events.Emitter;
 declare class Runner {
     static BEGIN_EVENT: string;
     static END_EVENT: string;
     _stopped: boolean;
     _prevTime: number;
-    _emitter: events.Emitter<void>;
+    _emitter: Emitter<void>;
     _elapsed: number;
     _tickLength: number;
     _kernel: Kernel;
