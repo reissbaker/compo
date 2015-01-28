@@ -18,7 +18,7 @@
   "scripts": {
     "test": "make test"
   },
-  "main": "index.js",
+  "main": "build/lib/index.js",
   "devDependencies": {
     "typescript": "^1.4.0",
     "uglify-js": "^2.4.16",

@@ -9,7 +9,5 @@ node_modules/
 build/*.gz
 build/*.png
 build/*/*.png
-build/**/*.js
-build/**/**/*.js
 
 test/**/*.js
