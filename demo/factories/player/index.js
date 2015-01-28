@@ -48,7 +48,6 @@ module.exports = function(engine, world) {
 function npcDamage(state) {
   return function(collider) {
     if(collider.type === 'npc') {
-      console.log(collider.type);
       state.takeDamage();
     }
   }
