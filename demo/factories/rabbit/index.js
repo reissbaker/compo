@@ -37,6 +37,9 @@ module.exports = function(engine, world) {
   physics.emitter.on('collide', function(collidable) {
     if(collidable.type === 'bullet') state.takeDamage(0, 0);
   });
+  physics.emitter.on('collide:top', function(collidable) {
+    if(collidable.type === 'player') state.takeDamage(0, 0);
+  });
 
   var controller = new NpcController(state, engine, character);
   engine.behavior.table.attach(entity, controller);
