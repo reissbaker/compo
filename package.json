@@ -1,6 +1,6 @@
 {
   "name": "gamekernel",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Matt Baker",
   "description": "A tiny, Component-based kernel of a game engine.",
   "repository": [
@@ -18,7 +18,7 @@
   "scripts": {
     "test": "make test"
   },
-  "main": "build/lib/index.js",
+  "main": "index.js",
   "devDependencies": {
     "typescript": "^1.4.0",
     "uglify-js": "^2.4.16",
