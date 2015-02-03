@@ -55,6 +55,14 @@ class Kernel {
     this._root.destroy();
     this._root = this.db.entity();
   }
+
+  reset(): void {
+    this.resetRoot();
+    this._systems.forEach((system) => {
+      system.onDetach(this.db);
+    });
+    this._systems = [];
+  }
 }
 
 export = Kernel;

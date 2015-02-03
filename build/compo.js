@@ -268,6 +268,14 @@ var Kernel = (function () {
         this._root.destroy();
         this._root = this.db.entity();
     };
+    Kernel.prototype.reset = function () {
+        var _this = this;
+        this.resetRoot();
+        this._systems.forEach(function (system) {
+            system.onDetach(_this.db);
+        });
+        this._systems = [];
+    };
     return Kernel;
 })();
 module.exports = Kernel;

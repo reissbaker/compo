@@ -13,5 +13,6 @@ declare class Kernel {
     render(delta: number): void;
     root(): Entity;
     resetRoot(): void;
+    reset(): void;
 }
 export = Kernel;
