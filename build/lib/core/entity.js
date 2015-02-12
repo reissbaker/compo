@@ -1,3 +1,4 @@
+'use strict';
 var Entity = (function () {
     function Entity(db, id) {
         this._db = db;

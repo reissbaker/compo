@@ -1,3 +1,5 @@
+'use strict';
+
 import State = require('./state');
 
 interface StateMap {

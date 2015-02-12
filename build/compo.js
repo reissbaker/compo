@@ -159,6 +159,7 @@ var Engine = (function () {
 module.exports = Engine;
 
 },{}],4:[function(require,module,exports){
+'use strict';
 var Entity = (function () {
     function Entity(db, id) {
         this._db = db;

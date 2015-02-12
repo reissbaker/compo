@@ -1,3 +1,5 @@
+'use strict';
+
 import Database = require('./database');
 
 class Entity {
