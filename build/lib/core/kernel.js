@@ -53,6 +53,7 @@ var Kernel = (function () {
             system.onDetach(_this.db);
         });
         this._systems = [];
+        this._callbacks = [];
     };
     return Kernel;
 })();

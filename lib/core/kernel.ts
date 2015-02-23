@@ -62,6 +62,7 @@ class Kernel {
       system.onDetach(this.db);
     });
     this._systems = [];
+    this._callbacks = [];
   }
 }
 
