@@ -241,7 +241,7 @@ var Kernel = (function () {
     };
     Kernel.prototype.tick = function (delta) {
         while (this._callbacks.length > 0) {
-            this._callbacks.pop()();
+            this._callbacks.shift()();
         }
         util.each(this._systems, function (system) {
             system.before(delta);
@@ -569,6 +569,39 @@ exports.extend = extend;
 
 },{}],11:[function(require,module,exports){
 'use strict';
+var Component = require('./core/component');
+var Table = require('./core/table');
+var Database = require('./core/database');
+var Kernel = require('./core/kernel');
+var System = require('./core/system');
+var BehaviorSystem = require('./plugin/behavior-system');
+var Behavior = require('./plugin/behavior');
+var util = require('./core/util');
+var extend = util.extend;
+var Runner = require('./core/runner');
+var Engine = require('./core/engine');
+var State = require('./state/state');
+var StateMachine = require('./state/state-machine');
+var events = require('./core/events');
+var out = {
+    Component: Component,
+    Table: Table,
+    Database: Database,
+    System: System,
+    Kernel: Kernel,
+    BehaviorSystem: BehaviorSystem,
+    Behavior: Behavior,
+    extend: extend,
+    Runner: Runner,
+    Engine: Engine,
+    StateMachine: StateMachine,
+    State: State,
+    Emitter: events.Emitter
+};
+module.exports = out;
+
+},{"./core/component":1,"./core/database":2,"./core/engine":3,"./core/events":5,"./core/kernel":6,"./core/runner":7,"./core/system":8,"./core/table":9,"./core/util":10,"./plugin/behavior":13,"./plugin/behavior-system":12,"./state/state":15,"./state/state-machine":14}],12:[function(require,module,exports){
+'use strict';
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -596,7 +629,7 @@ var BehaviorSystem = (function (_super) {
 })(System);
 module.exports = BehaviorSystem;
 
-},{"../core/system":8}],12:[function(require,module,exports){
+},{"../core/system":8}],13:[function(require,module,exports){
 'use strict';
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -616,7 +649,7 @@ var Behavior = (function (_super) {
 })(Component);
 module.exports = Behavior;
 
-},{"../core/component":1}],13:[function(require,module,exports){
+},{"../core/component":1}],14:[function(require,module,exports){
 'use strict';
 var StateMachine = (function () {
     function StateMachine(states) {
@@ -654,7 +687,7 @@ var StateMachine = (function () {
 })();
 module.exports = StateMachine;
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 var State = (function () {
     function State() {
@@ -675,37 +708,4 @@ var State = (function () {
 })();
 module.exports = State;
 
-},{}],"compo":[function(require,module,exports){
-'use strict';
-var Component = require('./core/component');
-var Table = require('./core/table');
-var Database = require('./core/database');
-var Kernel = require('./core/kernel');
-var System = require('./core/system');
-var BehaviorSystem = require('./plugin/behavior-system');
-var Behavior = require('./plugin/behavior');
-var util = require('./core/util');
-var extend = util.extend;
-var Runner = require('./core/runner');
-var Engine = require('./core/engine');
-var State = require('./state/state');
-var StateMachine = require('./state/state-machine');
-var events = require('./core/events');
-var out = {
-    Component: Component,
-    Table: Table,
-    Database: Database,
-    System: System,
-    Kernel: Kernel,
-    BehaviorSystem: BehaviorSystem,
-    Behavior: Behavior,
-    extend: extend,
-    Runner: Runner,
-    Engine: Engine,
-    StateMachine: StateMachine,
-    State: State,
-    Emitter: events.Emitter
-};
-module.exports = out;
-
-},{"./core/component":1,"./core/database":2,"./core/engine":3,"./core/events":5,"./core/kernel":6,"./core/runner":7,"./core/system":8,"./core/table":9,"./core/util":10,"./plugin/behavior":12,"./plugin/behavior-system":11,"./state/state":14,"./state/state-machine":13}]},{},["compo"]);
+},{}]},{},[11]);

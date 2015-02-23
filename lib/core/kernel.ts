@@ -23,7 +23,7 @@ class Kernel {
 
   tick(delta: number): void {
     while(this._callbacks.length > 0) {
-      this._callbacks.pop()();
+      this._callbacks.shift()();
     }
     util.each(this._systems, (system) => {
       system.before(delta);
