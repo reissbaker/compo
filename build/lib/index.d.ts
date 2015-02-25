@@ -11,6 +11,7 @@ import Engine = require('./core/engine');
 import State = require('./state/state');
 import StateMachine = require('./state/state-machine');
 import events = require('./core/events');
+import Welder = require('./core/welder');
 declare var out: {
     Component: typeof Component;
     Table: typeof Table;
@@ -25,5 +26,6 @@ declare var out: {
     StateMachine: typeof StateMachine;
     State: typeof State;
     Emitter: typeof events.Emitter;
+    welder: typeof Welder;
 };
 export = out;

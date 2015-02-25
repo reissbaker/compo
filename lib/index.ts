@@ -14,6 +14,7 @@ import Engine = require('./core/engine');
 import State = require('./state/state');
 import StateMachine = require('./state/state-machine');
 import events = require('./core/events');
+import Welder = require('./core/welder');
 
 var out = {
   Component: Component,
@@ -28,7 +29,8 @@ var out = {
   Engine: Engine,
   StateMachine: StateMachine,
   State: State,
-  Emitter: events.Emitter
+  Emitter: events.Emitter,
+  welder: Welder
 };
 
 export = out;

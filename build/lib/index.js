@@ -13,6 +13,7 @@ var Engine = require('./core/engine');
 var State = require('./state/state');
 var StateMachine = require('./state/state-machine');
 var events = require('./core/events');
+var Welder = require('./core/welder');
 var out = {
     Component: Component,
     Table: Table,
@@ -26,6 +27,7 @@ var out = {
     Engine: Engine,
     StateMachine: StateMachine,
     State: State,
-    Emitter: events.Emitter
+    Emitter: events.Emitter,
+    welder: Welder
 };
 module.exports = out;

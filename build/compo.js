@@ -569,6 +569,24 @@ exports.extend = extend;
 
 },{}],11:[function(require,module,exports){
 'use strict';
+var StandardWelder = (function () {
+    function StandardWelder(table, builder) {
+        this._table = table;
+        this._builder = builder;
+    }
+    StandardWelder.prototype.attach = function (e, args) {
+        var component = this._builder(args);
+        return this._table.attach(e, component);
+    };
+    StandardWelder.prototype.detach = function (e, c) {
+        return this._table.detach(e, c);
+    };
+    return StandardWelder;
+})();
+exports.StandardWelder = StandardWelder;
+
+},{}],12:[function(require,module,exports){
+'use strict';
 var Component = require('./core/component');
 var Table = require('./core/table');
 var Database = require('./core/database');
@@ -583,6 +601,7 @@ var Engine = require('./core/engine');
 var State = require('./state/state');
 var StateMachine = require('./state/state-machine');
 var events = require('./core/events');
+var Welder = require('./core/welder');
 var out = {
     Component: Component,
     Table: Table,
@@ -596,11 +615,12 @@ var out = {
     Engine: Engine,
     StateMachine: StateMachine,
     State: State,
-    Emitter: events.Emitter
+    Emitter: events.Emitter,
+    welder: Welder
 };
 module.exports = out;
 
-},{"./core/component":1,"./core/database":2,"./core/engine":3,"./core/events":5,"./core/kernel":6,"./core/runner":7,"./core/system":8,"./core/table":9,"./core/util":10,"./plugin/behavior":13,"./plugin/behavior-system":12,"./state/state":15,"./state/state-machine":14}],12:[function(require,module,exports){
+},{"./core/component":1,"./core/database":2,"./core/engine":3,"./core/events":5,"./core/kernel":6,"./core/runner":7,"./core/system":8,"./core/table":9,"./core/util":10,"./core/welder":11,"./plugin/behavior":14,"./plugin/behavior-system":13,"./state/state":16,"./state/state-machine":15}],13:[function(require,module,exports){
 'use strict';
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -629,7 +649,7 @@ var BehaviorSystem = (function (_super) {
 })(System);
 module.exports = BehaviorSystem;
 
-},{"../core/system":8}],13:[function(require,module,exports){
+},{"../core/system":8}],14:[function(require,module,exports){
 'use strict';
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -649,7 +669,7 @@ var Behavior = (function (_super) {
 })(Component);
 module.exports = Behavior;
 
-},{"../core/component":1}],14:[function(require,module,exports){
+},{"../core/component":1}],15:[function(require,module,exports){
 'use strict';
 var StateMachine = (function () {
     function StateMachine(states) {
@@ -687,7 +707,7 @@ var StateMachine = (function () {
 })();
 module.exports = StateMachine;
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 var State = (function () {
     function State() {
@@ -708,4 +728,4 @@ var State = (function () {
 })();
 module.exports = State;
 
-},{}]},{},[11]);
+},{}]},{},[12]);
