@@ -1,36 +1,19 @@
 'use strict';
 
-import Component = require('./core/component');
-import Table = require('./core/table');
-import Database = require('./core/database');
-import Kernel = require('./core/kernel');
-import System = require('./core/system');
-import BehaviorSystem = require('./plugin/behavior-system');
-import Behavior = require('./plugin/behavior');
-import util = require('./core/util');
-import extend = util.extend;
-import Runner = require('./core/runner');
-import Engine = require('./core/engine');
-import State = require('./state/state');
-import StateMachine = require('./state/state-machine');
+export import Component = require('./core/component');
+export import Table = require('./core/table');
+export import Database = require('./core/database');
+export import Kernel = require('./core/kernel');
+export import System = require('./core/system');
+export import BehaviorSystem = require('./plugin/behavior-system');
+export import Behavior = require('./plugin/behavior');
+export import util = require('./core/util');
+export import extend = util.extend;
+export import Runner = require('./core/runner');
+export import Engine = require('./core/engine');
+export import State = require('./state/state');
+export import StateMachine = require('./state/state-machine');
+export import Welder = require('./core/welder');
+
 import events = require('./core/events');
-import Welder = require('./core/welder');
-
-var out = {
-  Component: Component,
-  Table: Table,
-  Database: Database,
-  System: System,
-  Kernel: Kernel,
-  BehaviorSystem: BehaviorSystem,
-  Behavior: Behavior,
-  extend: extend,
-  Runner: Runner,
-  Engine: Engine,
-  StateMachine: StateMachine,
-  State: State,
-  Emitter: events.Emitter,
-  welder: Welder
-};
-
-export = out;
+export import Emitter = events.Emitter;

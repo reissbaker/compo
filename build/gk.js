@@ -587,38 +587,22 @@ exports.StandardWelder = StandardWelder;
 
 },{}],12:[function(require,module,exports){
 'use strict';
-var Component = require('./core/component');
-var Table = require('./core/table');
-var Database = require('./core/database');
-var Kernel = require('./core/kernel');
-var System = require('./core/system');
-var BehaviorSystem = require('./plugin/behavior-system');
-var Behavior = require('./plugin/behavior');
-var util = require('./core/util');
-var extend = util.extend;
-var Runner = require('./core/runner');
-var Engine = require('./core/engine');
-var State = require('./state/state');
-var StateMachine = require('./state/state-machine');
+exports.Component = require('./core/component');
+exports.Table = require('./core/table');
+exports.Database = require('./core/database');
+exports.Kernel = require('./core/kernel');
+exports.System = require('./core/system');
+exports.BehaviorSystem = require('./plugin/behavior-system');
+exports.Behavior = require('./plugin/behavior');
+exports.util = require('./core/util');
+exports.extend = exports.util.extend;
+exports.Runner = require('./core/runner');
+exports.Engine = require('./core/engine');
+exports.State = require('./state/state');
+exports.StateMachine = require('./state/state-machine');
+exports.Welder = require('./core/welder');
 var events = require('./core/events');
-var Welder = require('./core/welder');
-var out = {
-    Component: Component,
-    Table: Table,
-    Database: Database,
-    System: System,
-    Kernel: Kernel,
-    BehaviorSystem: BehaviorSystem,
-    Behavior: Behavior,
-    extend: extend,
-    Runner: Runner,
-    Engine: Engine,
-    StateMachine: StateMachine,
-    State: State,
-    Emitter: events.Emitter,
-    welder: Welder
-};
-module.exports = out;
+exports.Emitter = events.Emitter;
 
 },{"./core/component":1,"./core/database":2,"./core/engine":3,"./core/events":5,"./core/kernel":6,"./core/runner":7,"./core/system":8,"./core/table":9,"./core/util":10,"./core/welder":11,"./plugin/behavior":14,"./plugin/behavior-system":13,"./state/state":16,"./state/state-machine":15}],13:[function(require,module,exports){
 'use strict';
