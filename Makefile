@@ -24,20 +24,20 @@ $(LIB_DIR)/index.js:
 		-t ES5 \
 		lib/index.ts
 
-$(BUILD_DIR)/compo.js: $(LIB_DIR)/index.js
+$(BUILD_DIR)/gk.js: $(LIB_DIR)/index.js
 	mkdir -p $(BUILD_DIR)
 	./node_modules/.bin/browserify \
 		-o $@ \
-		-r ./$(LIB_DIR)/index.js:compo \
+		-r ./$(LIB_DIR)/index.js:gk \
 		$(LIB_DIR)/index.js
 
-$(BUILD_DIR)/compo.min.js: $(BUILD_DIR)/compo.js
+$(BUILD_DIR)/gk.min.js: $(BUILD_DIR)/gk.js
 	node_modules/.bin/uglifyjs \
 		-m \
 		-c warnings=false,unsafe=true \
 		$< > $@
 
-$(BUILD_DIR)/compo.min.js.gz: $(BUILD_DIR)/compo.min.js
+$(BUILD_DIR)/gk.min.js.gz: $(BUILD_DIR)/gk.min.js
 	gzip -c $< > $@
 
 $(LIB_DIR)/gamekernel.d.ts: $(LIB_DIR)/index.js
@@ -63,9 +63,10 @@ run-test:
 		test/
 
 .PHONY: build
-build: $(BUILD_DIR)/compo.js \
-	$(BUILD_DIR)/compo.min.js \
-	$(BUILD_DIR)/compo.min.js.gz
+build: $(BUILD_DIR)/gk.js \
+	$(BUILD_DIR)/gk.min.js \
+	$(BUILD_DIR)/gk.min.js.gz \
+	$(LIB_DIR)/gamekernel.d.ts
 
 .PHONY: clean
 clean:
