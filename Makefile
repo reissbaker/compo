@@ -40,6 +40,8 @@ $(BUILD_DIR)/compo.min.js: $(BUILD_DIR)/compo.js
 $(BUILD_DIR)/compo.min.js.gz: $(BUILD_DIR)/compo.min.js
 	gzip -c $< > $@
 
+$(LIB_DIR)/gamekernel.d.ts: $(LIB_DIR)/index.js
+	node dts-bundle.js
 
 
 #

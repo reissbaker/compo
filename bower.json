@@ -21,6 +21,6 @@
     "tests"
   ],
   "typescript": {
-    "definition": "build/lib/index.d.ts"
+    "definition": "build/lib/gamekernel.d.ts"
   }
 }

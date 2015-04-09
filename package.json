@@ -13,7 +13,10 @@
     "url": "https://github.com/reissbaker/gamekernel/issues"
   },
   "keywords": [
-    "game", "engine", "game engine", "videogame"
+    "game",
+    "engine",
+    "game engine",
+    "videogame"
   ],
   "scripts": {
     "test": "make test"
@@ -26,10 +29,10 @@
     "coffee-script": "^1.8.0",
     "chai": "^1.10.0",
     "mocha": "^2.1.0",
-    "wate": "^0.1.1"
+    "dts-bundle": "^0.2.0"
   },
   "typescript": {
-    "definition": "build/lib/index.d.ts"
+    "definition": "build/lib/gamekernel.d.ts"
   },
   "license": "MIT"
 }
