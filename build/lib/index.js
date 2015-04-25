@@ -12,6 +12,6 @@ exports.Runner = require('./core/runner');
 exports.Engine = require('./core/engine');
 exports.State = require('./state/state');
 exports.StateMachine = require('./state/state-machine');
-exports.Welder = require('./core/welder');
+exports.welder = require('./core/welder');
 var events = require('./core/events');
 exports.Emitter = events.Emitter;

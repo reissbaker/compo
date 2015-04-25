@@ -14,7 +14,7 @@ declare module 'gamekernel' {
     export import Engine = require('__gamekernel/core/engine');
     export import State = require('__gamekernel/state/state');
     export import StateMachine = require('__gamekernel/state/state-machine');
-    export import Welder = require('__gamekernel/core/welder');
+    export import welder = require('__gamekernel/core/welder');
     import events = require('__gamekernel/core/events');
     export import Emitter = events.Emitter;
 }

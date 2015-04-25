@@ -13,7 +13,7 @@ export import Runner = require('./core/runner');
 export import Engine = require('./core/engine');
 export import State = require('./state/state');
 export import StateMachine = require('./state/state-machine');
-export import Welder = require('./core/welder');
+export import welder = require('./core/welder');
 
 import events = require('./core/events');
 export import Emitter = events.Emitter;
