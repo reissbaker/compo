@@ -31,7 +31,7 @@
     "mocha": "^2.3.3",
     "dts-bundle": "^0.2.0"
   },
-  "typings": "build/lib/gamekernel.d.ts",
+  "typings": "build/lib/index.d.ts",
   "typescript": {
     "definition": "build/lib/gamekernel.d.ts"
   },
