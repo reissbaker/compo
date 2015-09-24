@@ -60,8 +60,7 @@ function compact(array) {
 }
 exports.compact = compact;
 function extend(Klass, OtherKlass) {
-    var Temp = function () {
-    };
+    var Temp = function () { };
     Temp.prototype = Klass.prototype;
     OtherKlass.prototype = new Temp();
     OtherKlass.prototype.constructor = OtherKlass;

@@ -425,6 +425,9 @@ var Table = (function () {
         util.each(row, function (component) {
             util.nullify(_this._attached, component);
         });
+        // null out and remove primary index immediately, rather than waiting for
+        // compaction. we know it can be deleted, the only question is whether
+        // existing code is iterating through the now-dead components.
         for (var i = 0, l = row.length; i < l; i++) {
             row[i] = null;
         }
@@ -558,8 +561,7 @@ function compact(array) {
 }
 exports.compact = compact;
 function extend(Klass, OtherKlass) {
-    var Temp = function () {
-    };
+    var Temp = function () { };
     Temp.prototype = Klass.prototype;
     OtherKlass.prototype = new Temp();
     OtherKlass.prototype.constructor = OtherKlass;
@@ -606,11 +608,10 @@ exports.Emitter = events.Emitter;
 
 },{"./core/component":1,"./core/database":2,"./core/engine":3,"./core/events":5,"./core/kernel":6,"./core/runner":7,"./core/system":8,"./core/table":9,"./core/util":10,"./core/welder":11,"./plugin/behavior":14,"./plugin/behavior-system":13,"./state/state":16,"./state/state-machine":15}],13:[function(require,module,exports){
 'use strict';
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var System = require('../core/system');
 var BehaviorSystem = (function (_super) {
@@ -635,11 +636,10 @@ module.exports = BehaviorSystem;
 
 },{"../core/system":8}],14:[function(require,module,exports){
 'use strict';
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Component = require('../core/component');
 var Behavior = (function (_super) {

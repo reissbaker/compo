@@ -54,6 +54,9 @@ var Table = (function () {
         util.each(row, function (component) {
             util.nullify(_this._attached, component);
         });
+        // null out and remove primary index immediately, rather than waiting for
+        // compaction. we know it can be deleted, the only question is whether
+        // existing code is iterating through the now-dead components.
         for (var i = 0, l = row.length; i < l; i++) {
             row[i] = null;
         }
