@@ -4,12 +4,12 @@ import Kernel = require('./kernel');
 import events = require('./events');
 import Emitter = events.Emitter;
 
-var TARGET_FPS = 60,
-    TARGET_FRAMETIME = 1000 / TARGET_FPS,
-    MIN_FRAMETIME = 10,
-    MAX_FRAMESKIP = 5;
+const TARGET_FPS = 60;
+const TARGET_FRAMETIME = 1000 / TARGET_FPS;
+const MIN_FRAMETIME = 10;
+const MAX_FRAMESKIP = 5;
 
-var rAF = window.requestAnimationFrame || fallback;
+const rAF = window.requestAnimationFrame || fallback;
 
 function fallback(callback: () => any) {
   setTimeout(callback, TARGET_FRAMETIME);
@@ -63,7 +63,7 @@ function onTick(runner: Runner) {
   function loop() {
     if(runner._stopped) return;
 
-    var timestamp = (new Date).valueOf();
+    const timestamp = (new Date).valueOf();
     runner._emitter.trigger(Runner.BEGIN_EVENT, null);
     runUpdate(runner, timestamp - runner._prevTime);
     runner._emitter.trigger(Runner.END_EVENT, null);
@@ -75,8 +75,8 @@ function onTick(runner: Runner) {
 }
 
 function runUpdate(runner: Runner, delta: number) {
-  var consumed = 0,
-      tickLength = runner._tickLength;
+  let consumed = 0;
+  const tickLength = runner._tickLength;
 
   runner._elapsed += Math.min(delta, tickLength * MAX_FRAMESKIP);
 

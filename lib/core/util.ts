@@ -1,26 +1,26 @@
 'use strict';
 
 export function backwards<T>(array: T[], callback: (el: T) => any) {
-  for(var i = array.length - 1; i >= 0; i--) {
+  for(let i = array.length - 1; i >= 0; i--) {
     callback(array[i]);
   }
 }
 
 export function each<T>(array: T[], callback: (el: T) => any) {
-  for(var i = 0, l = array.length; i < l; i++) {
+  for(let i = 0, l = array.length; i < l; i++) {
     callback(array[i]);
   }
 }
 
 export function safeEach<T>(array: T[], callback: (el: T) => any) {
-  for(var i = 0, l = array.length; i < l; i++) {
-    var curr = array[i];
+  for(let i = 0, l = array.length; i < l; i++) {
+    const curr = array[i];
     if(curr != null) callback(curr);
   }
 }
 
 export function remove<T>(array: T[], item: T) {
-  for(var i = 0, l = array.length; i < l; i++) {
+  for(let i = 0, l = array.length; i < l; i++) {
     if(array[i] === item) {
       array.splice(i, 1);
       return;
@@ -29,7 +29,7 @@ export function remove<T>(array: T[], item: T) {
 }
 
 export function nullify<T>(array: T[], item: T) {
-  for(var i = 0, l = array.length; i < l; i++) {
+  for(let i = 0, l = array.length; i < l; i++) {
     if(array[i] === item) {
       array[i] = null;
       return;
@@ -38,11 +38,12 @@ export function nullify<T>(array: T[], item: T) {
 }
 
 export function compact<T>(array: T[]) {
-  var start = -1,
-      runLength = 0,
-      inRun = false;
+  let start = -1;
+  let runLength = 0;
+  let inRun = false;
 
-  for(var i = 0, l = array.length; i < l; i++) {
+  let i = 0;
+  for(let l = array.length; i < l; i++) {
     if(array[i] == null) {
       if(!inRun) {
         inRun = true;
@@ -66,7 +67,7 @@ export interface Constructor {
 }
 
 export function extend(Klass: Constructor, OtherKlass: Constructor) {
-  var Temp: any = function() {};
+  const Temp: any = function() {};
   Temp.prototype = Klass.prototype;
   OtherKlass.prototype = new Temp();
   OtherKlass.prototype.constructor = OtherKlass;

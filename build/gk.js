@@ -51,7 +51,8 @@ var Database = (function () {
      */
     Database.prototype.entity = function (parent) {
         if (parent === void 0) { parent = null; }
-        var id = this._guid++, entity = new Entity(this, id);
+        var id = this._guid++;
+        var entity = new Entity(this, id);
         this._alive[id] = true;
         if (parent != null && this._alive[parent.id]) {
             var row = this._children[parent.id] = this._children[parent.id] || [];
@@ -286,7 +287,10 @@ module.exports = Kernel;
 'use strict';
 var events = require('./events');
 var Emitter = events.Emitter;
-var TARGET_FPS = 60, TARGET_FRAMETIME = 1000 / TARGET_FPS, MIN_FRAMETIME = 10, MAX_FRAMESKIP = 5;
+var TARGET_FPS = 60;
+var TARGET_FRAMETIME = 1000 / TARGET_FPS;
+var MIN_FRAMETIME = 10;
+var MAX_FRAMESKIP = 5;
 var rAF = window.requestAnimationFrame || fallback;
 function fallback(callback) {
     setTimeout(callback, TARGET_FRAMETIME);
@@ -335,7 +339,8 @@ function onTick(runner) {
     return loop;
 }
 function runUpdate(runner, delta) {
-    var consumed = 0, tickLength = runner._tickLength;
+    var consumed = 0;
+    var tickLength = runner._tickLength;
     runner._elapsed += Math.min(delta, tickLength * MAX_FRAMESKIP);
     while (runner._elapsed > tickLength) {
         runner._kernel.tick(tickLength);
@@ -539,8 +544,11 @@ function nullify(array, item) {
 }
 exports.nullify = nullify;
 function compact(array) {
-    var start = -1, runLength = 0, inRun = false;
-    for (var i = 0, l = array.length; i < l; i++) {
+    var start = -1;
+    var runLength = 0;
+    var inRun = false;
+    var i = 0;
+    for (var l = array.length; i < l; i++) {
         if (array[i] == null) {
             if (!inRun) {
                 inRun = true;

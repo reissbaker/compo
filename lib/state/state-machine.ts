@@ -9,7 +9,7 @@ class StateMachine {
 
   constructor(states: StateMap) {
     this._map = states;
-    for(var prop in states) {
+    for(let prop in states) {
       if(states.hasOwnProperty(prop)) {
         states[prop].attach(this);
       }

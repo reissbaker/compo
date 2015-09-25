@@ -41,7 +41,8 @@ var Database = (function () {
      */
     Database.prototype.entity = function (parent) {
         if (parent === void 0) { parent = null; }
-        var id = this._guid++, entity = new Entity(this, id);
+        var id = this._guid++;
+        var entity = new Entity(this, id);
         this._alive[id] = true;
         if (parent != null && this._alive[parent.id]) {
             var row = this._children[parent.id] = this._children[parent.id] || [];

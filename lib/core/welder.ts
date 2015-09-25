@@ -10,23 +10,23 @@
  * the hood. For example, rather than the dichotomy of:
  *
  *     // Physics system has separate grid, tile tables:
- *     var tilePhysics = new TilePhysics({ ... });
+ *     const tilePhysics = new TilePhysics({ ... });
  *     physicsSystem.tiles.attach(entity, tilePhysics);
- *     var gridPhysics = new GridPhysics({ ... });
+ *     const gridPhysics = new GridPhysics({ ... });
  *     physicsSystem.grids.attach(level, gridPhysics);
  *
  *     // Rendering system doesn't:
- *     var animation = new Animation({ ... });
+ *     const animation = new Animation({ ... });
  *     renderer.table.attach(entity, animation);
- *     var levelGrid = new GridImage({ ... });
+ *     const levelGrid = new GridImage({ ... });
  *     renderer.table.attach(level, levelGrid);
  *
  * You could instead have:
  *
- *     var tilePhysics = physicsSystem.tiles.attach(entity, { ... });
- *     var gridPhysics = physicsSystem.grids.attach(level, { ... });
- *     var animation = renderer.animation.attach(entity, { ... });
- *     var gridImage = renderer.grids.attach(level, { ... });
+ *     const tilePhysics = physicsSystem.tiles.attach(entity, { ... });
+ *     const gridPhysics = physicsSystem.grids.attach(level, { ... });
+ *     const animation = renderer.animation.attach(entity, { ... });
+ *     const gridImage = renderer.grids.attach(level, { ... });
  */
 
 
@@ -49,7 +49,7 @@ export class StandardWelder<C extends Component, Args> implements Welder<C, Args
   }
 
   attach(e: Entity, args: Args): C {
-    var component = this._builder(args);
+    const component = this._builder(args);
     return this._table.attach(e, component);
   }
 

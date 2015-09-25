@@ -25,7 +25,7 @@ class Database {
    */
 
   table<T extends Component>(): Table<T> {
-    var table = new Table<T>();
+    const table = new Table<T>();
     this._tables.push(table);
     return table;
   }
@@ -54,12 +54,12 @@ class Database {
    */
 
   entity(parent: Entity = null): Entity {
-    var id = this._guid++,
-        entity = new Entity(this, id);
+    const id = this._guid++;
+    const entity = new Entity(this, id);
     this._alive[id] = true;
 
     if(parent != null && this._alive[parent.id]) {
-      var row = this._children[parent.id] = this._children[parent.id] || [];
+      const row = this._children[parent.id] = this._children[parent.id] || [];
       row.push(entity);
       this._parents[id] = parent;
     }
@@ -78,14 +78,14 @@ class Database {
     if(!this._alive[entity.id]) return;
 
     // get parent before entity is killed, since the reference will disappear
-    var parent = this._parents[entity.id];
+    const parent = this._parents[entity.id];
 
     // kill entity
     kill(entity, this._tables, this._alive, this._children, this._parents);
 
     // clean up parent's child
     if(parent) {
-      var parentChildArray = this._children[parent.id];
+      const parentChildArray = this._children[parent.id];
       util.remove(parentChildArray, entity);
       if(parentChildArray.length === 0) delete this._children[parent.id];
     }
@@ -176,7 +176,7 @@ function kill(
   delete alive[entity.id];
   delete parents[entity.id];
 
-  var entityChildren = children[entity.id];
+  const entityChildren = children[entity.id];
   if(entityChildren) {
     entityChildren.forEach((c) => {
       kill(c, tables, alive, children, parents);

@@ -7,8 +7,8 @@ import Emitter = events.Emitter;
 import util = require('./util');
 import Entity = require('./entity');
 
-var ATTACH_EVENT = 'attach';
-var DETACH_EVENT = 'detach';
+const ATTACH_EVENT = 'attach';
+const DETACH_EVENT = 'detach';
 
 class Table<T extends Component> {
   private _attached: T[] = [];
@@ -26,7 +26,7 @@ class Table<T extends Component> {
 
     this._attached.push(component);
 
-    var row = this._primaryIdx[entity.id] = this._primaryIdx[entity.id] || [];
+    const row = this._primaryIdx[entity.id] = this._primaryIdx[entity.id] || [];
     row.push(component);
 
     this._emitter.trigger(ATTACH_EVENT, component);
@@ -40,7 +40,7 @@ class Table<T extends Component> {
    */
 
   detach(entity: Entity, component: T) {
-    var row = this._primaryIdx[entity.id];
+    const row = this._primaryIdx[entity.id];
     if(!row) return;
 
     // trigger the event first, for consistency with `detachAllFrom`
@@ -62,7 +62,7 @@ class Table<T extends Component> {
    */
 
   detachAllFrom(entity: Entity) {
-    var row = this._primaryIdx[entity.id];
+    const row = this._primaryIdx[entity.id];
     if(!row) return;
 
     // trigger events before nulling out indices
@@ -78,7 +78,7 @@ class Table<T extends Component> {
     // null out and remove primary index immediately, rather than waiting for
     // compaction. we know it can be deleted, the only question is whether
     // existing code is iterating through the now-dead components.
-    for(var i = 0, l = row.length; i < l; i++) {
+    for(let i = 0, l = row.length; i < l; i++) {
       row[i] = null;
     }
     delete this._primaryIdx[entity.id];
@@ -96,10 +96,10 @@ class Table<T extends Component> {
    */
 
   compact() {
-    var curr: Entity;
+    let curr: Entity;
 
     while(curr = this._detached.pop()) {
-      var row = this._primaryIdx[curr.id];
+      const row = this._primaryIdx[curr.id];
       util.compact(row);
       if(row.length === 0) delete this._primaryIdx[curr.id];
     }
@@ -147,7 +147,7 @@ class Table<T extends Component> {
   }
 
   components(entity: Entity, callback: Callback<T>) {
-    var row = this._primaryIdx[entity.id];
+    const row = this._primaryIdx[entity.id];
     if(!row) return;
     util.safeEach(row, callback);
   }

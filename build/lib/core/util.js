@@ -38,8 +38,11 @@ function nullify(array, item) {
 }
 exports.nullify = nullify;
 function compact(array) {
-    var start = -1, runLength = 0, inRun = false;
-    for (var i = 0, l = array.length; i < l; i++) {
+    var start = -1;
+    var runLength = 0;
+    var inRun = false;
+    var i = 0;
+    for (var l = array.length; i < l; i++) {
         if (array[i] == null) {
             if (!inRun) {
                 inRun = true;
