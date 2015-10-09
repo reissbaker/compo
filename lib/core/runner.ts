@@ -9,7 +9,7 @@ const TARGET_FRAMETIME = 1000 / TARGET_FPS;
 const MIN_FRAMETIME = 10;
 const MAX_FRAMESKIP = 5;
 
-const rAF = window.requestAnimationFrame || fallback;
+const rAF = typeof window === 'undefined' ? fallback : (window.requestAnimationFrame || fallback);
 
 function fallback(callback: () => any) {
   setTimeout(callback, TARGET_FRAMETIME);

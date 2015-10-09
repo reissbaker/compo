@@ -291,7 +291,7 @@ var TARGET_FPS = 60;
 var TARGET_FRAMETIME = 1000 / TARGET_FPS;
 var MIN_FRAMETIME = 10;
 var MAX_FRAMESKIP = 5;
-var rAF = window.requestAnimationFrame || fallback;
+var rAF = typeof window === 'undefined' ? fallback : (window.requestAnimationFrame || fallback);
 function fallback(callback) {
     setTimeout(callback, TARGET_FRAMETIME);
 }
