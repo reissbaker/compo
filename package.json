@@ -1,6 +1,6 @@
 {
   "name": "gamekernel",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "author": "Matt Baker",
   "description": "A tiny, Component-based kernel of a game engine.",
   "repository": [
