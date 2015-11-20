@@ -4,6 +4,7 @@ declare module 'gamekernel' {
     export import Component = require('__gamekernel/core/component');
     export import Table = require('__gamekernel/core/table');
     export import Database = require('__gamekernel/core/database');
+    export import Entity = require('__gamekernel/core/entity');
     export import Kernel = require('__gamekernel/core/kernel');
     export import System = require('__gamekernel/core/system');
     export import BehaviorSystem = require('__gamekernel/plugin/behavior-system');
@@ -64,6 +65,20 @@ declare module '__gamekernel/core/database' {
         isAlive(entity: Entity): boolean;
     }
     export = Database;
+}
+
+declare module '__gamekernel/core/entity' {
+    import Database = require('__gamekernel/core/database');
+    class Entity {
+        id: number;
+        constructor(db: Database, id: number);
+        entity(): Entity;
+        destroy(): Entity;
+        getParent(): Entity;
+        getChildren(): Entity[];
+        isAlive(): boolean;
+    }
+    export = Entity;
 }
 
 declare module '__gamekernel/core/kernel' {
@@ -221,20 +236,6 @@ declare module '__gamekernel/core/events' {
         off(event: string, callback: Callback<T>): void;
         trigger(event: string, object: T): void;
     }
-}
-
-declare module '__gamekernel/core/entity' {
-    import Database = require('__gamekernel/core/database');
-    class Entity {
-        id: number;
-        constructor(db: Database, id: number);
-        entity(): Entity;
-        destroy(): Entity;
-        getParent(): Entity;
-        getChildren(): Entity[];
-        isAlive(): boolean;
-    }
-    export = Entity;
 }
 
 declare module '__gamekernel/state/state-map' {

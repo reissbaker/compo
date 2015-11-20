@@ -2,6 +2,7 @@
 exports.Component = require('./core/component');
 exports.Table = require('./core/table');
 exports.Database = require('./core/database');
+exports.Entity = require('./core/entity');
 exports.Kernel = require('./core/kernel');
 exports.System = require('./core/system');
 exports.BehaviorSystem = require('./plugin/behavior-system');

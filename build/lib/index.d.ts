@@ -1,6 +1,7 @@
 export import Component = require('./core/component');
 export import Table = require('./core/table');
 export import Database = require('./core/database');
+export import Entity = require('./core/entity');
 export import Kernel = require('./core/kernel');
 export import System = require('./core/system');
 export import BehaviorSystem = require('./plugin/behavior-system');

@@ -600,6 +600,7 @@ exports.StandardWelder = StandardWelder;
 exports.Component = require('./core/component');
 exports.Table = require('./core/table');
 exports.Database = require('./core/database');
+exports.Entity = require('./core/entity');
 exports.Kernel = require('./core/kernel');
 exports.System = require('./core/system');
 exports.BehaviorSystem = require('./plugin/behavior-system');
@@ -614,7 +615,7 @@ exports.welder = require('./core/welder');
 var events = require('./core/events');
 exports.Emitter = events.Emitter;
 
-},{"./core/component":1,"./core/database":2,"./core/engine":3,"./core/events":5,"./core/kernel":6,"./core/runner":7,"./core/system":8,"./core/table":9,"./core/util":10,"./core/welder":11,"./plugin/behavior":14,"./plugin/behavior-system":13,"./state/state":16,"./state/state-machine":15}],13:[function(require,module,exports){
+},{"./core/component":1,"./core/database":2,"./core/engine":3,"./core/entity":4,"./core/events":5,"./core/kernel":6,"./core/runner":7,"./core/system":8,"./core/table":9,"./core/util":10,"./core/welder":11,"./plugin/behavior":14,"./plugin/behavior-system":13,"./state/state":16,"./state/state-machine":15}],13:[function(require,module,exports){
 'use strict';
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
